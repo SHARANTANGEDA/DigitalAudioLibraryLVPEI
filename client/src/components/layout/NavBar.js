@@ -3,10 +3,20 @@ import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { logoutUser } from '../../actions/authActions'
-import Select from 'react-select'
-import classnames from 'classnames'
 import { getSearchResults } from '../../actions/homeActions'
+import EnterPin from './EnterPin'
+import Modal from 'react-modal'
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '0',
 
+    transform: 'translate(-50%, -50%)'
+  }
+}
 
 class Navbar extends Component {
   constructor (props) {
@@ -19,6 +29,10 @@ class Navbar extends Component {
     this.onCatChange = this.onCatChange.bind(this)
     this.onChange = this.onChange.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
+    this.onSendAgain = this.onSendAgain.bind(this)
+    this.openModal = this.openModal.bind(this)
+    this.afterOpenModal = this.afterOpenModal.bind(this)
+    this.closeModal = this.closeModal.bind(this)
   }
 
   onSubmit (e) {
@@ -36,10 +50,24 @@ class Navbar extends Component {
     }
   }
 
+  onSendAgain(e) {
+    this.props.sendAgain(this.props.match.params.id)
+  }
+
+  openModal () {
+    this.setState({ modalIsOpen: true })
+  }
+  afterOpenModal () {
+
+  }
+
+  closeModal () {
+    this.setState({ modalIsOpen: false })
+  }
+
   onChange (e) {
     this.setState({ [e.target.name]: e.target.value })
     console.log({ [e.target.name]: e.target.value })
-
   }
 
   componentWillReceiveProps (nextProps, nextContext) {
@@ -87,7 +115,7 @@ class Navbar extends Component {
           <img style={{ maxWidth: '200px', maxHeight: '150px' }}
                src={require('../../img/logo.png')} alt=""
           />
-          <h3>SmartScan</h3>
+          <h3>Digital Audio Library</h3>
         </div>
       </div>
 
@@ -105,53 +133,26 @@ class Navbar extends Component {
           <img style={{ maxWidth: '200px', maxHeight: '150px' }}
                src={require('../../img/logo.png')} alt=""
           />
-          <h3>SmartScan</h3>
+          <h3>Digital Audio Library</h3>
         </div>
       </div>
     )
-    const authLinksII = (
-      <ul className="navbar-nav  ml-auto">
-        <li className="nav-item">
-          <Link className="nav-link" to="" style={{color: 'white', borderRadius: '5px' }}>
-            {user.emailId}
-          </Link>
-        </li>
-        <li className="nav-item pull-right">
-          <Link className="nav-link" to="/" onClick={this.onLogoutClick.bind(this)}
+    const guestLink1 = (
+      <ul className="navbar-nav components d-flex justify-content-around" style={{ height: '100%' }}>
+        <li className='nav-item' >
+          <Link className="nav-link" to="/login"
                 style={{color: 'white', borderRadius: '5px' }}>
             <i className="fa fa-power-off" aria-hidden="true"/>
-            {'  '}Logout</Link>
+            {' '}Login</Link>
+        </li>
+        <li className="nav-item pull-right">
+          <Link className='nav-link' to="/register" style={{color: 'white', borderRadius: '5px' }}>
+            register
+          </Link>
         </li>
       </ul>
     )
-    const authLinksI = (
-        <div className=" input-group md-form form-sm form-2 pl-0" style={{ width: '500px', maxWidth: '700px' }}>
-          <div style={{ minWidth: '100px' }}>
-            <Select options={[{ value: 'mr.No', label: 'MR No' },{value:'name', label: 'Name'}]}
-                    className={classnames('isSearchable',
-              { 'is-invalid': errors.category })}
-                    placeholder="Category"
-                    name="category" value={category} onChange={this.onCatChange}>
-            </Select>
-            {errors.category && (
-              <div className="invalid-feedback">{errors.category}</div>
-            )}
-          </div>
-          <input type="text"
-                 className={classnames('form-control my-0 py-1 lime-border', { 'is-invalid': errors.search })}
-                 placeholder="Search"
-                 name="search"
-                 value={this.state.search} onChange={this.onChange}/>
-          {errors.search && (<div className="invalid-feedback">{errors.search}</div>
-          )}
-          <div className="input-group-append">
-            <button type="submit" onClick={this.onSubmit} className="input-group-text cyan lighten-2">
-              <i className="fas fa-search text-grey" aria-hidden="true"/>
-            </button>
-          </div>
-        </div>
 
-    )
     let authLinksIII=null
     if (isAuthenticated && (user.role==='super_admin')) {
       authLinksIII = (
@@ -160,21 +161,6 @@ class Navbar extends Component {
               <Link className='nav-link' to="/dashboard" style={{color: 'white', borderRadius: '5px' }}>
                 Home
               </Link>
-            </li>
-            <li className="nav-item dropdown" style={{color: 'white', borderRadius: '5px'
-              ,minWidth:'150px' }}>
-              <Link className="nav-link nav-item d-flex justify-content-around" to="" data-toggle="dropdown"
-                    style={{color: 'white', borderRadius: '5px' }}>
-                Centres<i className="fas fa-caret-down"/>
-              </Link>
-              <ul className="dropdown-menu " >
-                <li><Link className='nav-link' to="/addDiagnosticCentre" style={{color: 'white'}}>
-                 Create</Link></li>
-                <li><Link className='nav-link' to="/activeCentres" style={{color: 'white'}}>
-                  Current</Link></li>
-                <li><Link className='nav-link' to="/removedCentres" style={{color: 'white'}}>
-                 De Assigned</Link></li>
-              </ul>
             </li>
             <li className="nav-item dropdown" style={{color: 'white', borderRadius: '5px'
               ,minWidth:'150px' }}>
@@ -189,7 +175,6 @@ class Navbar extends Component {
                   Current</Link></li>
                 <li><Link className='nav-link' to="/deAssignedLVP" style={{color: 'white'}}>
                   De Assigned</Link></li>
-
               </ul>
             </li>
             <li className="nav-item dropdown" style={{color: 'white', borderRadius: '5px'
@@ -214,7 +199,7 @@ class Navbar extends Component {
             </li>
           </ul>
       )
-    }else if(isAuthenticated && (user.role==='diag_admin')) {
+    }else if(isAuthenticated && (user.role==='lvpei')) {
       authLinksIII = (
         <ul className="navbar-nav components" style={{ height: '100%' }}>
           <li className='nav-item'>
@@ -222,26 +207,9 @@ class Navbar extends Component {
               Home
             </Link>
           </li>
-          <li className="nav-item dropdown" style={{color: 'white', borderRadius: '5px'
-            ,minWidth:'150px' }}>
-            <Link className="nav-link nav-item d-flex justify-content-around" to="" data-toggle="dropdown"
-                  style={{color: 'white', borderRadius: '5px' }}>
-              Users<i className="fas fa-caret-down"/>
-            </Link>
-            <ul className="dropdown-menu " >
-              <li><Link className='nav-link'  to="/createUser" style={{color: 'white', borderRadius: '5px' }}>
-                Create</Link></li>
-              <li><Link className='nav-link' to="/activeUser" style={{color: 'white'}}>
-                Current</Link></li>
-              <li><Link className='nav-link' to="/deAssignedUser" style={{color: 'white'}}>
-                De Assigned</Link></li>
-
-            </ul>
-          </li>
-
           <li className='nav-item'>
             <Link className='nav-link'  to="/uploadForm" style={{color: 'white', borderRadius: '5px' }}>
-              Upload Files
+              Upload Book
             </Link>
           </li>
           <li className="nav-item dropdown " style={{color: 'white',background:'#008cff' , borderRadius: '5px'
@@ -265,42 +233,7 @@ class Navbar extends Component {
           </li>
         </ul>
       )
-    }else if(isAuthenticated && (user.role==='lvpei' )) {
-      authLinksIII = (
-        <ul className="navbar-nav components d-flex justify-content-around" style={{ height: '100%' }}>
-          <li className='nav-item' >
-            <Link className='nav-link' to="/dashboard" style={{color: 'white', borderRadius: '5px' }}>
-              Home
-            </Link>
-          </li>
-          <li>
-            <Link className="nav-link" to="/" onClick={this.onLogoutClick.bind(this)}
-                  style={{color: 'white', borderRadius: '5px' }}>
-              Tumor Volume</Link>
-          </li>
-          <li className="nav-item dropdown " style={{color: 'white',background:'#008cff' , borderRadius: '5px'
-            ,minWidth:'150px' }}>
-            <Link className="nav-link nav-item d-flex justify-content-around" to=""  data-toggle="dropdown"
-                  style={{color: 'white', borderRadius: '5px' }}>
-              {user.emailId}<i className="fas fa-caret-down"/>
-            </Link>
-            <ul className="dropdown-menu " >
-              <li><Link className='nav-link' to="/editProfile" style={{color: 'white'}}>
-                My Account</Link></li>
-              <li><Link className='nav-link' to="/changePassword" style={{color: 'white'}}>
-                Change Password</Link></li>
-            </ul>
-          </li>
-          <li className="nav-item pull-right">
-            <Link className="nav-link" to="/" onClick={this.onLogoutClick.bind(this)}
-                  style={{color: 'white', borderRadius: '5px' }}>
-              <i className="fa fa-power-off" aria-hidden="true"/>
-              {'  '}Logout</Link>
-          </li>
-
-        </ul>
-      )
-    }else if(user.role==='diag') {
+    }else if(user.role==='world') {
       authLinksIII = (
         <ul className="navbar-nav components d-flex justify-content-around" style={{ height: '100%' }}>
           <li className='nav-item' >
@@ -327,16 +260,39 @@ class Navbar extends Component {
               <i className="fa fa-power-off" aria-hidden="true"/>
               {'  '}Logout</Link>
           </li>
-
         </ul>
       )
     }
 
+    let requestConfirmation = (
+      <div className='row col-md-12' style={{ background:'#ffa726', width:'100%', height:'40px'}}>
+        <p>Please confirm  your email address, If you didn't receive a Confirmation OTP click Send Again</p>
+          <button onClick={this.openModal} className='btn btn-sm' style={{background:'#ffa726', color: 'green'}}>Confirm Now</button>
 
+          <button onClick={this.onSendAgain} className='btn btn-sm' style={{background:'#ffa726', color: 'yellow'}}>Send Again</button>
+          <Modal
+            isOpen={this.state.modalIsOpen}
+            onAfterOpen={this.afterOpenModal}
+            onRequestClose={this.closeModal}
+            style={customStyles}
+            contentLabel="OTP confirmation"
+            shouldCloseOnOverlayClick={false}
+            modalOptions={{ dismissible: false }}
+            shouldCloseOnEsc={false}
+            ariaHideApp={false}
+          >{<div className='d-flex justify-content-center'>
+            <EnterPin/>
+            <div>
+              <button onClick={this.closeModal} className='btn btn-sm' style={{color:'white', background:'red'}}>
+                <i className="fas fa-times"/></button>
+            </div>
+          </div>}</Modal>
+      </div>
+    )
     return (
       <nav className="navbar navbar-expand-sm  col-md-12 " style={{background:'#008cff'}}>
         <div className="row container d-flex justify-content-between col-md-12">
-          <div className='row col-md-12 d-flex justify-content-between col-md-12' >
+          <div className='row  d-flex justify-content-between col-md-12' >
             {isAuthenticated ? authLinkO : guestLinkO}
           <button
             className="navbar-toggler"
@@ -346,15 +302,8 @@ class Navbar extends Component {
           >
             <span className="navbar-toggler-icon"/>
           </button>
-          <div className="row collapse navbar-collapse justify-content-between" id="mobile-nav">
-            <div>
-            </div><div>
-              {/*{(isAuthenticated && user.role==='lvpei') ? authLinksI : null}*/}
-            </div> <div>
-            {isAuthenticated ? authLinksIII: null}
-
-            {/*{isAuthenticated ? authLinksII : null}*/}
-          </div>
+          <div className="row collapse navbar-collapse justify-content-end" id="mobile-nav">
+            {isAuthenticated ? authLinksIII: guestLink1}
           </div>
           </div>
         </div>
@@ -375,4 +324,4 @@ const mapStateToProps = state => ({
   search: state.search
 })
 
-export default connect(mapStateToProps, { logoutUser, getSearchResults })(Navbar)
+export default connect(mapStateToProps, {logoutUser, getSearchResults})(Navbar)

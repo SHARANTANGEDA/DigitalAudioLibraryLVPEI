@@ -7,7 +7,6 @@ import DisplayFolder from '../../display/Folders/DisplayFolder'
 import Display from '../../display/Files/Display'
 import CreateUsers from '../../MyAccount/CreateUsers'
 import AddDiagnosticCentre from '../../SuperAdmin/AddDiagnosticCentre'
-import Success from '../../upload/Success'
 import NotFound from '../../layout/NotFound'
 import SearchNotFound from '../../layout/SearchNotFound'
 import ActiveCentres from '../../SuperAdmin/ActiveCentres'
@@ -20,6 +19,8 @@ import EditProfile from '../../MyAccount/EditProfile'
 import ManageDiagUsers from '../../diagAdmin/ManageDiagUsers'
 import ReAssignDiagUsers from '../../diagAdmin/ReAssignDiagUsers'
 import DisplaySelected from '../../display/Files/DisplaySelected'
+import Login from '../../layout/Login'
+import AudioBook from '../../dashboard/AudioBook'
 
 const Routes = () => {
   return (
@@ -45,8 +46,7 @@ const Routes = () => {
         <PrivateRoute exact path='/addDiagnosticCentre' component={AddDiagnosticCentre}/>
         {/*</Switch>*/}
         {/*<Switch>*/}
-        <PrivateRoute exact path='/uploadSuccess' component={Success}/>
-        <PrivateRoute exact path='/detailsNotFound' component={SearchNotFound}/>
+=        <PrivateRoute exact path='/detailsNotFound' component={SearchNotFound}/>
         <PrivateRoute exact path='/activeCentres' component={ActiveCentres}/>
         <PrivateRoute exact path='/removedCentres' component={RemovedCentres} />
         <PrivateRoute exact path='/uploadForm' component={UploadForm}/>
@@ -57,7 +57,7 @@ const Routes = () => {
         <PrivateRoute exact path='/activeUser' component={ManageDiagUsers}/>
         <PrivateRoute exact path='/deAssignedUser' component={ReAssignDiagUsers}/>
         <PrivateRoute exact path='/displayFolder/displaySelectedFiles/:id' component={DisplaySelected}/>
-
+        <PrivateRoute exact path='/audioBook/:id' component={AudioBook}/>
         {/*</Switch>*/}
         <Route path="*" component={NotFound} />
       </Switch>

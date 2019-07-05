@@ -23,29 +23,28 @@ setLoading()
   );
 };
 export  const deleteResidual=(id) => dispatch => {
-  axios.post(`/api/diagAdmin/onDiscard`,id).then(res => {
+  axios.post(`/api/upload/onDiscard`,id).then(res => {
     window.location.href='/dashboard'
   }).catch(err =>
     console.log('error in deleting residual')
   )
 }
-export const getPatientDetails=(data) => dispatch => {
-  axios.post('/api/diagAdmin/patientDetails', data)
+export const getUploadModal=(data) => dispatch => {
+  axios.post('/api/upload/uploadForm', data)
     .then(res => {
       dispatch({
         type: GET_PATIENT_DETAILS,
         payload: res.data
       })
     }).catch(err =>{
-    console.log(err)
     dispatch({
-      type: GET_INVALID_MR,
+      type: GET_ERRORS,
       payload: err.response.data
     })}
   )
 }
 export const continueToUpload=(data) => dispatch => {
-  axios.post('/api/diagAdmin/continueToUpload', data)
+  axios.post('/api/upload/upload', data)
     .then(res => {
       console.log('created User')
       dispatch({

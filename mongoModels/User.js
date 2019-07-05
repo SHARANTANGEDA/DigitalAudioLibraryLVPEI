@@ -19,34 +19,40 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
-  admin: { //Admin Id for Diag  people
-      type: String
-  },
-  diagCentre: {
+  address: {//World
     type: String
   },
-  centreShortCode: {
+  pinCode: {//World
+    type: Number
+  },
+  city: {//World
     type: String
   },
-  totalUploads: {
+  state: {//World
+    type: String
+  },
+  country: { //World
+    type: String
+  },
+
+  verified: {
+    type: Boolean
+  },
+  uploads: {
     type: Number,
     default: 0
-  },
-  diagCentreName: {
-    type: String
-  },
-  centreCode: {
-    type: String
   },
   access: {
     type: Boolean,
     default: true
   },
+  otpKey: {
+    type: String
+  },
   time: {
     type: Date,
-    default: Date.now
+    default: Date.now()
   }
 });
-
 module.exports = User = mongoose.model('users',UserSchema);
 

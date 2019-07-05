@@ -6,10 +6,11 @@ import { changePassword } from '../../actions/profileActions'
 
 import classnames from 'classnames'
 import TextFieldGroup from '../common/TextFieldGroup'
-import { continueToUpload, deleteResidual, getPatientDetails } from '../../actions/dAActions'
+import { continueToUpload, deleteResidual, getPatientDetails, getUploadModal } from '../../actions/dAActions'
 import Spinner from '../common/Spinner'
 import UploadFiles from './UploadFiles'
 import Modal from 'react-modal'
+import Select from 'react-select'
 
 
 const customStyles = {
@@ -19,6 +20,7 @@ const customStyles = {
     right: 'auto',
     bottom: 'auto',
     marginRight: '0',
+
     transform: 'translate(-50%, -50%)'
   }
 }
@@ -27,9 +29,15 @@ class UploadForm extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      patient: '',
+      title: '',
+      author: '',
+      language: null,
+      grade: '',
+      organization: '',
       modalIsOpen: false,
       uploadModal: false,
+      category: null,
+      discard: false,
       errors: {}
     }
 
@@ -41,11 +49,19 @@ class UploadForm extends Component {
     this.closeFlushModal = this.closeFlushModal.bind(this)
     this.openNextModal = this.openNextModal.bind(this)
     this.onDiscard = this.onDiscard.bind(this)
+    this.onSelectType = this.onSelectType.bind(this)
+    this.onSelectLang = this.onSelectLang.bind(this)
+
   }
 
   componentWillReceiveProps (nextProps, nextContext) {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors })
+    }
+    if(nextProps.home.patientData!==null) {
+      if(nextProps.home.patientData.mid!== null) {
+        this.setState({ modalIsOpen: true })
+      }
     }
   }
 
@@ -53,7 +69,7 @@ class UploadForm extends Component {
     this.setState({ [e.target.name]: e.target.value })
   }
   openModal () {
-    this.setState({ modalIsOpen: true })
+    this.setState({ modalIsOpen: true, discard: false })
   }
 
   openNextModal () {
@@ -63,21 +79,26 @@ class UploadForm extends Component {
     }
     this.props.continueToUpload(userData)
   }
-
+  onSelectType (e) {
+    this.setState({category: e})
+  }
+  onSelectLang (e) {
+    this.setState({language: e})
+  }
   afterOpenModal () {
 
   }
 
   onDiscard () {
-    this.setState({ modalIsOpen: false, patient: '' })
+    this.setState({ modalIsOpen: false, discard: true })
     const mid = {
-      mid: this.props.home.mid.mid
+      mid: this.props.home.patientData.mid
     }
     this.props.deleteResidual(mid)
   }
 
   closeFlushModal () {
-    this.setState({ modalIsOpen: false, patient: '' })
+    this.setState({ modalIsOpen: false })
   }
 
   closeModal () {
@@ -87,119 +108,69 @@ class UploadForm extends Component {
 
   onSubmit (e) {
     e.preventDefault()
-    this.setState({ modalIsOpen: true })
     const userData = {
-      patient: this.state.patient
+      title: this.state.title,
+      author: this.state.author,
+      language: this.state.language.value,
+      grade: this.state.grade,
+      organization: this.state.organization,
+      category: this.state.category.value,
     }
-    console.log({ user: userData })
-    if (this.state.patient.length !== 0) {
-      console.log({ len: 'not zero' })
-      // this.props.getDetails(userData);
-      this.props.getPatientDetails(userData)
-      this.setState({ patient: userData.patient })
-    } else {
-      this.setState({ errors: { patient: 'Please enter the MR No' }, patient: '' })
-    }
+      this.props.getUploadModal(userData)
   }
 
 
 
   render () {
     const { errors } = this.state
-    let showModal
-    if (!this.state.uploadModal) {
+    let showModal, categoryArray=[{value: 'School (I – V)', label: 'School (I – V)'},
+      {value: 'School (VI – X)', label: 'School (VI – X)'},
+      {value: 'Intermediate (XI & XII)', label: 'Intermediate (XI & XII)'},
+      {value: 'Undergraduate', label: 'Undergraduate'},
+      {value: 'Postgraduate', label: 'Postgraduate'},
+      {value: 'Law', label: 'Law'},
+      {value: 'Psychology', label: 'Psychology'},
+      {value: 'Competitive Exam', label: 'Competitive Exam'},
+      {value: 'English Grammar', label: 'English Grammar'},
+      {value: 'Children Stories', label: 'Children Stories'},
+      {value: 'Religious', label: 'Religious'},
+      {value: 'Other', label: 'Other'}]
+    let langArray=[{value: 'Arabic', label: 'Arabic'},
+      {value: 'Bengali', label: 'Bengali'},
+      {value: 'Chinese', label: 'Chinese'},
+      {value: 'English', label: 'English'},
+      {value: 'French', label: 'French'},
+      {value: 'German', label: 'German'},
+      {value: 'Hindi', label: 'Hindi'},
+      {value: 'Japanese', label: 'Japanese'},
+      {value: 'Kannada', label: 'Kannada'},
+      {value: 'Korean', label: 'Korean'},
+      {value: 'Marathi', label: 'Marathi'},
+      {value: 'Portuguese', label: 'Portuguese'},
+      {value: 'Russian', label: 'Russian'},
+      {value: 'Spanish', label: 'Spanish'},
+      {value: 'Tamil', label: 'Tamil'},
+      {value: 'Telugu', label: 'Telugu'},
+      {value: 'Urdu', label: 'Urdu'}]
+    if (this.state.modalIsOpen) {
       const { loading2, patientData } = this.props.home
       if (loading2 || patientData === null) {
         showModal = <Spinner/>
       } else {
-        if (patientData.invalid) {
+
           showModal = (
-            <div id="mainbar" className='row d-flex justify-content-center'>
-              <div className="grid text-center col-md-10">
-                <h3 className="grid--cell fl1 fs-headline1 text-center" style={{
-                  color: 'black'
-                }}> Patient Details</h3>
-              </div>
-              <div className='col-md-2'>
-                <button onClick={this.closeFlushModal}
-                        style={{ borderStyle: 'none', background: 'white', color: 'red' }}
-                ><i className="fa fa-times fa-2x" aria-hidden="true"/>
-                </button>
-              </div>
-              <p style={{ color: 'red', fontStyle: 'italic' }}>You have entered invalid MR number</p>
-              <div className="col-md-6 text-center" style={{ width: '100%' }}>
-                <button onClick={this.closeFlushModal} className='btn btn-warning'>Close</button>
-              </div>
-            </div>
-          )
-
-        } else {
-          showModal = (
-            <div id="mainbar" className='row d-flex justify-content-center'>
-              <div className="grid text-center col-md-10">
-                <h3 className="grid--cell fl1 fs-headline1 text-center" style={{
-                  color: 'black'
-                }}> Confirm Details</h3>
-              </div>
-              <div className='col-md-2'>
-                <button onClick={this.closeFlushModal} style={{ borderStyle: 'none', background: 'white', color: 'red' }}
-                ><i className="fa fa-times fa-2x" aria-hidden="true"/>
-                </button>
-              </div>
-
-              <div className="col-md-12" style={{ width: '100%' }}>
-                <div className='row'>
-                  <div className='col-md-5 d-flex justify-content-between' style={{borderStyle:'groove', margin:'5px'}}>
-                    <td><h6 style={{color: 'grey',opacity:'0.9'}}>First Name:</h6></td>
-                    <td><h6>{patientData.patient.firstName}</h6></td>
-                  </div>
-                  <div className='col-md-5 d-flex justify-content-between' style={{borderStyle:'groove', margin:'5px'}}>
-                    <td><h6 style={{color: 'grey',opacity:'0.9'}}>Last Name:</h6></td>
-                    <td><h6>{patientData.patient.lastName}</h6></td>
-                  </div>
+            <div >
+                <div className='row text-center'>
+                  <UploadFiles/>
                 </div>
-                <div className='row' >
-                  <div className='col-md-5 d-flex justify-content-between' style={{borderStyle:'groove', margin:'5px'}}>
-                    <td><h6 style={{color: 'grey',opacity:'0.9'}}>Age/Gender:</h6></td>
-                    <td><h6>{patientData.patient.age+'/'+patientData.patient.gender}</h6></td>
-                  </div>
-                  <div className='col-md-5 d-flex justify-content-between' style={{borderStyle:'groove', margin:'5px'}}>
-                    <td><h6 style={{color: 'grey',opacity:'0.9'}}>CentreCode:</h6></td>
-                    <td><h6>{patientData.patient.address}</h6></td>
-                  </div>
-                </div>
-                <div className='row' >
-                  <div className='col-md-5 d-flex justify-content-between' style={{borderStyle:'groove', margin:'5px'}}>
-                    <td><h6 style={{color: 'grey',opacity:'0.9'}}>District:</h6></td>
-                    <td><h6>{patientData.patient.district}</h6></td>
-                  </div>
-                  <div className='col-md-5 d-flex justify-content-between' style={{borderStyle:'groove', margin:'5px'}}>
-                    <td><h6 style={{color: 'grey',opacity:'0.9'}}>State:</h6></td>
-                    <td><h6>{patientData.patient.state}</h6></td>
-                  </div>
-                </div>
-                <div className='row' >
-                  <div className='col-md-10 d-flex justify-content-between' style={{borderStyle:'groove', margin:'10px'}}>
-                    <td><h6 style={{color: 'grey',opacity:'0.9'}}>Country:</h6></td>
-                    <td><h6>{patientData.patient.country}</h6></td>
-                  </div>
-                </div>
-
-                <div className='row d-flex justify-content-around'>
-                  <button onClick={this.openNextModal} className='btn btn-sm'
-                          style={{ background: 'green', color: 'white' }}>Continue to upload
-                  </button>
-                  <button onClick={this.closeFlushModal} className='btn btn-warning'
-                          style={{ background: 'red', color: 'white' }}>discard
-                  </button>
-                </div>
-
-              </div>
+              <button onClick={this.onDiscard} className='btn btn-warning'
+                      style={{ background: 'red', color: 'white' }}>discard
+              </button>
             </div>
           )
         }
-      }
-    } else {
+    }
+    if(this.state.discard && !this.state.modalIsOpen){
       console.log(this.props.home.patientData)
       if(this.props.home.patientData.mid===null) {
         showModal=<Spinner/>
@@ -218,16 +189,48 @@ class UploadForm extends Component {
     }
     return (
       <div className="container-fluid uploadForm d-flex justify-content-center" >
-        <div className="col-md-4" style={{ width: '100%' }}>
+        <div className="col-md-6" style={{ width: '100%' }}>
           <h3 className='text-center' style={{
             borderStyle: 'solid', borderWidth: '2px', background: 'green',
             color: 'white', borderRadius: '2px'
-          }}>Enter the Patient MR number to upload files</h3>
+          }}>Enter Book details to upload book</h3>
 
           <form noValidate onSubmit={this.onSubmit}>
-            <TextFieldGroup placeholder="Enter Patient MR.No" error={errors.patient}
-                            type="text" onChange={this.changeHandler} value={this.state.patient} name="patient"
+            <div style={{ minWidth: '100px', margin: '10px' }}>
+              <Select options={categoryArray}
+                      className={classnames('isSearchable',
+                        { 'is-invalid': errors.category })}
+                      placeholder="Category"
+                      name="category" value={this.state.category} onChange={this.onSelectType}>
+              </Select>
+              {errors.category && (
+                <div className="invalid-feedback">{errors.category}</div>
+              )}
+            </div>
+            <TextFieldGroup placeholder="Enter book title" error={errors.title}
+                            type="text" onChange={this.changeHandler} value={this.state.title} name="title"
             />
+            <TextFieldGroup placeholder="Enter book author/publication" error={errors.author}
+                            type="text" onChange={this.changeHandler} value={this.state.author} name="author"
+            />
+            <div style={{ minWidth: '100px', margin: '10px'  }}>
+              <Select options={langArray}
+                      className={classnames('isSearchable',
+                        { 'is-invalid': errors.language })}
+                      placeholder="Language"
+                      name="category" value={this.state.language} onChange={this.onSelectLang}>
+              </Select>
+              {errors.language && (
+                <div className="invalid-feedback">{errors.language}</div>
+              )}
+            </div>
+            <TextFieldGroup placeholder="Preferred Grade" error={errors.grade}
+                            type="text" onChange={this.changeHandler} value={this.state.grade} name="grade"
+            />
+            <TextFieldGroup placeholder="Organization" error={errors.organization}
+                            type="text" onChange={this.changeHandler} value={this.state.organization} name="organization"
+            />
+
             <input type="submit" className="btn btn-info btn-block mt-4"/>
           </form>
         </div>
@@ -242,13 +245,14 @@ class UploadForm extends Component {
           shouldCloseOnEsc={false}
           ariaHideApp={false}
         >{showModal}</Modal>
+
       </div>
     )
   }
 }
 
 UploadForm.propTypes = {
-  getPatientDetails: PropTypes.func.isRequired,
+  getUploadModal: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   continueToUpload: PropTypes.func.isRequired,
   deleteResidual: PropTypes.func.isRequired,
@@ -262,4 +266,4 @@ const mapStateToProps = state => ({
   home: state.home
 })
 
-export default connect(mapStateToProps, { getPatientDetails,continueToUpload, deleteResidual })(UploadForm)
+export default connect(mapStateToProps, { getUploadModal,continueToUpload, deleteResidual })(UploadForm)

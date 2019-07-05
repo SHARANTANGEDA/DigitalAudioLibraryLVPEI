@@ -3,7 +3,6 @@ const extractJWT = require('passport-jwt/lib').ExtractJwt;
 const mongoose = require('mongoose');
 const User = mongoose.model('users');
 const keys = require('./keys');
-const db = require("../models");
 
 const opts = {};
 opts.jwtFromRequest = extractJWT.fromAuthHeaderAsBearerToken();
@@ -25,27 +24,12 @@ module.exports = passport => {
         .catch(err=>console.log(err));
     })
   );
-  passport.use('diag_admin',
+  passport.use('world',
     new JWTStrategy(opts, (jwt_payload, done) => {
       User.findById(jwt_payload.id)
         .then(user => {
           if(user) {
-            if(user.role==='diag_admin') {
-              return done(null,user);
-            } else {
-              return done(null,false);
-            }          }
-          return done(null,false);
-        })
-        .catch(err=>console.log(err));
-    })
-  );
-  passport.use('diag',
-    new JWTStrategy(opts, (jwt_payload, done) => {
-      User.findById(jwt_payload.id)
-        .then(user => {
-          if(user) {
-            if(user.role==='diag') {
+            if(user.role==='world') {
               return done(null,user);
             } else {
               return done(null,false);
@@ -70,24 +54,12 @@ module.exports = passport => {
         .catch(err=>console.log(err));
     })
   );
-  passport.use('all',
+  passport.use('all_lvpei',
     new JWTStrategy(opts, (jwt_payload, done) => {
       User.findById(jwt_payload.id)
         .then(user => {
           if(user) {
-            return done(null,user);
-          }
-          return done(null,false);
-        })
-        .catch(err=>console.log(err));
-    })
-  );
-  passport.use('all_diag',
-    new JWTStrategy(opts, (jwt_payload, done) => {
-      User.findById(jwt_payload.id)
-        .then(user => {
-          if(user) {
-            if(user.role==='diag' || user.role === 'diag_admin') {
+            if(user.role==='lvpei' || user.role === 'super_admin') {
               return done(null,user);
             } else {
               return done(null,false);
@@ -102,11 +74,23 @@ module.exports = passport => {
       User.findById(jwt_payload.id)
         .then(user => {
           if(user) {
-            if(user.role==='diag' || user.role === 'diag_admin' || user.role === 'lvpei') {
+            if(user.role==='lvpei' || user.role === 'world') {
               return done(null,user);
             } else {
               return done(null,false);
             }          }
+          return done(null,false);
+        })
+        .catch(err=>console.log(err));
+    })
+  );
+  passport.use('all',
+    new JWTStrategy(opts, (jwt_payload, done) => {
+      User.findById(jwt_payload.id)
+        .then(user => {
+          if(user) {
+            return done(null,user);
+          }
           return done(null,false);
         })
         .catch(err=>console.log(err));

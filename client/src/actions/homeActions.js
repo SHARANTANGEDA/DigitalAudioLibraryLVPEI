@@ -7,7 +7,7 @@ import {
   GET_FILES,
   GET_FILES_SINGLE_FOLDER, GET_NAME_RESULTS,
   GET_PATIENTS_HOME,
-  GET_SA_HOME, GET_SEARCH_ERRORS,
+  GET_SA_HOME,
   GET_SEARCH_RESULTS,
   HOME_LOADING,
   NO_FILES,
@@ -16,24 +16,21 @@ import {
   SEARCH_LOADING,
   VIEW_LOADING
 } from './types'
-
-// export const getDetails = (userData) => dispatch => {
-//   homeLoading()
-//   axios.post('/api/users/enterName', userData)
-//     .then(res => {
-//       dispatch({
-//         type: GET_DETAILS,
-//         payload: res.data
-//       })
-//       window.location.href='/uploadMultipleFiles'
-//     }).catch(err =>
-//     dispatch({
-//       type: ON_POST_FAIL,
-//       payload: null
-//     })
-//   )
-// };
-
+export const getWorldHome = () => dispatch => {
+  dispatch(setLoading())
+  dispatch(homeLoading())
+  axios.get('/api/users/home').then(res => {
+    dispatch({
+      type: GET_PATIENTS_HOME,
+      payload: res.data
+    })
+  }).catch(err =>
+    dispatch({
+      type: NO_FILES,
+      payload: err.data
+    })
+  )
+}
 export const getSADetails = () => dispatch => {
   dispatch(homeLoading())
   axios.get('/api/superAdmin/home',)
@@ -85,16 +82,6 @@ export const deletePatient = (id) => dispatch => {
   )
 }
 
-// export const downloadFile = (id)=> async dispatch => {
-//   axios.get(`/api/upload/downloadFile/${id}`,{responseType: 'blob'}).then(res => {
-//     saveAs(new Blob([res.data],{type: "octet/stream"}),id)
-//   }).catch(err =>
-//     dispatch({
-//       type: NO_FILES,
-//       payload: err.data
-//     })
-//   );
-// }
 export const downloadFile = (id) => dispatch => {
   axios.get(`/api/upload/downloadFile/${id}`, { responseType: 'blob' }).then(res => {
     const url = window.URL.createObjectURL(new Blob([res.data], { type: 'octet/stream' }))
@@ -104,12 +91,6 @@ export const downloadFile = (id) => dispatch => {
     link.setAttribute('download', id.substr(id.lastIndexOf(';') + 1, id.length))
     document.body.appendChild(link)
     link.click()
-    // console.log('download in progress')
-
-    // dispatch({
-    //   type: GET_IMAGE,
-    //   payload: res.data
-    // })
   }).catch(err =>
     dispatch({
       type: NO_FILES,
@@ -121,7 +102,6 @@ export const downloadFile = (id) => dispatch => {
 export const downloadFolder = (id) => dispatch => {
   console.log('In download folder')
   axios.get(`/api/upload/downloadFolder/${id}`, { responseType: 'blob' }).then(res => {
-    console.log(res)
     const url = window.URL.createObjectURL(new Blob([res.data]))
     const link = document.createElement('a')
     console.log(url)
@@ -130,7 +110,6 @@ export const downloadFolder = (id) => dispatch => {
     document.body.appendChild(link)
     link.click()
     window.location.href = '/dashboard'
-
   }).catch(err =>
     dispatch({
       type: NO_FILES,
@@ -139,7 +118,7 @@ export const downloadFolder = (id) => dispatch => {
   )
 }
 
-export const getHomeFolders = (id) => dispatch => {
+export const getAudioBook = (id) => dispatch => {
   dispatch(setLoading())
   dispatch(homeLoading())
   axios.get(`/api/upload/folders/${id}`).then(res => {
@@ -152,6 +131,41 @@ export const getHomeFolders = (id) => dispatch => {
       type: NO_FILES,
       payload: err.data
     })
+  )
+}
+
+export const favourite=(id) => dispatch => {
+  axios.get(`/api/upload/favourite/${id}`)
+    .then(res => {
+
+    }).catch(err =>
+    console.log(err)
+  )
+}
+
+export const unFavourite=(id) => dispatch => {
+  axios.get(`/api/upload/unFavourite/${id}`)
+    .then(res => {
+
+    }).catch(err =>
+    console.log(err)
+  )
+}
+export const addRating = (id, rating) => dispatch => {
+  axios.get(`/api/upload/addRating/${id}/${rating}`)
+    .then(res => {
+
+    }).catch(err =>
+    console.log(err)
+  )
+}
+
+export const changeRating = (id, rating) => dispatch => {
+  axios.get(`/api/upload/changeRating/${id}/${rating}`)
+    .then(res => {
+
+    }).catch(err =>
+    console.log(err)
   )
 }
 
@@ -198,21 +212,6 @@ export const getNameResults = (data) => dispatch => {
     //   type: GET_SEARCH_ERRORS,
     //   payload: err.data
     // })
-  )
-}
-export const getAllPatients = () => dispatch => {
-  dispatch(setLoading())
-  dispatch(homeLoading())
-  axios.get('/api/upload/patientsFolders').then(res => {
-    dispatch({
-      type: GET_PATIENTS_HOME,
-      payload: res.data
-    })
-  }).catch(err =>
-    dispatch({
-      type: NO_FILES,
-      payload: err.data
-    })
   )
 }
 

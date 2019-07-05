@@ -8,23 +8,22 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="@types/axios-case-converter" level="application" />
+    <orderEntry type="library" name="@types/axios-token-interceptor" level="application" />
+    <orderEntry type="library" name="@types/bcryptjs" level="application" />
     <orderEntry type="library" name="@types/body-parser" level="application" />
+    <orderEntry type="library" name="@types/create-react-class" level="application" />
     <orderEntry type="library" name="@types/express" level="application" />
-    <orderEntry type="library" name="@types/validator" level="application" />
     <orderEntry type="library" name="@types/jsonwebtoken" level="application" />
     <orderEntry type="library" name="@types/mongoose" level="application" />
-    <orderEntry type="library" name="@types/axios-token-interceptor" level="application" />
-    <orderEntry type="library" name="@types/axios-case-converter" level="application" />
-    <orderEntry type="library" name="@types/passport" level="application" />
-    <orderEntry type="library" name="@types/bcryptjs" level="application" />
     <orderEntry type="library" name="@types/nodemailer" level="application" />
+    <orderEntry type="library" name="@types/passport" level="application" />
+    <orderEntry type="library" name="@types/passport-google-oauth" level="application" />
     <orderEntry type="library" name="@types/react" level="application" />
-    <orderEntry type="library" name="@types/create-react-class" level="application" />
     <orderEntry type="library" name="@types/react-app" level="application" />
     <orderEntry type="library" name="@types/react-autocomplete" level="application" />
     <orderEntry type="library" name="@types/react-bootstrap" level="application" />
-    <orderEntry type="library" name="@types/passport-google-oauth" level="application" />
-    <orderEntry type="library" name="@types/chartist" level="application" />
     <orderEntry type="library" name="@types/sequelize" level="application" />
+    <orderEntry type="library" name="@types/validator" level="application" />
   </component>
 </module>

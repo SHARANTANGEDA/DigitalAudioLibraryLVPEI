@@ -5,15 +5,15 @@ import setAuthToken from './utils/setAuthToken'
 import { logoutUser, setCurrentUser } from './actions/authActions'
 import { Provider } from 'react-redux'
 import store from './store'
-import Footer from './components/layout/Footer'
 import NavBar from './components/layout/NavBar'
 import Landing from './components/layout/Landing'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
-import Sidebar from './components/layout/Sidebar'
 import ContactUs from './components/common/ContactUs'
 
 import Routes from './components/common/Routes/Routes'
+import Login from './components/layout/Login'
+import Register from './components/layout/Register'
 
 
 //Check for token
@@ -37,7 +37,9 @@ class App extends Component {
         <NavBar/>
         <Switch>
         <Route exact path="/" component={Landing}/>
-        <Route exact path='/contactUs' component={ContactUs}/>
+          <Route exact path='/login' component={Login}/>
+          <Route exact path='/register' component={Register}/>
+          <Route exact path='/contactUs' component={ContactUs}/>
           <Route component={Routes}/>
         </Switch>
         {/*<Footer/>*/}

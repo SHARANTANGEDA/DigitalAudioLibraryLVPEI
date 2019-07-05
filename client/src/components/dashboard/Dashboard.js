@@ -1,19 +1,14 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { getAllPatients, getDiagUserHome, getSADetails } from '../../actions/homeActions'
-import TextFieldGroup from '../common/TextFieldGroup'
+import { getSADetails } from '../../actions/homeActions'
 import Spinner from '../common/Spinner'
-import SADashboard from '../SuperAdmin/SADashboard'
-import { continueToUpload, deleteResidual, getDAHome, getPatientDetails } from '../../actions/dAActions'
-import Modal from 'react-modal'
-import ShowTable from '../SuperAdmin/tableDisplay/ShowTable'
-import UploadFiles from '../upload/UploadFiles'
-import LVPEIHomeFeed from './LVPEIHomeFeed'
-import classnames from 'classnames'
+import Card from '@material-ui/core/Card'
+import TableItem from '../PublicHome/Single/TableItem'
 import Select from 'react-select'
-import Card from 'react-bootstrap/Card'
-import SearchBar from './SearchBar'
+import { Link } from 'react-router-dom'
+import { getAllBooks } from '../../actions/authActions'
+import Warning from '../layout/Warning'
 
 const customStyles = {
   content: {
@@ -34,12 +29,13 @@ class Dashboard extends Component {
       errors: {},
       modalIsOpen: false,
       uploadModal: false,
-      category: { value: 'all', label: 'Choose Time' },
+      category: { value: 'all', label: 'Choose book Category to filter' },
       campusCode: { value: 'all', label: 'Choose Campus' },
-      showPatient: null
+      currentPage: 1,
+      todosPerPage: 25,
+      filter: null
     }
     this.changeHandler = this.changeHandler.bind(this)
-    this.onSubmit = this.onSubmit.bind(this)
     this.openModal = this.openModal.bind(this)
     this.afterOpenModal = this.afterOpenModal.bind(this)
     this.closeModal = this.closeModal.bind(this)
@@ -47,19 +43,14 @@ class Dashboard extends Component {
     this.openNextModal = this.openNextModal.bind(this)
     this.onDiscard = this.onDiscard.bind(this)
     this.onSelectType = this.onSelectType.bind(this)
-    this.onConfirmSelect = this.onConfirmSelect.bind(this)
     this.codeSelect = this.codeSelect.bind(this)
   }
 
   componentDidMount () {
-    if (this.props.auth.user.role === 'lvpei') {
-      this.props.getAllPatients(this.props.match.params.id)
-    } else if (this.props.auth.user.role === 'super_admin') {
+    if (this.props.auth.user.role === 'super_admin' || this.props.auth.user.role === 'lvpei') {
       this.props.getSADetails(this.props.match.params.id)
-    } else if (this.props.auth.user.role === 'diag_admin') {
-      this.props.getDAHome(this.props.match.params.id)
-    } else if(this.props.auth.user.role === 'diag') {
-      this.props.getDiagUserHome(this.props.match.params.id)
+    }else if(this.props.auth.user.role === 'world') {
+      this.props.getAllBooks(this.props.match.params.id)
     }
   }
 
@@ -99,455 +90,410 @@ class Dashboard extends Component {
     this.setState({ [e.target.name]: e.target.value })
   }
 
-  onSubmit (e) {
-    e.preventDefault()
-    this.setState({ modalIsOpen: true })
-    const userData = {
-      patient: this.state.patient
-    }
-    console.log({ user: userData })
-    if (this.state.patient.length !== 0) {
-      console.log({ len: 'not zero' })
-      // this.props.getDetails(userData);
-      this.props.getPatientDetails(userData)
-      this.setState({ patient: userData.patient })
-    } else {
-      this.setState({ errors: { patient: 'Please enter the MR No' }, patient: '' })
-    }
-  }
   onSelectType (e) {
     this.setState({category: e})
   }
   codeSelect(e) {
     this.setState({campusCode: e})
   }
-  onConfirmSelect (e) {
-    if(this.state.category.value==='all') {
-      this.setState({showPatient: this.props.folder.patients.all})
-    } else if(this.state.category.value==='today') {
-      this.setState({showPatient: this.props.folder.patients.today})
-      console.log({NEWSTATE:  this.props.folder.patients.today})
-    }else if(this.state.category.value==='yesterday') {
-      this.setState({showPatient: this.props.folder.patients.yesterday})
 
-    }else if(this.state.category.value==='lastweek') {
-      this.setState({showPatient: this.props.folder.patients.lastweek})
-
-    }else if(this.state.category.value==='lastMonth') {
-      this.setState({showPatient: this.props.folder.patients.lastMonth})
-
-    }else if(this.state.category.value==='earlier') {
-      this.setState({showPatient: this.props.folder.patients.previous})
-
-    }
-  }
   render () {
-    const { errors, category,campusCode } = this.state
-    if (this.props.auth.user.role === 'lvpei') {
-      const { loading, notFound, patients } = this.props.folder
-      let allFoldersContent
-      if (loading || patients===null) {
-        allFoldersContent = <Spinner/>
-      } else {
-        if (notFound) {
-          allFoldersContent = (
-            <div>
-              <p>Nothing is uploaded yet, please check back later</p>
-            </div>
-          )
-        } else {
-          if(this.state.showPatient === null) {
-            allFoldersContent = (
-              <LVPEIHomeFeed patients={this.props.folder.patients.all} campusCode={this.state.campusCode.value}/>
-            )
-          }else {
-            console.log({'HELLO':this.state.showPatient})
-            allFoldersContent = (
-              <LVPEIHomeFeed patients={this.state.showPatient} campusCode={this.state.campusCode.value}/>
-            )
-          }
-
-        }
-      }
-      return (
-        <div className="display ">
-          <div className='App-content row d-flex justify-content-center'>
-            <nav className='navbar navbar-expand-sm  col-md-12' style={{background:'#ffa726', width:'100%'}}>
-              <div className='row col-md-8 d-flex justify-content-start'>
-                <div className='col-md-4'>
-                  <Select options={[{ value: 'all', label: 'All' },{value:'today', label: 'today'},
-                    {value:'yesterday', label: 'yesterday'},
-                    {value: 'lastweek', label: 'Last Week'}, {value: 'lastMonth', label: 'Last Month'},
-                    {value: 'earlier', label: 'earlier'}]} className={classnames('isSearchable',
-                    { 'is-invalid': errors.category })}
-                          placeholder="Category"
-                          name="category" value={category} onChange={this.onSelectType}>
-                  </Select>
-                </div>
-                <button onClick={this.onConfirmSelect} className="input-group-text cyan lighten-2">
-                  <i className="fas fa-search text-grey" aria-hidden="true"/>
-                </button>
-                <div className='col-md-4'>
-                  <Select
-                    options={[{ value: 'all', label: 'All' },{ value: 'KAR', label: 'KAR' },
-                      { value: 'KVC', label: 'KVC' }, { value: 'GMRV', label: 'GMRV' }, { value: 'MTC', label: 'MTC' }]}
-                    className={classnames('isSearchable', { 'is-invalid': errors.campusCode })}
-                    placeholder="Campus Code"
-                    name="campusCode" value={campusCode} onChange={this.codeSelect}>
-                  </Select>
-                </div>
-
-              </div>
-              <SearchBar/>
-            </nav>
-          </div>
-
-          <div className="App-content row d-flex justify-content-center">
-
-              {/*<h1 className="grid--cell fl1 fs-headline1 text-center" style={{*/}
-              {/*  color: 'black'*/}
-              {/*}}> Welcome to L V Prasad Cloud</h1>*/}
-          </div>
-
-
-            {allFoldersContent}
-          </div>
-      )
-    } else if (this.props.auth.user.role === 'super_admin') {
+    if (this.props.auth.user.role === 'lvpei' || this.props.auth.user.role === 'super_admin') {
       const { loading, home } = this.props.home
-      let showContent
+      let showContent=null
       if (loading || home === null) {
         showContent = <Spinner/>
       } else {
-        showContent = <SADashboard home={home}/>
-      }
-      return (
-        <div className='dashboard' style={{width: '100%', minHeight:'100%'}}>
-          {showContent}
-
-        </div>
-      )
-    } else if (this.props.auth.user.role === 'diag_admin' || this.props.auth.user.role === 'diag') {
-      const { loading, home } = this.props.home
-      let showContent, showModal,
-        showForm = (
-          <div className="col-md-8" style={{ width: '100%' }}>
-            <h4 className='text-center' style={{
-              borderStyle: 'solid', borderWidth: '2px', background: 'green',
-              color: 'white', borderRadius: '2px'
-            }}>Enter Patient MR No to upload files</h4>
-
-            <form noValidate onSubmit={this.onSubmit}>
-              <TextFieldGroup placeholder="Enter Patient MR.No" error={errors.patient}
-                              type="text" onChange={this.changeHandler} value={this.state.patient} name="patient"
-              />
-              <input type="submit" className="btn btn-info btn-block mt-4"/>
-            </form>
-          </div>
-        )
-      if (this.props.auth.user.role === 'diag_admin') {
-        if (loading || home === null) {
-          showContent = <Spinner/>
-        } else {
-          console.log(home.users)
-          if(home.users===null || home.details ===null) {
-            showContent = <Spinner/>
-          } else{
-            showContent = (
-              <div className='row'>
-                <div className='row'>
-                  <div className="grid text-center col-md-12">
-                    <h1 className="grid--cell fl1 fs-headline1 text-center" style={{
-                      color: 'black'
-                    }}>L V Prasad Cloud</h1>
+        console.log({home: home})
+        let { lvpei, world, school1, inter,
+          school2,ug, law,psy,pg, ce, eg, cs, reg, ot, all} = home
+        showContent = (
+          <div className=' ' style={{minWidth:'100%', minHeight:'100%'}}>
+            <div className='row d-flex justify-content-between' style={{margin: '5px'}}>
+              <Card style={{
+                backgroundColor: '#f44336', marginRight: '20px', padding:'5px', minWidth:'250px'//, maxHeight:
+                // '100px',
+                // maxWidth:
+                // '250px'
+              }}>
+                <div className='row d-flex justify-content-between'>
+                  <div className=' col-md-8'>
+                    <p style={{ color: 'white' }}>LVPEI Users</p>
+                    <img style={{width:'auto'}} src={require('../../img/SAIcons/doctor.png')} alt=''/>
                   </div>
-                  <div className='row col-md-12 d-flex justify-content-around'>
-                    <Card style={{
-                      backgroundColor: '#ffa726', marginRight: '20px', padding:'5px', minWidth:'250px'
-                    }}>
-                      <div className='row d-flex justify-content-between'>
-                        <div className=' col-md-8'>
-                          <p style={{ color: 'white' }}>Users</p>
-                          <img style={{width:'auto'}} src={require('../../img/SAIcons/centerUser.png')} alt=''/>
-                        </div>
-                        <div className='d-flex justify-content-end col-md-4'>
-                          <h1 style={{ color: 'white', fontWeight: 'bold' }}>
-                            {home.users.length}
-                          </h1>
-                        </div>
-                      </div>
-                    </Card>
-                    <Card style={{
-                      backgroundColor: '#4caf50', marginRight: '20px', padding:'5px', minWidth:'250px'
-                    }}>
-                      <div className='row d-flex justify-content-between'>
-                        <div className=' col-md-8'>
-                          <p style={{ color: 'white' }}>My Uploads</p>
-                          <img style={{width:'auto'}} src={require('../../img/SAIcons/patient.png')} alt=''/>
-                        </div>
-                        <div className='d-flex justify-content-end col-md-4'>
-                          <h1 style={{ color: 'white', fontWeight: 'bold' }}>
-                            {home.myUploads}
-                          </h1>
-                        </div>
-                      </div>
-                    </Card>
-                    <Card style={{
-                      backgroundColor: '#f44336', marginRight: '20px', padding:'5px', minWidth:'250px'
-                    }}>
-                      <div className='row d-flex justify-content-between'>
-                        <div className=' col-md-8'>
-                          <p style={{ color: 'white' }}>Centre Uploads</p>
-                          <img style={{width:'auto'}} src={require('../../img/SAIcons/patient.png')} alt=''/>
-                        </div>
-                        <div className='d-flex justify-content-end col-md-4'>
-                          <h1 style={{ color: 'white', fontWeight: 'bold' }}>
-                            {home.totalUploads}
-                          </h1>
-                        </div>
-                      </div>
-                    </Card>
+                  <div className='d-flex justify-content-end col-md-4'>
+                    <h1 style={{ color: 'white', fontWeight: 'bold' }}>
+                      {lvpei.length}
+                    </h1>
                   </div>
-
-                  <div className='row col-md-12'>
-                    <div className="table-wrapper-scroll-y my-custom-scrollbar col-md-12">
-                      <h3 className='text-center' style={{
-                        borderStyle: 'solid', borderWidth: '2px', background: 'green',
-                        color: 'white'
-                        , borderRadius: '2px'
-                      }}>Users in Your Organization</h3>
-                      <table className="table table-bordered table-striped mb-0">
-                        <thead>
-                        <tr>
-                          <th scope="col" style={{fontSize:'10pt'}}>Username</th>
-                          <th scope="col" style={{fontSize:'10pt'}} >Full Name</th>
-                          <th scope="col" style={{fontSize:'10pt'}}>Created On</th>
-                          <th scope='col' style={{fontSize:'10pt'}}>Total Uploads</th>
-                          <th scope="col" style={{fontSize:'10pt'}} >Edit</th>
-                          <th scope="col" style={{fontSize:'10pt'}} >Manage</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <ShowTable data={home.users} index={{ type: 'manageDiagUser' }}/>
-                        </tbody>
-                      </table>
+                </div>
+              </Card>
+              <Card style={{
+                backgroundColor: '#00acc1', marginRight: '20px', padding:'5px', minWidth:'255px' }}>
+                <div className='row d-flex justify-content-between'>
+                  <div className=' col-md-8'>
+                    <p style={{ color: 'white' }}>Users across world</p>
+                    <img style={{width:'50px', maxHeight:'50px'}} src={require('../../img/SAIcons/customers.png')} alt=''/>
+                  </div>
+                  <div className='d-flex justify-content-end col-md-4'>
+                    <h1 style={{ color: 'white', fontWeight: 'bold' }}>
+                      {world.length}
+                    </h1>
+                  </div>
+                </div>
+              </Card>
+              <Card style={{
+                backgroundColor: '#4caf50', marginRight: '20px', padding:'5px', minWidth:'250px'
+              }}>
+                <div className='row d-flex justify-content-between'>
+                  <div className=' col-md-8'>
+                    <p style={{ color: 'white' }}>Total Books</p>
+                    <img style={{width:'auto'}} src={require('../../img/SAIcons/centerUser.png')} alt=''/>
+                  </div>
+                  <div className='d-flex justify-content-end col-md-4'>
+                    <h1 style={{ color: 'white', fontWeight: 'bold' }}>
+                      {all.length}
+                    </h1>
+                  </div>
+                </div>
+              </Card>
+            </div>
+            <div style={{
+              backgroundColor: '#d4d4d4', marginRight: '20px', padding:'5px', minWidth:'250px' }}
+                 className='row  d-flex justify-content-between'>
+              <div className='col-6 col-md-3'>
+                <Card style={{ color: 'black',
+                  margin: '5px', padding:'5px', minWidth:'250px', height:'100px'
+                }}>
+                  <div className='row'>
+                    <div className='d-flex justify-content-start col-md-9'>
+                      <p >School (I – V)</p>
+                    </div>
+                    <div className='d-flex justify-content-end col-md-3 pull-right'>
+                      <h1 style={{fontWeight: 'bold' }}>
+                        {school1.length}
+                      </h1>
                     </div>
                   </div>
-                </div>
-              </div>
-            )
-          }
-        }
-      } else if (this.props.auth.user.role === 'diag') {
-        const {loading4, diagUserHome} = this.props.home
-        if(loading4 || diagUserHome===null) {
-          showContent= (
-            <Spinner/>
-          )
-        }else {
-          showContent = (
-            <div className='row d-flex justify-content-center'>
-              <div className=" grid text-center col-md-12">
-                <h1 className="grid--cell fl1 fs-headline1 text-center" style={{
-                  color: 'black'
-                }}> Welcome to L V Prasad MRI Cloud</h1>
-              </div>
-              <div className='row col-md-12 d-flex justify-content-center'>
-                <div className='row col-md-6 d-flex justify-content-around' style={{}}>
-                  <div className='row'>
-                    <Card style={{margin:'10px',
-                      backgroundColor: '#4caf50', marginRight: '20px', padding:'5px', minWidth:'250px'
-                    }}>
-                      <div className='row d-flex justify-content-between'>
-                        <div className=' col-md-8'>
-                          <p style={{ color: 'white' }}>My Uploads</p>
-                          <img style={{width:'auto'}} src={require('../../img/SAIcons/patient.png')} alt=''/>
-                        </div>
-                        <div className='d-flex justify-content-end col-md-4'>
-                          <h1 style={{ color: 'white', fontWeight: 'bold' }}>
-                            {diagUserHome.myUploads}
-                          </h1>
-                        </div>
-                      </div>
-                    </Card>
+                </Card>
+                <Card  style={{
+                  color: 'black', margin: '5px', padding:'5px', minWidth:'250px', height:'100px'}}>
+                  <div className='row d-flex justify-content-between'>
+                    <div className=' col-md-8'>
+                      <p >School (VI – X)</p>
+                    </div>
+                    <div className='d-flex justify-content-end col-md-4'>
+                      <h1 style={{fontWeight: 'bold' }}>
+                        {school2.length}
+                      </h1>
+                    </div>
                   </div>
-                  <div className='row'>
-                    <Card style={{margin:'10px',
-                      backgroundColor: '#f44336', marginRight: '20px', padding:'5px', minWidth:'250px'
-                    }}>
-                      <div className='row d-flex justify-content-between'>
-                        <div className=' col-md-8'>
-                          <p style={{ color: 'white' }}>Centre Uploads</p>
-                          <img style={{width:'auto'}} src={require('../../img/SAIcons/patient.png')} alt=''/>
-                        </div>
-                        <div className='d-flex justify-content-end col-md-4'>
-                          <h1 style={{ color: 'white', fontWeight: 'bold' }}>
-                            {diagUserHome.totalUploads}
-                          </h1>
-                        </div>
-                      </div>
-                    </Card>
+                </Card>
+                <Card  style={{
+                  color: 'black', margin: '5px', padding:'5px', minWidth:'250px', height:'100px'
+                }}>
+                  <div className='row d-flex justify-content-between'>
+                    <div className=' col-md-8'>
+                      <p >Intermediate (XI & XII)</p>
+                    </div>
+                    <div className='d-flex justify-content-end col-md-4'>
+                      <h1 style={{fontWeight: 'bold' }}>
+                        {inter.length}
+                      </h1>
+                    </div>
                   </div>
-                </div>
-                <div className='row d-flex justify-content-center col-md-6'>
-                  {showForm}
-                </div>
+                </Card>
+              </div>
+              <div className='col-6 col-md-3'>
+                <Card  style={{color: 'black', margin: '5px', padding:'5px', minWidth:'250px'
+                  , height:'100px'}}>
+                  <div className='row d-flex justify-content-between'>
+                    <div className=' col-md-8'>
+                      <p >Undergraduate</p>
+                    </div>
+                    <div className='d-flex justify-content-end col-md-4'>
+                      <h1 style={{fontWeight: 'bold' }}>
+                        {ug.length}
+                      </h1>
+                    </div>
+                  </div>
+                </Card>
+                <Card  style={{color: 'black', margin: '5px', padding:'5px', minWidth:'250px'
+                  , height:'100px'}}>
+                  <div className='row d-flex justify-content-between'>
+                    <div className=' col-md-8'>
+                      <p >Postgraduate</p>
+                    </div>
+                    <div className='d-flex justify-content-end col-md-4'>
+                      <h1 style={{fontWeight: 'bold' }}>
+                        {pg.length}
+                      </h1>
+                    </div>
+                  </div>
+                </Card>
+                <Card  style={{color: 'black', margin: '5px', padding:'5px', minWidth:'250px'
+                  , height:'100px'}}>
+                  <div className='row d-flex justify-content-between'>
+                    <div className=' col-md-8'>
+                      <p >Law</p>
+                    </div>
+                    <div className='d-flex justify-content-end col-md-4'>
+                      <h1 style={{ fontWeight: 'bold' }}>
+                        {law.length}
+                      </h1>
+                    </div>
+                  </div>
+                </Card>
+              </div>
+              <div className='col-6 col-md-3'>
+                <Card  style={{color: 'black', margin: '5px', padding:'5px', minWidth:'250px'
+                  , height:'100px'}}>
+                  <div className='row d-flex justify-content-between'>
+                    <div className=' col-md-8'>
+                      <p >Psychology</p>
+                    </div>
+                    <div className='d-flex justify-content-end col-md-4'>
+                      <h1 style={{fontWeight: 'bold' }}>
+                        {psy.length}
+                      </h1>
+                    </div>
+                  </div>
+                </Card>
+                <Card  style={{color: 'black', margin: '5px', padding:'5px', minWidth:'250px'
+                  , height:'100px'}}>
+                  <div className='row d-flex justify-content-between'>
+                    <div className=' col-md-8'>
+                      <p >Competitive Exam</p>
+                    </div>
+                    <div className='d-flex justify-content-end col-md-4'>
+                      <h1 style={{ fontWeight: 'bold' }}>
+                        {ce.length}
+                      </h1>
+                    </div>
+                  </div>
+                </Card>
+                <Card  style={{color: 'black',margin: '5px', padding:'5px', minWidth:'250px'
+                  , height:'100px'}}>
+                  <div className='row d-flex justify-content-between'>
+                    <div className=' col-md-8'>
+                      <p >English Grammar</p>
+                    </div>
+                    <div className='d-flex justify-content-end col-md-4'>
+                      <h1 style={{fontWeight: 'bold' }}>
+                        {eg.length}
+                      </h1>
+                    </div>
+                  </div>
+                </Card>
+              </div>
+              <div className='col-6 col-md-3' >
+                <Card  style={{color: 'black', margin: '5px', padding:'5px', minWidth:'250px'
+                  , height:'100px'}}>
+                  <div className='row d-flex justify-content-between'>
+                    <div className=' col-md-8'>
+                      <p >Children Stories</p>
+                    </div>
+                    <div className='d-flex justify-content-end col-md-4'>
+                      <h1 style={{ fontWeight: 'bold' }}>
+                        {cs.length}
+                      </h1>
+                    </div>
+                  </div>
+                </Card>
+                <Card  style={{color: 'black', margin: '5px', padding:'5px', minWidth:'250px'
+                  , height:'100px'}}>
+                  <div className='row d-flex justify-content-between'>
+                    <div className=' col-md-8'>
+                      <p >Religious</p>
+                    </div>
+                    <div className='d-flex justify-content-end col-md-4'>
+                      <h1 style={{fontWeight: 'bold' }}>
+                        {reg.length}
+                      </h1>
+                    </div>
+                  </div>
+                </Card>
+                <Card style={{color: 'black', margin: '5px', padding:'5px', minWidth:'250px'
+                  , height:'100px'}}>
+                  <div className='row d-flex justify-content-between'>
+                    <div className=' col-md-8'>
+                      <p >Others</p>
+                    </div>
+                    <div className='d-flex justify-content-end col-md-4'>
+                      <h1 style={{ fontWeight: 'bold' }}>
+                        {ot.length}
+                      </h1>
+                    </div>
+                  </div>
+                </Card>
               </div>
             </div>
-          )
-        }
-      }
 
-      if (!this.state.uploadModal) {
-        const { loading2, patientData } = this.props.home
-        if (loading2 || patientData === null) {
-          showModal = <Spinner/>
-        } else {
-          if (patientData.invalid) {
-            showModal = (
-              <div id="mainbar" className='row d-flex justify-content-center'>
-                <div className="grid text-center col-md-10">
-                  <h3 className="grid--cell fl1 fs-headline1 text-center" style={{
-                    color: 'black'
-                  }}> Patient Details</h3>
-                </div>
-                <div className='col-md-2'>
-                  <button onClick={this.closeFlushModal}
-                          style={{ borderStyle: 'none', background: 'white', color: 'red' }}
-                  ><i className="fa fa-times fa-2x" aria-hidden="true"/>
+          </div>
+        )
+      }
+          return (
+            <div>
+              {showContent}
+              <footer className="text-white mt-5 p-4 text-center" style={{ height:'40px ',left:0,
+                bottom:0,background:'#008cff',
+                right:0}}>
+                Copyright &copy; {new Date().getFullYear()} L V Prasad Eye Institute
+              </footer>
+            </div>
+          )
+    }else if(this.props.auth.user.role==='world') {
+      let categoryArray=[{value:'all', label: 'all'},{value: 'School (I – V)', label: 'School (I – V)'},
+        {value: 'School (VI – X)', label: 'School (VI – X)'},
+        {value: 'Intermediate (XI & XII)', label: 'Intermediate (XI & XII)'},
+        {value: 'Undergraduate', label: 'Undergraduate'},
+        {value: 'Postgraduate', label: 'P`ostgraduate'},
+        {value: 'Law', label: 'Law'},
+        {value: 'Psychology', label: 'Psychology'},
+        {value: 'Competitive Exam', label: 'Competitive Exam'},
+        {value: 'English Grammar', label: 'English Grammar'},
+        {value: 'Children Stories', label: 'Children Stories'},
+        {value: 'Religious', label: 'Religious'},
+        {value: 'Other', label: 'Other'}]
+      const {loading, land} = this.props.auth
+      const {  currentPage, todosPerPage } = this.state;
+      const indexOfLastTodo = currentPage * todosPerPage;
+      const indexOfFirstTodo = indexOfLastTodo - todosPerPage;
+      const pageNumbers = [];
+      let allFoldersContent, heading, renderpn;
+      if (loading || land===null) {
+        allFoldersContent = (<Spinner/>)
+      } else {
+        if(land.all.length===0) {
+          allFoldersContent = (
+            <h5>Nothing is uploaded yet, please check back later</h5>
+          )
+          heading=null
+        }else {
+          // allFoldersContent = (
+          heading = null
+
+          if(this.state.category===null || this.state.category.value==='all') {
+            const currentFolder = land.all.slice(indexOfFirstTodo, indexOfLastTodo);
+            const render = (  currentFolder.map(land => (
+              <TableItem folder={land} key={land._id}/>
+            )))
+            for (let i = 1; i <= Math.ceil(land.all.length / todosPerPage); i++) {
+              pageNumbers.push(i);
+            }
+            const renderPageNumbers = (
+              pageNumbers.map(number => {
+                return (
+                  <button className='page-item page-link'
+                          key={number}
+                          id={number}
+                          onClick={this.handleClick}
+                  >
+                    {number}
                   </button>
-                </div>
-                <p style={{ color: 'red', fontStyle: 'italic' }}>You have entered invalid MR number</p>
-                <div className="col-md-6 text-center" style={{ width: '100%' }}>
-                  <button onClick={this.closeFlushModal} className='btn btn-warning'>Close</button>
-                </div>
-              </div>
+                );
+              }))
+            allFoldersContent=render
+            renderpn = (
+              <nav aria-label="...">
+                <ul className="pagination pagination-sm">
+                  {renderPageNumbers}
+                </ul>
+              </nav>
+
             )
 
           } else {
-            showModal = (
-              <div id="mainbar" className='row d-flex justify-content-center'>
-                <div className="grid text-center col-md-10">
-                  <h3 className="grid--cell fl1 fs-headline1 text-center" style={{
-                    color: 'black'
-                  }}> Confirm Details before upload</h3>
-                </div>
-                <div className='col-md-2'>
-                  <button onClick={this.closeModal} style={{ borderStyle: 'none', background: 'white', color: 'red' }}
-                  ><i className="fa fa-times fa-2x" aria-hidden="true"/>
-                  </button>
-                </div>
-                <div className="col-md-12" style={{ width: '100%' }}>
-                  <div className='row'>
-                    <div className='col-md-5 d-flex justify-content-between' style={{borderStyle:'groove', margin:'5px'}}>
-                      <td><h6 style={{color: 'grey',opacity:'0.9'}}>First Name:</h6></td>
-                      <td><h6>{patientData.patient.firstName}</h6></td>
-                    </div>
-                    <div className='col-md-5 d-flex justify-content-between' style={{borderStyle:'groove', margin:'5px'}}>
-                      <td><h6 style={{color: 'grey',opacity:'0.9'}}>Last Name:</h6></td>
-                      <td><h6>{patientData.patient.lastName}</h6></td>
-                    </div>
-                  </div>
-                  <div className='row' >
-                    <div className='col-md-5 d-flex justify-content-between' style={{borderStyle:'groove', margin:'5px'}}>
-                      <td><h6 style={{color: 'grey',opacity:'0.9'}}>Age/Gender:</h6></td>
-                      <td><h6>{patientData.patient.age+'/'+patientData.patient.gender}</h6></td>
-                    </div>
-                    <div className='col-md-5 d-flex justify-content-between' style={{borderStyle:'groove', margin:'5px'}}>
-                      <td><h6 style={{color: 'grey',opacity:'0.9'}}>CentreCode:</h6></td>
-                      <td><h6>{patientData.patient.address}</h6></td>
-                    </div>
-                  </div>
-                  <div className='row' >
-                    <div className='col-md-5 d-flex justify-content-between' style={{borderStyle:'groove', margin:'5px'}}>
-                      <td><h6 style={{color: 'grey',opacity:'0.9'}}>District:</h6></td>
-                      <td><h6>{patientData.patient.district}</h6></td>
-                    </div>
-                    <div className='col-md-5 d-flex justify-content-between' style={{borderStyle:'groove', margin:'5px'}}>
-                      <td><h6 style={{color: 'grey',opacity:'0.9'}}>State:</h6></td>
-                      <td><h6>{patientData.patient.state}</h6></td>
-                    </div>
-                  </div>
-                  <div className='row' >
-                    <div className='col-md-10 d-flex justify-content-between' style={{borderStyle:'groove', margin:'10px'}}>
-                      <td><h6 style={{color: 'grey',opacity:'0.9'}}>Country:</h6></td>
-                      <td><h6>{patientData.patient.country}</h6></td>
-                    </div>
-                  </div>
+            let newFolders = land.all.filter(folder => folder.category === this.state.category.value.toString())
+            const currentFolder = newFolders.slice(indexOfFirstTodo, indexOfLastTodo);
+            const render = (  currentFolder.map(folder => (
+              <TableItem folder={folder} key={folder._id}/>
+            )))
+            for (let i = 1; i <= Math.ceil(newFolders.length / todosPerPage); i++) {
+              pageNumbers.push(i);
+            }
+            const renderPageNumbers = pageNumbers.map(number => {
+              return (
+                <button className='page-item page-link'
+                        key={number}
+                        id={number}
+                        onClick={this.handleClick}
+                >
+                  {number}
+                </button>
+              );
+            })
+            allFoldersContent=render
+            renderpn = (
+              <nav aria-label="...">
+                <ul className="pagination pagination-sm">
+                  {renderPageNumbers}
+                </ul>
+              </nav>
 
-                  <div className='row d-flex justify-content-around'>
-                    <button onClick={this.openNextModal} className='btn btn-sm'
-                            style={{ background: 'green', color: 'white' }}>Continue to upload
-                    </button>
-                    <button onClick={this.closeFlushModal} className='btn btn-warning'
-                            style={{ background: 'red', color: 'white' }}>discard
-                    </button>
-                  </div>
-
-                </div>
-
-              </div>
             )
           }
         }
-      } else {
-        console.log(this.props.home.patientData)
-        if(this.props.home.patientData.mid===null) {
-          showModal=<Spinner/>
-        }else {
-          showModal = (
-            <div>
-              <UploadFiles/>
-              <div className='row d-flex justify-content-around'>
-                <button onClick={this.onDiscard} className='btn btn-warning'
-                        style={{ background: 'red', color: 'white' }}>discard
-                </button>
-              </div>
-            </div>
-          )
-        }
       }
       return (
-        <div className='dashboard'>
-          {showContent}
-          <div>
-            {/*<button onClick={this.openModal}>Open Modal</button>*/}
-            <Modal
-              isOpen={this.state.modalIsOpen}
-              onAfterOpen={this.afterOpenModal}
-              onRequestClose={this.closeModal}
-              style={customStyles}
-              contentLabel="Patient Data"
-              shouldCloseOnOverlayClick={false}
-              modalOptions={{ dismissible: false }}
-              shouldCloseOnEsc={false}
-              ariaHideApp={false}
-            >{showModal}</Modal>
+        <div>
+          <div className="displayFolder">
+            <div className="App-content row d-flex justify-content-center" >
+              {!this.props.auth.user.verified ? <Warning/>: null}
+              <nav className='navbar navbar-expand-sm justify-content-between col-md-12' style={{ background:'#ffa726', width:'100%', height:'40px'}}>
+                {heading}
+                <div className='col-md-3'>
+                  <Select
+                    options={categoryArray}
+                    className='isSearchable' placeholder="Select a book category to filter"
+                    name="category" value={this.state.category} onChange={this.onSelectType}>
+                  </Select>
+                </div>
+
+                <Link to='/dashboard' className='btn' style={{background:'#ffa726', color: 'green'}}>
+                  BACK</Link>
+              </nav>
+              <table className="table table-bordered  mb-0">
+                <thead>
+                <tr>
+                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Category</th>
+                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Book Title</th>
+                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Number of Tracks</th>
+                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Language</th>
+                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Author</th>
+                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Grade</th>
+                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Download</th>
+                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>View</th>
+                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Important</th>
+                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Rating</th>
+                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Rate</th>
+                </tr>
+                </thead>
+                <tbody>
+                {allFoldersContent}
+                </tbody>
+              </table>
+            </div>
+            <div className='d-flex justify-content-end'>
+              {renderpn}
+            </div>
           </div>
         </div>
-      )
+      );
     }
-  }
+    }
 }
 
 Dashboard.propTypes = {
   home: PropTypes.object.isRequired,
   getSADetails: PropTypes.func.isRequired,
-  getDAHome: PropTypes.func.isRequired,
-  getPatientDetails: PropTypes.func.isRequired,
-  deleteResidual: PropTypes.func.isRequired,
-  continueToUpload: PropTypes.func.isRequired,
-  getAllPatients: PropTypes.func.isRequired,
-  getDiagUserHome: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  folder: PropTypes.object.isRequired
+  folder: PropTypes.object.isRequired,
+  getAllBooks: PropTypes.func.isRequired
 }
 const mapStateToProps = state => ({
   home: state.home,
   auth: state.auth,
   folder: state.folder
 })
-export default connect(mapStateToProps, { getSADetails, getDAHome,
-  getPatientDetails, continueToUpload,
-  deleteResidual, getAllPatients, getDiagUserHome
-})(Dashboard)
+export default connect(mapStateToProps, {getSADetails, getAllBooks})(Dashboard)

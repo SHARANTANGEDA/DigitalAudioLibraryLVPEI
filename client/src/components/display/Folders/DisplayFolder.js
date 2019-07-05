@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Spinner from '../../common/Spinner'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import {  getHomeFolders } from '../../../actions/homeActions'
 import { Link } from 'react-router-dom'
 import FolderRow from './FolderRow'
 import classnames from 'classnames'
@@ -84,23 +83,6 @@ class DisplayFolder extends Component {
             <Link to='/dashboard' className='btn' style={{background:'#ffa726', color: 'green'}}>
               BACK</Link>
           </nav>
-          {/*<table className="table table-bordered table-striped mb-0">*/}
-          {/*  <thead>*/}
-          {/*  <tr>*/}
-          {/*    <th scope="col" style={{ fontSize: '10pt'}}>Centre</th>*/}
-          {/*    <th scope="col" style={{ fontSize: '10pt'}}>MR No</th>*/}
-          {/*    <th scope="col" style={{ fontSize: '10pt'}}>Patient Name</th>*/}
-          {/*    <th scope="col" style={{ fontSize: '10pt'}}>Age/Gender</th>*/}
-          {/*    <th scope="col" style={{ fontSize: '10pt'}} >Date of upload</th>*/}
-          {/*    <th scope="col" style={{ fontSize: '10pt'}}>type</th>*/}
-          {/*    <th scope="col" style={{ fontSize: '10pt'}}>Remarks</th>*/}
-          {/*    <th scope="col" style={{ fontSize: '10pt'}}>View</th>*/}
-          {/*    <th scope="col" style={{ fontSize: '10pt'}}>Download</th>*/}
-          {/*    <th scope="col" style={{ fontSize: '10pt'}}>Delete</th>*/}
-          {/*  </tr>*/}
-          {/*  </thead>*/}
-          {/*  {allFoldersContent}*/}
-          {/*</table>*/}
           {allFoldersContent}
         </div>
       </div>
@@ -117,4 +99,4 @@ const mapStateToProps = state => ({
   auth: state.auth,
   folder: state.folder
 })
-export default connect(mapStateToProps, { getHomeFolders })(DisplayFolder);
+export default connect(mapStateToProps )(DisplayFolder);

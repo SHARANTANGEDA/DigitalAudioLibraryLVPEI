@@ -10,7 +10,7 @@ div {
 
 .landing {
   position: relative;
-  background: url('./img/images.jpeg') no-repeat;
+  background: url('./img/audioBack.jpg') no-repeat;
   background-size: cover;
   background-position: center;
   height: 100vh;

@@ -7,10 +7,171 @@ const passport = require('passport')
 
 const validatePassword = require('../../validations/ChangePassword')
 const validateLoginInput = require('../../validations/login')
-const validateSearchInput = require('../../validations/search')
-const validateChangeInput = require('../../validations/editProfile')
+const validateChangeInput = require('../../validations/editProfile/editProfileLVPEI')
+const validateWorldChangeInput = require('../../validations/editProfile/editProfileWorld')
+const validateWorldRegisterInput = require('../../validations/worldRegister')
+
 const User = require('../../mongoModels/User');
-const Patient = require('../../mongoModels/Patient');
+const Music = require('../../mongoModels/Music');
+const nodemailer = require("nodemailer");
+const shortid = require('shortid');
+const dateDiffInDays = require( '../../validations/dateDiffInDays')
+//@Register
+router.post('/register', (req, res) => {
+  const { errors, isValid } = validateWorldRegisterInput(req.body)
+
+  if (!isValid) {
+    return res.status(400).json(errors)
+  }
+  User.findOne({ emailId: req.body.emailId }).then(async user => {
+    if (user) {
+      errors.emailId = 'Account already exists please use your password to login'
+      return res.status(400).json(errors)
+    } else {
+      let pin = shortid.generate()
+      let testAccount = await nodemailer.createTestAccount();
+      let transporter = nodemailer.createTransport({
+        host: "smtp.ethereal.email",
+        port: 587,
+        secure: false, // true for 465, false for other ports
+        auth: {
+          user: testAccount.user, // generated ethereal user
+          pass: testAccount.pass // generated ethereal password
+        }
+      });
+      let info = await transporter.sendMail({
+        from: '"LVPEI Test Server" <SoundCloud@gmail.com>', // sender address
+        to: req.body.emailId, // list of receivers
+        subject: "Audio Digital Library Email Verification", // Subject line
+        text: "pin:"+pin, // plain text body
+        html: "<div><h4>Use the PIN below to verify your email</h4></div>"
+          +"<h6>Verification Pin:</h6>" + pin // html body
+      });
+      const newUser = new User({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        emailId: req.body.emailId,
+        password: req.body.password,
+        address: req.body.address,
+        pinCode: req.body.pinCode,
+        city: req.body.city,
+        state: req.body.state,
+        country: req.body.country,
+        otpKey: pin,
+        role: 'world'
+      })
+      console.log("Message sent: %s", info.messageId);
+      console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+      bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(newUser.password, salt, (err, hash) => {
+          if (err) throw err
+          newUser.password = hash
+          newUser
+            .save()
+            .then( user => {
+              let payload
+              if(user.access) {
+                console.log(new Date(), user.time)
+                // && dateDiffInDays(new Date(), user.time)>2
+                if(!user.verified) {
+                  payload = { id: user._id,role: user.role, emailId: user.emailId, verified: false}
+                }else {
+                  payload = { id: user._id,role: user.role, emailId: user.emailId, verified: true}
+                }
+              }else {
+                errors.emailId='Your account is blocked!!'
+                return res.status(401).json(errors)
+              }
+              jwt.sign(payload, keys.secretOrKey, { expiresIn: '12h' },
+                (err, token) => {
+                  console.log(payload)
+                  res.json({
+                    success: true,
+                    token: 'Bearer ' + token
+                  })
+                })
+            })
+            .catch(err => console.log(err))
+        })
+      })
+    }
+  })
+})
+
+router.post('/verifyEmail',passport.authenticate('world',{session: false}),(req, res) => {
+  User.findById(req.user.id).then(user => {
+    if (!user) {
+      return res.status(400).json('err')
+    }
+    if(req.body.pin.length===0) {
+      errors.pin = 'Please enter the verification code to sent to your mail'
+      return res.status(400).json(errors)
+    }
+    if(user.otpKey === req.body.pin) {
+      console.log({otp: user.otpKey, pin: req.body.pin})
+      user.verified = true;
+      user.otpKey = null
+      user.save().then(user => {
+        let payload
+        if(user.access) {
+          // && dateDiffInDays(new Date(), user.time)>2
+          if(!user.verified) {
+            payload = { id: user._id,role: user.role, emailId: user.emailId, verified: false}
+          }else {
+            payload = { id: user._id,role: user.role, emailId: user.emailId, verified: true}
+          }
+        }else {
+          errors.emailId='Your account is blocked!!'
+          return res.status(401).json(errors)
+        }
+        jwt.sign(payload, keys.secretOrKey, { expiresIn: '12h' },
+          (err, token) => {
+            res.json({
+              success: true,
+              token: 'Bearer ' + token
+            })
+          })
+      })
+        .catch(err => console.log(err))
+    } else {
+      res.status(404).json({success: false})
+    }
+  })
+})
+
+router.get('/sendAgain',passport.authenticate('world',{session: false}),(req, res) => {
+  console.log({user: req.user.id})
+  User.findById(req.user.id).then(async user => {
+    let pin = shortid.generate()
+    let testAccount = await nodemailer.createTestAccount();
+    let transporter = nodemailer.createTransport({
+      host: "smtp.ethereal.email",
+      port: 587,
+      secure: false, // true for 465, false for other ports
+      auth: {
+        user: testAccount.user, // generated ethereal user
+        pass: testAccount.pass // generated ethereal password
+      }
+    });
+    let info = await transporter.sendMail({
+      from: '"LVPEI Test Server" <SoundCloud@gmail.com>', // sender address
+      to: user.emailId, // list of receivers
+      subject: "Audio Digital Library Email Verification", // Subject line
+      text: "pin:" + pin, // plain text body
+      html: "<div><h4>Use the PIN below to verify your email</h4></div>"
+        + "<h6>Verification Pin:</h6>" + pin // html body
+    });
+    console.log("Message sent: %s", info.messageId);
+    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+    user.otpKey = pin
+    user.save().then(user => {
+      res.json({success: true})
+    })
+  }).catch(err => {
+    res.json({success: false})
+  })
+})
+
 
 
 //@desc Login
@@ -36,22 +197,25 @@ router.post('/login', (req, res) => {
         let payload
         if(user.role ==='super_admin') {
           payload = { id: user.id,role: user.role, emailId: user.emailId}
-        }else if(user.role === 'diag_admin' || user.role==='diag') {
+        }else if(user.role === 'world') {
           if(user.access) {
-            payload = { id: user.id,role: user.role, emailId: user.emailId, diagId: user.diagCentre}
+            if(!user.verified) {
+              payload = { id: user._id,role: user.role, emailId: user.emailId, verified: false}
+            }else {
+              payload = { id: user._id,role: user.role, emailId: user.emailId, verified: true}
+            }
           }else {
-            errors.emailId='You are not Authorized to access this site!!'
+            errors.emailId='Your account is blocked!!'
             return res.status(401).json(errors)
           }
         } else if(user.role === 'lvpei') {
           if(user.access) {
             payload = { id: user.id,role: user.role, emailId: user.emailId}
           }else {
-            errors.emailId='You are not Authorized to access this site!!'
+            errors.emailId='Your access to this site is revoked!!'
             return res.status(401).json(errors)
           }
         }
-        //TODO change secret key and signIn options
         jwt.sign(payload, keys.secretOrKey, { expiresIn: '12h' },
           (err, token) => {
           console.log(payload)
@@ -59,7 +223,7 @@ router.post('/login', (req, res) => {
               success: true,
               token: 'Bearer ' + token
             })
-          })
+        })
       } else {
         errors.password = 'Incorrect Password'
         return res.status(400).json(errors)
@@ -68,28 +232,7 @@ router.post('/login', (req, res) => {
   })
 })
 
-// //@Get Name of patient
-// router.post('/enterName',passport.authenticate('MRI',{session: false}),
-//   (req,res) => {
-//   console.log(req.body)
-//     const {errors , isValid} =validateName(req.body);
-//     if(!isValid) {
-//       return res.status(400).json(errors);
-//     }
-//
-//     const newPatient = new Patient({
-//       name: req.body.name,
-//       empty: true
-//     });
-//     console.log("Name is being saved")
-//     newPatient.save().then(patient => {
-//       console.log(patient)
-//       res.json(patient)
-//     }).catch(err => {
-//       console.log(err)
-//       res.json(errors)
-//     });
-// });
+
 
 //Change Password
 router.post('/changePassword', passport.authenticate('all', { session: false }),
@@ -120,80 +263,21 @@ router.post('/changePassword', passport.authenticate('all', { session: false }),
         return res.status(400).json(errors)
       }
     })
+})
+
+router.get('/home', async (req, res) => {
+  Music.find().then( records => {
+    res.json({ all: records })
   })
+});
 
-router.post('/search',passport.authenticate('lvpei',{session: false}),(req, res) => {
-  const { errors, isValid } = validateSearchInput(req.body)
-  if (!isValid) {
-    return res.status(400).json(errors)
-  }
-  if(req.body.category === 'mr.No') {
-    Patient.find({mrNo: req.body.search}).then( patients =>
-    {
-      if(patients.length === 0) {
-        return res.json({success: false})
-      }
-      res.json({mrNo: req.body.search, success: true})
-    }).catch(err => {
-      res.json({success: false})
-    })
-  }else if(req.body.category === 'name') {
-    res.json({success: true})
-    // Patient.find().then(async patients => {
-    //   let searchResult = []
-    //   searchResult.push(new Promise((resolve, reject) => {
-    //     patients.map(patient => {
-    //       let name = patient.firstName + ' ' + patient.lastName;
-    //       if (name.includes(req.body.search)) {
-    //         resolve(patient)
-    //       }
-    //     })
-    //   }))
-    //   res.json({name:await Promise.all(searchResult),success: true})
-    // })
-  }
-})
 
-router.get('/searchName/:id',passport.authenticate('lvpei',{session: false}),(req, res) => {
-  console.log({id:req.params.id})
-    Patient.find().then(async patients => {
-      let searchResult = [], dummy=[]
-        patients.map(patient => {
-          dummy.push(new Promise((resolve, reject) => {
-
-            let name = patient.firstName + ' ' + patient.lastName;
-          console.log({name: name, check:name.toLowerCase().includes(req.params.id)})
-          if (name.toLowerCase().includes(req.params.id)) {
-            console.log({resolve:patient})
-            searchResult.push(patient)
-          }
-          }))
-        })
-      // console.log({called:await Promise.all(searchResult),length: searchResult.length})
-      // await Promise.all(dummy)
-        res.json({name:await Promise.all(searchResult),success: true})
-    }).catch(err => {
-      res.json({success: false})
-    })
-})
-
-//
-// router.post('/masterBackDoor',
-//   (req, res) => {
-//     let newPassword = req.body.newPassword
-//         bcrypt.genSalt(10, (err, salt) => {
-//           bcrypt.hash(newPassword, salt, (err, hash) => {
-//             if (err) throw err
-//             newPassword = hash
-//             res.json(newPassword)
-//           })
-//         })
-//     })
 router.get('/myAccount', passport.authenticate('non_super', { session: false }),
   (req, res) => {
-    User.findOne({ emailId: req.user.emailId })
+    User.findById(req.user.id)
       .then(user => {
-        res.json({firstName: user.firstName, emailId: user.emailId, lastName: user.lastName})
+        res.json(user)
+        // res.json({firstName: user.firstName, emailId: user.emailId, lastName: user.lastName})
       }).catch(err => {
       return res.status(404).json({ err })
     })
@@ -202,16 +286,36 @@ router.get('/myAccount', passport.authenticate('non_super', { session: false }),
 router.post('/myAccount/change', passport.authenticate('non_super', { session: false }),
   (req, res) => {
   User.findOne({emailId: req.user.emailId}).then(user => {
-    const { errors, isValid } = validateChangeInput(req.body, user)
-    if (!isValid) {
-      return res.status(400).json(errors);
+    if(user.role==='world') {
+      const {errors, isValid} = validateWorldChangeInput(req.body, user)
+      if (!isValid) {
+        return res.status(400).json(errors);
+      }
+      user.firstName = req.body.firstName
+      user.lastName = req.body.lastName
+      user.pinCode = req.body.pinCode
+      user.city = req.body.city
+      user.state = req.body.state
+      user.country = req.body.country
+      user.address = req.body.address
+      user.save().then(user => {
+        res.json({success: true})
+      })
+    }else if(user.role==='lvpei') {
+      const { errors, isValid } = validateChangeInput(req.body, user)
+      if (!isValid) {
+        return res.status(400).json(errors);
+      }
+      user.firstName = req.body.firstName
+      user.lastName = req.body.lastName
+      user.save().then(user => {
+        res.json({success: true})
+      })
     }
-    user.firstName = req.body.firstName
-    user.lastName = req.body.lastName
-    user.save().then(user => {
-      res.json({success: true})
-    })
+
   })
   }
 );
+
+
 module.exports = router

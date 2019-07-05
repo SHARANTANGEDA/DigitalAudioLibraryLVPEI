@@ -7,8 +7,7 @@ const validateRegisterInput = require('../../validations/register')
 const validateDiagnosticsInput = require('../../validations/newDiagnostics')
 const validateResetPassword = require('../../validations/resetPassword')
 const User = require('../../mongoModels/User')
-const Diagnostics=require('../../mongoModels/Diagnostics')
-const Patient = require('../../mongoModels/Patient');
+const Music = require('../../mongoModels/Music');
 
 // router.post('/registerSA',(req, res) => {
 //   // const { errors, isValid } = validateRegisterInput(req.body)
@@ -75,197 +74,64 @@ router.post('/register', passport.authenticate('super_admin',{session: false}),(
   })
 })
 
-router.post('/addDiagnostic',passport.authenticate('super_admin', {session: false}),
-  (req, res) => {
-  const { errors, isValid } = validateDiagnosticsInput(req.body)
-  if (!isValid) {
-    return res.status(400).json(errors)
-  }
-  Diagnostics.findOne({orgEmail: req.body.orgEmail}).then(diagnostics => {
-    if(diagnostics) {
-      errors.orgEmail='This organization is already added to the system,' +
-        ' you can control their access on dashboard';
-      return res.status(400).json(errors);
-    } else {
-      const newCentre = new Diagnostics({
-        orgEmail: req.body.orgEmail,
-        centreName: req.body.centreName,
-        adminId: req.body.adminId,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        short: req.body.short,
-        centreCode: req.body.centreCode
-      })
-      // newCentre.save().then(diagnostics=> {
-        User.findOne({ emailId: req.body.adminId }).then(user => {
-          if (user) {
-            errors.adminId = 'Account already exists please create with different name'
-            return res.status(400).json(errors)
-          } else {
-            newCentre.save().then(diagnostics=> {
-              const newUser = new User({
-                emailId: req.body.adminId,
-                password: req.body.password,
-                diagCentre: req.body.orgEmail, //to change
-                diagCentreName: req.body.centreName,
-                firstName: req.body.firstName,
-                lastName: req.body.lastName,
-                role: 'diag_admin',
-                centreShortCode: req.body.short,
-                centreCode: req.body.centreCode
-              })
-              bcrypt.genSalt(10, (err, salt) => {
-                bcrypt.hash(newUser.password, salt, (err, hash) => {
-                  if (err) throw err
-                  newUser.password = hash
-                  newUser.save().then(user => {
-                    console.log({diag: diagnostics, user: user})
-                    res.json({ success: true })
-                  }).catch(err => {
-                    console.log(err)
-                    res.json({ error: 'creating the user' })
-                  })
-                })
-              })
-            }).catch(err => {
-              return res.status(400).json('Please try again')
-            })
-          }
-        })
-    }
-  })
-})
-
-router.post('/removeAccess',passport.authenticate('super_admin', {session: false}),
-  (req, res) => {
-  console.log(Date.now())
-  Diagnostics.findOneAndUpdate({adminId: req.body.emailId},{access: false, lastUpdate: Date.now()}).
-  then(diagnostics => {
-    User.findOneAndUpdate({emailId: req.body.emailId},{access: false}).then(admin => {
-      User.find({admin: req.body.emailId}).then(users => {
-        users.map(user => {
-          User.findByIdAndUpdate(user._id,{access: false}).then(newUser => {
-            console.log(user)
-          }).catch(err => {
-            console.log('Error in removing')
-          })
-        })
-        res.json({success: true})
-      })
-    })
-  })
-})
-
-router.post('/grantAccess',passport.authenticate('super_admin', {session: false}),
-  (req, res) => {
-    Diagnostics.findOneAndUpdate({adminId: req.body.emailId},{access: true, lastUpdate: Date.now()}).
-    then(diagnostics => {
-      User.findOneAndUpdate({emailId: req.body.emailId},{access: true}).then(admin => {
-        User.find({admin: req.body.emailId}).then(users => {
-          users.map(user => {
-            User.findByIdAndUpdate(user._id,{access: true}).then(newUser => {
-              console.log(user)
-            }).catch(err => {
-              console.log('Error in adding')
-            })
-          })
-          res.json({success: true})
-        })
-      })
-    })
-  })
-
-
-// router.post('/deleteLVPEIUser',passport.authenticate('super_admin', {session: false}),
-//   (req, res) => {
-//   User.deleteOne({emailId: req.body.emailId, role:'lvpei'}).then(data => {
-//     res.json({success: true})
-//   }).catch(err => {
-//     res.json({success: false})
-//   })
-// })
-
-router.get('/activeCentres',passport.authenticate('super_admin', {session: false}),
-  (req, res) => {
-  Diagnostics.find({access: true}).then(diagnostics => {
-    res.json(diagnostics)
-  }).catch(err => {
-    console.log(err,'IN ACTIVE')
-    res.json({fail: true})
-  })
-})
-
-router.get('/inactiveDiags',passport.authenticate('super_admin', {session: false}),
-  (req, res) => {
-  console.log('here')
-    Diagnostics.find({access: false}).then(diagnostics => {
-      console.log('IN INACTIVE SUCCESS')
-      res.json(diagnostics)
-    }).catch(err => {
-      console.log(err,'IN IN-ACTIVE')
-
-      res.json({fail: true})
-    })
-  })
-router.get('/home', passport.authenticate('super_admin', { session: false }), (req, res) => {
+router.get('/home', passport.authenticate('all_lvpei', { session: false }), (req, res) => {
   User.find().then(async users => {
-    let lvpei = [], diag_admin = [], dummy = [], diag = [], centre = [], len=0, CTS =[]
-    let CTA=[],MRIS=[],MRIA=[], USGA=[],BT=[],PETS=[]
-    users.map(user => {
-      dummy.push(new Promise((resolve, reject) => {
-        if (user.role === 'lvpei') {
-          lvpei.push(user)
-        } else if (user.role === 'diag_admin') {
-          diag_admin.push(user)
-        } else if (user.role === 'diag') {
-          diag.push(user)
-        }
-      }))
-    })
-    diag_admin.map(user => {
-      centre.push(new Promise((resolve, reject) => {
-        Patient.find().then(patients=> {
-          User.find({admin: user.emailId}).then(users => {
-            len=patients.length
-            resolve({user:user,emp: users.length})
-        })
-        })
-      }))
-    })
-      Patient.find().then(patients => {
-        dummy.push(new Promise((resolve, reject) => {
-          patients.map(patient => {
-            if(patient.scanType==='CT') {
-              CTS.push(patient)
-            }else if(patient.scanType==='MRI') {
-              MRIS.push(patient)
-            }else if(patient.scanType==="'CT Angiography") {
-              CTA.push(patient)
-            }else if(patient.scanType==='MRI Angiography') {
-              MRIA.push(patient)
-            }else if(patient.scanType==='PET Scan') {
-              PETS.push(patient)
-            }else if(patient.scanType==='USG Abdomen'){
-              USGA.push(patient)
-            }else if(patient.scanType==='Blood Tests'){
-              BT.push(patient)
+    let lvpei = [], world = [], dummy = [], school1 =[], all=[]
+    let inter=[],school2=[],ug=[], law=[],psy=[],pg=[], ce=[], eg=[], cs=[], reg=[], ot=[]
+
+      Music.find().then(async records => {
+        users.map(async user => {
+          dummy.push(new Promise((resolve, reject) => {
+            if (user.role === 'lvpei') {
+              lvpei.push(user)
+            } else if (user.role === 'world') {
+              world.push(user)
             }
+          }))
+        })
+          records.map(async record => {
+            dummy.push(new Promise((resolve, reject) => {
+              console.log({record:record})
+            all.push(record)
+            if(record.category==='School (I – V)') {
+              school1.push(record)
+            }else if(record.category==='School (VI – X)') {
+              school2.push(record)
+              console.log(school2.length)
+            }else if(record.category==="Intermediate (XI & XII)") {
+              inter.push(record)
+            }else if(record.category==='Undergraduate') {
+              ug.push(record)
+            }else if(record.category==='Postgraduate') {
+              pg.push(record)
+            }else if(record.category==='Law'){
+              law.push(record)
+            }else if(record.category==='Psychology'){
+              psy.push(record)
+            }else if(record.category==='Competitive Exam'){
+              ce.push(record)
+            }else if(record.category==='English Grammar'){
+              eg.push(record)
+            }else if(record.category==='Children Stories'){
+              cs.push(record)
+            }else if(record.category==='Religious'){
+              reg.push(record)
+            } else if(record.category==='Other'){
+              ot.push(record)
+            }
+            resolve(record)
+            }))
           })
-        }))
+          res.json({
+          lvpei: await Promise.all(lvpei),
+          world: await Promise.all(world),
+          all: await Promise.all(all),
+          school1: await Promise.all(school1),
+          school2: await Promise.all(school2),inter: await Promise.all(inter),ug: await Promise.all(ug),
+          pg: await Promise.all(pg), law: await Promise.all(law),psy: await Promise.all(psy), ce: await Promise.all(ce),
+          eg: await Promise.all(eg), cs: await Promise.all(cs), reg: await Promise.all(reg), ot: await Promise.all(ot)
       })
 
-
-
-
-    res.json({
-      lvpei: await Promise.all(lvpei),
-      diag_admin: await Promise.all(diag_admin),
-      centre: await Promise.all(centre),
-      CTS: await Promise.all(CTS),
-      MRIS: await Promise.all(MRIS),CTA: await Promise.all(CTA),MRIA: await Promise.all(MRIA),PETS: await Promise.all(PETS),
-      USGA: await Promise.all(USGA),BT: await Promise.all(BT),
-      diagLen: diag.length,
-      patientsLen: len
     })
   })
 });
