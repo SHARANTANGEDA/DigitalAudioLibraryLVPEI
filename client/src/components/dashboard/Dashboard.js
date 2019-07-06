@@ -449,9 +449,6 @@ class Dashboard extends Component {
                     name="category" value={this.state.category} onChange={this.onSelectType}>
                   </Select>
                 </div>
-
-                <Link to='/dashboard' className='btn' style={{background:'#ffa726', color: 'green'}}>
-                  BACK</Link>
               </nav>
               <table className="table table-bordered  mb-0">
                 <thead>
@@ -464,9 +461,11 @@ class Dashboard extends Component {
                   <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Grade</th>
                   <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Download</th>
                   <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>View</th>
-                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Important</th>
+                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Favourite</th>
                   <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Rating</th>
                   <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Rate</th>
+                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Share</th>
+
                 </tr>
                 </thead>
                 <tbody>

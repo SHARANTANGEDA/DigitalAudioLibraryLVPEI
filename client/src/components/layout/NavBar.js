@@ -228,12 +228,6 @@ class Navbar extends Component {
       authLinksIII = (
         <ul className="navbar-nav components d-flex justify-content-around" style={{ height: '100%' }}>
           <li className='nav-item' style={{color: 'white',background:'#008cff' , borderRadius: '5px'
-             }}>
-            <Link className='nav-link' to="/dashboard" style={{color: 'white', borderRadius: '5px' }}>
-              Home
-            </Link>
-          </li>
-          <li className='nav-item' style={{color: 'white',background:'#008cff' , borderRadius: '5px'
             }}>
             <Link className='nav-link' to="/dashboard" style={{color: 'white', borderRadius: '5px' }}>
               Home

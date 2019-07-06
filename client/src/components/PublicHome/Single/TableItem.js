@@ -210,23 +210,23 @@ class TableItem extends Component {
           renderStarIcon={() => {
             return (
               <span>
-                  <i className='fas fa-star fa-2x'/>
+                  <i className='fas fa-star '/>
                 </span>
             )}}
           editing={true}
         /></td>: null}
-        <td><div className='row' style={{margin:'3px'}}>
+        <td><div className='row' style={{margin:'1px'}}>
           <button style={{borderStyle:'none', background:'white'}}>
-            <TwitterShareButton url={URL()+`audioBook/${this.props.folder._id}`}><TwitterIcon size={32} round={true} />
+            <TwitterShareButton url={URL()+`audioBook/${this.props.folder._id}`}><TwitterIcon size={25} round={true} />
           </TwitterShareButton></button>
           <button style={{borderStyle:'none', background:'white'}}>
-          <WhatsappShareButton url={URL()+`audioBook/${this.props.folder._id}`}><WhatsappIcon size={32} round={true} />
+          <WhatsappShareButton url={URL()+`audioBook/${this.props.folder._id}`}><WhatsappIcon size={25} round={true} />
           </WhatsappShareButton></button>
           <button style={{borderStyle:'none', background:'white'}}>
-          <FacebookShareButton url={URL()+`audioBook/${this.props.folder._id}`}><FacebookIcon size={32} round={true} />
+          <FacebookShareButton url={URL()+`audioBook/${this.props.folder._id}`}><FacebookIcon size={25} round={true} />
           </FacebookShareButton></button>
           <button style={{borderStyle:'none', background:'white'}}>
-          <LinkedinShareButton url={URL()+`audioBook/${this.props.folder._id}`}><LinkedinIcon size={32} round={true} />
+          <LinkedinShareButton url={URL()+`audioBook/${this.props.folder._id}`}><LinkedinIcon size={25} round={true} />
           </LinkedinShareButton></button>
 
         </div>
