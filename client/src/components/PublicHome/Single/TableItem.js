@@ -2,16 +2,26 @@ import React, { Component } from 'react'
 import { PropTypes } from 'prop-types'
 import { connect } from 'react-redux'
 import StarRatingComponent from 'react-star-rating-component';
-
-// import '../allFolders.css'
+import URL from '../../../utils/URL'
 import {
-  addRating, changeRating,
-  deleteFolder,
-  downloadFile,
-  downloadFolder,
-  downloadSelectedFiles,
-  favourite, unFavourite
-} from '../../../actions/homeActions'
+  FacebookIcon,
+  TwitterIcon,
+  WhatsappIcon,
+  LinkedinIcon, } from 'react-share';
+import {
+  FacebookShareButton,
+  LinkedinShareButton,
+  TwitterShareButton,
+  WhatsappShareButton,
+} from 'react-share';
+import {
+  FacebookShareCount,
+  LinkedinShareCount,
+  TwitterShareCount,
+  WhatsappShareCount,
+} from 'react-share';
+import {
+  addRating, changeRating, downloadFolder, favourite, unFavourite } from '../../../actions/homeActions'
 import downloading from '../../common/downloading.gif'
 import Modal from 'react-modal'
 import ModalLogin from '../../layout/ModalLogin'
@@ -190,7 +200,7 @@ class TableItem extends Component {
         <td><span style={{ fontFamily: 'Arial', fontSize: '14px' }}>{folder.grade}</span></td>
         <td>{icon}</td>
         <td>{icon2}</td>
-        <td>{fav}</td>
+        {this.props.auth.isAuthenticated ? <td>{fav}</td>: null}
         <td>{rating}</td>
         {this.props.auth.isAuthenticated ?<td><StarRatingComponent
           name="rating"
@@ -205,6 +215,22 @@ class TableItem extends Component {
             )}}
           editing={true}
         /></td>: null}
+        <td><div className='row' style={{margin:'3px'}}>
+          <button style={{borderStyle:'none', background:'white'}}>
+            <TwitterShareButton url={URL()+`audioBook/${this.props.folder._id}`}><TwitterIcon size={32} round={true} />
+          </TwitterShareButton></button>
+          <button style={{borderStyle:'none', background:'white'}}>
+          <WhatsappShareButton url={URL()+`audioBook/${this.props.folder._id}`}><WhatsappIcon size={32} round={true} />
+          </WhatsappShareButton></button>
+          <button style={{borderStyle:'none', background:'white'}}>
+          <FacebookShareButton url={URL()+`audioBook/${this.props.folder._id}`}><FacebookIcon size={32} round={true} />
+          </FacebookShareButton></button>
+          <button style={{borderStyle:'none', background:'white'}}>
+          <LinkedinShareButton url={URL()+`audioBook/${this.props.folder._id}`}><LinkedinIcon size={32} round={true} />
+          </LinkedinShareButton></button>
+
+        </div>
+        </td>
         <Modal
           isOpen={this.state.modalIsOpen}
           onAfterOpen={this.afterOpenModal}

@@ -35,6 +35,7 @@
     "react-scripts": "^2.1.8",
     "react-select": "^2.4.4",
     "react-select-country-list": "^2.0.1",
+    "react-share": "^3.0.0",
     "react-star-rating-component": "^1.4.1",
     "react-swipeable-views": "^0.13.1",
     "reactjs-popup": "^1.4.1",
