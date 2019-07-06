@@ -107,13 +107,13 @@ class Navbar extends Component {
         <div  className="row col-md-6 d-flex justify-content-start align-items-center"
              style={{color:'white', verticalAlign: 'bottom'}}>
           <Link to='/dashboard'> <img style={{ maxWidth: '100px', maxHeight: '100px' }}
-                            src={require('../../img/logo2.png')} alt=""/></Link>
+                            src={require('../../img/image.png')} alt=""/></Link>
          <h2>{' '}L V Prasad Eye Institute</h2>
 
         </div>
         <div className="row d-flex justify-content-end align-items-center" style={{color:'white'}}>
           <img style={{ maxWidth: '200px', maxHeight: '150px' }}
-               src={require('../../img/logo.png')} alt=""
+               src={require('../../img/invertedEye.png')} alt=""
           />
           <h3>Digital Audio Library</h3>
         </div>
@@ -125,13 +125,13 @@ class Navbar extends Component {
         <div className="row col-md-6 d-flex justify-content-start align-items-center"
              style={{color:'white', verticalAlign: 'bottom'}}>
           <Link to='/'> <img style={{ maxWidth: '130px', maxHeight: '130px' }}
-                                      src={require('../../img/logo2.png')} alt=""/></Link>
+                                      src={require('../../img/image.png')} alt=""/></Link>
           <h3>  {' '}L V Prasad Eye Institute</h3>
 
         </div>
         <div className="row d-flex justify-content-end align-items-center" style={{color:'white'}}>
           <img style={{ maxWidth: '200px', maxHeight: '150px' }}
-               src={require('../../img/logo.png')} alt=""
+               src={require('../../img/invertedEye.png')} alt=""
           />
           <h3>Digital Audio Library</h3>
         </div>
