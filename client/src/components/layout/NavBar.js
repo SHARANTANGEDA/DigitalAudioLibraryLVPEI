@@ -4,19 +4,8 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { logoutUser } from '../../actions/authActions'
 import { getSearchResults } from '../../actions/homeActions'
-import EnterPin from './EnterPin'
-import Modal from 'react-modal'
-const customStyles = {
-  content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '0',
 
-    transform: 'translate(-50%, -50%)'
-  }
-}
+
 
 class Navbar extends Component {
   constructor (props) {
@@ -29,7 +18,6 @@ class Navbar extends Component {
     this.onCatChange = this.onCatChange.bind(this)
     this.onChange = this.onChange.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
-    this.onSendAgain = this.onSendAgain.bind(this)
     this.openModal = this.openModal.bind(this)
     this.afterOpenModal = this.afterOpenModal.bind(this)
     this.closeModal = this.closeModal.bind(this)
@@ -48,10 +36,6 @@ class Navbar extends Component {
       console.log({name:`/nameSearchResults/${this.state.search}`})
       window.location.href=`/nameSearchResults/${this.state.search}`
     }
-  }
-
-  onSendAgain(e) {
-    this.props.sendAgain(this.props.match.params.id)
   }
 
   openModal () {
@@ -85,6 +69,7 @@ class Navbar extends Component {
     e.preventDefault()
     this.props.logoutUser()
   }
+
 
   render () {
     const { isAuthenticated, user } = this.props.auth
@@ -139,13 +124,14 @@ class Navbar extends Component {
     )
     const guestLink1 = (
       <ul className="navbar-nav components d-flex justify-content-around" style={{ height: '100%' }}>
-        <li className='nav-item' >
+        <li className='nav-item' style={{color: 'white',background:'#008cff' , borderRadius: '5px'
+           }}>
           <Link className="nav-link" to="/login"
                 style={{color: 'white', borderRadius: '5px' }}>
-            <i className="fa fa-power-off" aria-hidden="true"/>
             {' '}Login</Link>
         </li>
-        <li className="nav-item pull-right">
+        <li className="nav-item pull-right" style={{color: 'white',background:'#008cff' , borderRadius: '5px'
+           }}>
           <Link className='nav-link' to="/register" style={{color: 'white', borderRadius: '5px' }}>
             register
           </Link>
@@ -157,15 +143,17 @@ class Navbar extends Component {
     if (isAuthenticated && (user.role==='super_admin')) {
       authLinksIII = (
           <ul className="navbar-nav components d-flex justify-content-between" style={{ height: '100%' }}>
-            <li className='nav-item'  style={{borderRadius: '5px' }}>
+            <li className='nav-item'  style={{color: 'white',background:'#008cff' , borderRadius: '5px'
+               }}>
               <Link className='nav-link' to="/dashboard" style={{color: 'white', borderRadius: '5px' }}>
                 Home
               </Link>
             </li>
-            <li className="nav-item dropdown" style={{color: 'white', borderRadius: '5px'
-              ,minWidth:'150px' }}>
+            <li className="nav-item dropdown" style={{color: 'white',background:'#008cff' , borderRadius: '5px'
+               }}>
                 <Link className="nav-link nav-item d-flex justify-content-around" to="" data-toggle="dropdown"
-                      style={{color: 'white', borderRadius: '5px' }}>
+                      style={{color: 'white',background:'#008cff' , borderRadius: '5px'
+                        ,minWidth:'150px' }}>
                   Users<i className="fas fa-caret-down"/>
                 </Link>
               <ul className="dropdown-menu " >
@@ -202,12 +190,13 @@ class Navbar extends Component {
     }else if(isAuthenticated && (user.role==='lvpei')) {
       authLinksIII = (
         <ul className="navbar-nav components" style={{ height: '100%' }}>
-          <li className='nav-item'>
+          <li className='nav-item' style={{color: 'white',background:'#008cff' , borderRadius: '5px' }}>
             <Link className='nav-link'  to="/dashboard" style={{color: 'white', borderRadius: '5px' }}>
               Home
             </Link>
           </li>
-          <li className='nav-item'>
+          <li className='nav-item' style={{color: 'white',background:'#008cff' , borderRadius: '5px'
+            }}>
             <Link className='nav-link'  to="/uploadForm" style={{color: 'white', borderRadius: '5px' }}>
               Upload Book
             </Link>
@@ -218,14 +207,16 @@ class Navbar extends Component {
                   style={{color: 'white', borderRadius: '5px' }}>
               {user.emailId}<i className="fas fa-caret-down"/>
             </Link>
-            <ul className="dropdown-menu " >
+            <ul className="dropdown-menu " style={{color: 'white',background:'#008cff' , borderRadius: '5px'
+              }}>
               <li><Link className='nav-link' to="/editProfile" style={{color: 'white'}}>
               My Account</Link></li>
               <li><Link className='nav-link' to="/changePassword" style={{color: 'white'}}>
                 Change Password</Link></li>
             </ul>
           </li>
-          <li className="nav-item pull-right">
+          <li className="nav-item pull-right" style={{color: 'white',background:'#008cff' , borderRadius: '5px'
+            }}>
             <Link className="nav-link" to="/" onClick={this.onLogoutClick.bind(this)}
                   style={{color: 'white', borderRadius: '5px' }}>
               <i className="fa fa-power-off" aria-hidden="true"/>
@@ -236,13 +227,20 @@ class Navbar extends Component {
     }else if(user.role==='world') {
       authLinksIII = (
         <ul className="navbar-nav components d-flex justify-content-around" style={{ height: '100%' }}>
-          <li className='nav-item' >
+          <li className='nav-item' style={{color: 'white',background:'#008cff' , borderRadius: '5px'
+             }}>
+            <Link className='nav-link' to="/dashboard" style={{color: 'white', borderRadius: '5px' }}>
+              Home
+            </Link>
+          </li>
+          <li className='nav-item' style={{color: 'white',background:'#008cff' , borderRadius: '5px'
+            }}>
             <Link className='nav-link' to="/dashboard" style={{color: 'white', borderRadius: '5px' }}>
               Home
             </Link>
           </li>
           <li className="nav-item dropdown " style={{color: 'white',background:'#008cff' , borderRadius: '5px'
-            ,minWidth:'150px' }}>
+             }}>
             <Link className="nav-link nav-item d-flex justify-content-around" to=""  data-toggle="dropdown"
                   style={{color: 'white', borderRadius: '5px' }}>
               {user.emailId}<i className="fas fa-caret-down"/>
@@ -264,31 +262,6 @@ class Navbar extends Component {
       )
     }
 
-    let requestConfirmation = (
-      <div className='row col-md-12' style={{ background:'#ffa726', width:'100%', height:'40px'}}>
-        <p>Please confirm  your email address, If you didn't receive a Confirmation OTP click Send Again</p>
-          <button onClick={this.openModal} className='btn btn-sm' style={{background:'#ffa726', color: 'green'}}>Confirm Now</button>
-
-          <button onClick={this.onSendAgain} className='btn btn-sm' style={{background:'#ffa726', color: 'yellow'}}>Send Again</button>
-          <Modal
-            isOpen={this.state.modalIsOpen}
-            onAfterOpen={this.afterOpenModal}
-            onRequestClose={this.closeModal}
-            style={customStyles}
-            contentLabel="OTP confirmation"
-            shouldCloseOnOverlayClick={false}
-            modalOptions={{ dismissible: false }}
-            shouldCloseOnEsc={false}
-            ariaHideApp={false}
-          >{<div className='d-flex justify-content-center'>
-            <EnterPin/>
-            <div>
-              <button onClick={this.closeModal} className='btn btn-sm' style={{color:'white', background:'red'}}>
-                <i className="fas fa-times"/></button>
-            </div>
-          </div>}</Modal>
-      </div>
-    )
     return (
       <nav className="navbar navbar-expand-sm  col-md-12 " style={{background:'#008cff'}}>
         <div className="row container d-flex justify-content-between col-md-12">
