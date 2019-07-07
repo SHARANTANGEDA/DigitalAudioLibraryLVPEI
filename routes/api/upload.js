@@ -150,14 +150,16 @@ router.get('/changeRating/:id/:rating',passport.authenticate('world',{session: f
   })
 })
 
-router.post('/displayImage', (req, res) => {
-  dfs.files.findOne({'metadata.bookId':req.body.id}, (err, file) => {
+router.get('/displayImage/:id', (req, res) => {
+  console.log(req.params.id)
+  dfs.files.findOne({'metadata.bookId':req.params.id}, (err, file) => {
+    console.log({file:file})
     if (!file || file.length === 0) {
       return res.status(404).json({
         err: 'No file exists'
       })
     }
-    const readstream = gfs.createReadStream(file.filename)
+    const readstream = dfs.createReadStream(file.filename)
       readstream.pipe(res)
   })
 })

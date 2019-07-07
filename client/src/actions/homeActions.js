@@ -169,6 +169,8 @@ export const changeRating = (id, rating) => dispatch => {
   )
 }
 
+
+
 export const getDiagUserHome=() => dispatch => {
   dispatch(homeLoading())
   axios.get('/api/diagUser/home',)

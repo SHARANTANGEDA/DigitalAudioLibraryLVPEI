@@ -265,8 +265,8 @@ router.post('/changePassword', passport.authenticate('all', { session: false }),
     })
 })
 
-router.get('/home', async (req, res) => {
-  Music.find().then( records => {
+router.get('/home',(req, res) => {
+  Music.find().sort({uploadAt: -1}).then( records => {
     res.json({ all: records })
   })
 });

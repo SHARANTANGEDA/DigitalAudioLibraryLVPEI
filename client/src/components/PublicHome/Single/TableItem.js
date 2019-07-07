@@ -14,12 +14,7 @@ import {
   TwitterShareButton,
   WhatsappShareButton,
 } from 'react-share';
-import {
-  FacebookShareCount,
-  LinkedinShareCount,
-  TwitterShareCount,
-  WhatsappShareCount,
-} from 'react-share';
+
 import {
   addRating, changeRating, downloadFolder, favourite, unFavourite } from '../../../actions/homeActions'
 import downloading from '../../common/downloading.gif'

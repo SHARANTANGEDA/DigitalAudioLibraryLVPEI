@@ -7,6 +7,7 @@ import { getAllBooks, loginUser } from '../../actions/authActions'
 import Spinner from '../common/Spinner'
 import Select from 'react-select'
 import TableItem from '../PublicHome/Single/TableItem'
+import ProductCard from '../PublicHome/ProductCard/ProductCard'
 
 class Landing extends Component {
   constructor () {
@@ -92,7 +93,8 @@ class Landing extends Component {
         if(this.state.category===null || this.state.category.value==='all') {
           const currentFolder = land.all.slice(indexOfFirstTodo, indexOfLastTodo);
           const render = (  currentFolder.map(land => (
-            <TableItem folder={land} key={land._id}/>
+            <ProductCard folder={land} key={land._id}/>
+            // <TableItem folder={land} key={land._id}/>
           )))
           for (let i = 1; i <= Math.ceil(land.all.length / todosPerPage); i++) {
             pageNumbers.push(i);
@@ -152,9 +154,9 @@ class Landing extends Component {
       }
     }
     return (
-      <div>
-        <div className="displayFolder">
-          <div className="App-content row d-flex justify-content-center" >
+      <div className='container-fluid'>
+        <div className="displayFolder " style={{width:'100%'}}>
+          <div className=" row d-flex justify-content-start" >
             <nav className='navbar navbar-expand-sm justify-content-between col-md-12' style={{ background:'#ffa726', width:'100%', height:'40px'}}>
               {heading}
               <div className='col-md-4'>
@@ -165,25 +167,28 @@ class Landing extends Component {
                 </Select>
               </div>
             </nav>
-            <table className="table table-bordered  mb-0">
-              <thead>
-              <tr>
-                <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Category</th>
-                <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Book Title</th>
-                <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Number of Tracks</th>
-                <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Language</th>
-                <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Author</th>
-                <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Grade</th>
-                <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Download</th>
-                <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>View</th>
-                <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Rate</th>
-                <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Share</th>
-              </tr>
-              </thead>
-              <tbody>
+            <div className='d-flex row justify-content-start' style={{margin:'20px', padding:'5px'}}>
               {allFoldersContent}
-              </tbody>
-            </table>
+            </div>
+
+            {/*<table className="table table-bordered  mb-0">*/}
+            {/*  <thead>*/}
+            {/*  <tr>*/}
+            {/*    <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Category</th>*/}
+            {/*    <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Book Title</th>*/}
+            {/*    <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Number of Tracks</th>*/}
+            {/*    <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Language</th>*/}
+            {/*    <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Author</th>*/}
+            {/*    <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Grade</th>*/}
+            {/*    <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Download</th>*/}
+            {/*    <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>View</th>*/}
+            {/*    <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Rate</th>*/}
+            {/*    <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Share</th>*/}
+            {/*  </tr>*/}
+            {/*  </thead>*/}
+            {/*  <tbody>*/}
+            {/*  </tbody>*/}
+            {/*</table>*/}
             {noContent}
             {spinner}
           </div>

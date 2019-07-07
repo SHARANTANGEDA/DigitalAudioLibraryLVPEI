@@ -9,6 +9,7 @@ import Select from 'react-select'
 import { Link } from 'react-router-dom'
 import { getAllBooks } from '../../actions/authActions'
 import Warning from '../layout/Warning'
+import ProductCard from '../PublicHome/ProductCard/ProductCard'
 
 const customStyles = {
   content: {
@@ -376,7 +377,8 @@ class Dashboard extends Component {
           if(this.state.category===null || this.state.category.value==='all') {
             const currentFolder = land.all.slice(indexOfFirstTodo, indexOfLastTodo);
             const render = (  currentFolder.map(land => (
-              <TableItem folder={land} key={land._id}/>
+              <ProductCard folder={land} key={land._id}/>
+              // <TableItem folder={land} key={land._id}/>
             )))
             for (let i = 1; i <= Math.ceil(land.all.length / todosPerPage); i++) {
               pageNumbers.push(i);
@@ -436,8 +438,8 @@ class Dashboard extends Component {
         }
       }
       return (
-        <div>
-          <div className="displayFolder">
+        <div className=''>
+          <div className="displayFolder container-fluid" style={{width:'100%'}}>
             <div className="App-content row d-flex justify-content-center" >
               {!this.props.auth.user.verified ? <Warning/>: null}
               <nav className='navbar navbar-expand-sm justify-content-between col-md-12' style={{ background:'#ffa726', width:'100%', height:'40px'}}>
@@ -450,28 +452,29 @@ class Dashboard extends Component {
                   </Select>
                 </div>
               </nav>
-              <table className="table table-bordered  mb-0">
-                <thead>
-                <tr>
-                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Category</th>
-                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Book Title</th>
-                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Number of Tracks</th>
-                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Language</th>
-                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Author</th>
-                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Grade</th>
-                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Download</th>
-                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>View</th>
-                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Favourite</th>
-                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Rating</th>
-                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Rate</th>
-                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Share</th>
+              {allFoldersContent}
 
-                </tr>
-                </thead>
-                <tbody>
-                {allFoldersContent}
-                </tbody>
-              </table>
+              {/*<table className="table table-bordered  mb-0">*/}
+              {/*  <thead>*/}
+              {/*  <tr>*/}
+              {/*    <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Category</th>*/}
+              {/*    <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Book Title</th>*/}
+              {/*    <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Number of Tracks</th>*/}
+              {/*    <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Language</th>*/}
+              {/*    <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Author</th>*/}
+              {/*    <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Grade</th>*/}
+              {/*    <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Download</th>*/}
+              {/*    <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>View</th>*/}
+              {/*    <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Favourite</th>*/}
+              {/*    <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Rating</th>*/}
+              {/*    <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Rate</th>*/}
+              {/*    <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Share</th>*/}
+
+              {/*  </tr>*/}
+              {/*  </thead>*/}
+              {/*  <tbody>*/}
+              {/*  </tbody>*/}
+              {/*</table>*/}
             </div>
             <div className='d-flex justify-content-end'>
               {renderpn}
