@@ -6,7 +6,7 @@ import {
   GET_ACTIVE, GET_DIAG_USER_HOME,
   GET_FILES,
   GET_FILES_SINGLE_FOLDER, GET_NAME_RESULTS,
-  GET_PATIENTS_HOME,
+  GET_PATIENTS_HOME, GET_REPORT_DATA,
   GET_SA_HOME,
   GET_SEARCH_RESULTS,
   HOME_LOADING,
@@ -16,6 +16,7 @@ import {
   SEARCH_LOADING,
   VIEW_LOADING
 } from './types'
+import { reportLoading } from './sAActions'
 export const getWorldHome = () => dispatch => {
   dispatch(setLoading())
   dispatch(homeLoading())
@@ -160,6 +161,35 @@ export const addRating = (id, rating) => dispatch => {
   )
 }
 
+export const getPlays = (id) => dispatch => {
+  axios.get(`/api/users/addPlay/${id}`)
+    .then(res => {
+      window.location.href=`/audioBook/${id}`
+    }).catch(err => {
+    console.log({success: false})
+    })
+}
+
+export const getReports = () => dispatch => {
+  axios.get(`/api/superAdmin/downloadExcel`, { responseType: 'arraybuffer' })
+    .then(res => {
+      console.log(res)
+      const url = window.URL.createObjectURL(new Blob([res.data],
+        { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }))
+      const link = document.createElement('a')
+      console.log(url)
+      link.href = url
+      link.setAttribute('download', 'UsageReports.xlsx')
+      document.body.appendChild(link)
+      link.click()
+    }).catch(err => {
+      dispatch({
+      type: NO_FILES,
+      payload: err.data
+    })
+  })
+}
+
 export const changeRating = (id, rating) => dispatch => {
   axios.get(`/api/upload/changeRating/${id}/${rating}`)
     .then(res => {
@@ -169,20 +199,6 @@ export const changeRating = (id, rating) => dispatch => {
   )
 }
 
-
-
-export const getDiagUserHome=() => dispatch => {
-  dispatch(homeLoading())
-  axios.get('/api/diagUser/home',)
-    .then(res => {
-      dispatch({
-        type: GET_DIAG_USER_HOME,
-        payload: res.data
-      })
-    }).catch(err =>
-   console.log(err)
-  )
-}
 
 export const getSearchResults = (data) => dispatch => {
   dispatch(setSearchLoading())

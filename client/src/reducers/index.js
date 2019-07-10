@@ -6,6 +6,7 @@ import fileReducer from './fileReducer'
 import searchReducer from './searchReducer'
 import viewCentreReducer from './viewCentreReducer'
 import accountReducer from './accountReducer'
+import reportReducer from './reportReducer'
 
 
 export default combineReducers({
@@ -15,5 +16,6 @@ export default combineReducers({
   folder: fileReducer,
   search: searchReducer,
   view: viewCentreReducer,
-  account: accountReducer
+  account: accountReducer,
+  report: reportReducer
 })

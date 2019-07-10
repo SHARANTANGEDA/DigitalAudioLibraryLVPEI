@@ -59,6 +59,12 @@ class Dashboard extends Component {
     this.setState({ modalIsOpen: true })
   }
 
+  handleClick(event) {
+    this.setState({
+      currentPage: Number(event.target.id)
+    });
+  }
+
   openNextModal () {
     this.setState({ uploadModal: true })
     const userData = {

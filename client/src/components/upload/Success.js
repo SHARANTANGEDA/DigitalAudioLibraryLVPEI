@@ -33,8 +33,7 @@ class Success extends Component {
     let data = new FormData()
     if(Array.from(this.state.files).length===0)
     {
-      this.setState({error: 'Please choose at least one file to upload'})
-      return
+      window.location.href='/dashboard'
     }
     this.setState({spinner: true})
     Array.from(this.state.files).forEach((file, i) => {
@@ -60,7 +59,7 @@ class Success extends Component {
     )
     let downloadBut = (
       <button className='btn btn-success ' style={{background: 'green'}}
-              onClick={this.uploadFile.bind(this)}>Upload</button>
+              onClick={this.uploadFile.bind(this)}>Continue</button>
     )
     let info;
     if(this.state.error!==null) {

@@ -120,7 +120,7 @@ class Display extends Component {
 
     } else {
       modalContent = (
-        <div id="mainbar" className='row d-flex justify-content-center'>
+        <div id="mainbar" className='row d-flex justify-content-center '>
           <div className="grid text-center col-md-10">
             <h3 className="grid--cell fl1 fs-headline1 text-center" style={{
               color: 'black'

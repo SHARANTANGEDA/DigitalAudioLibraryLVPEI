@@ -271,7 +271,11 @@ router.get('/home',(req, res) => {
   })
 });
 
-
+router.get('/addPlay/:id',(req, res) => {
+  Music.findByIdAndUpdate(req.params.id,{$inc:{plays: 1}}).then( records => {
+    res.json({ success: true })
+  })
+})
 router.get('/myAccount', passport.authenticate('non_super', { session: false }),
   (req, res) => {
     User.findById(req.user.id)

@@ -21,6 +21,7 @@ import ReAssignDiagUsers from '../../diagAdmin/ReAssignDiagUsers'
 import DisplaySelected from '../../display/Files/DisplaySelected'
 import Login from '../../layout/Login'
 import AudioBook from '../../dashboard/AudioBook'
+import Report from '../../SuperAdmin/Report'
 
 const Routes = () => {
   return (
@@ -57,7 +58,9 @@ const Routes = () => {
         <PrivateRoute exact path='/activeUser' component={ManageDiagUsers}/>
         <PrivateRoute exact path='/deAssignedUser' component={ReAssignDiagUsers}/>
         <PrivateRoute exact path='/displayFolder/displaySelectedFiles/:id' component={DisplaySelected}/>
-        <PrivateRoute exact path='/audioBook/:id' component={AudioBook}/>
+        <Route exact path='/audioBook/:id' component={AudioBook}/>
+        <PrivateRoute exact path='/report' component={Report}/>
+
         {/*</Switch>*/}
         <Route path="*" component={NotFound} />
       </Switch>

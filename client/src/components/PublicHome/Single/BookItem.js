@@ -6,7 +6,7 @@ import {
   deleteFolder,
   downloadFile,
   downloadFolder,
-  downloadSelectedFiles, favourite,
+  downloadSelectedFiles, favourite, getPlays,
   pinFile, unFavourite, unPinFile
 } from '../../../actions/homeActions'
 import downloading from '../../common/downloading.gif'
@@ -45,12 +45,9 @@ class BookItem extends Component {
     this.setState({file: true})
   }
   onPlay (e) {
-    if(this.props.auth===null || this.props.auth.isAuthenticated===false) {
-      this.setState({modalIsOpen: true})
-    } else {
       this.setState({ file2: true })
+    this.props.getPlays(this.props.folder._id)
 
-    }
   }
   onDownload(e) {
     if(this.props.auth===null || this.props.auth.isAuthenticated===false) {
@@ -92,26 +89,16 @@ class BookItem extends Component {
       />
       </button>)
     }
-    let rating=(
-      <p>rating</p>
-    )
-    let share = (
-      <p>share</p>
-    )
-    if(!this.state.file2) {
-      icon2= (<button className='btn-sm btn' style={{background: 'whit', color: 'black',marginRight: '10px'}}
-                      onClick={this.onPlay.bind(this)}><i className="fas fa-play"/>
-      </button>)
-    } else {
-      icon2 = (<audio controls src={`/api/upload/audio/${this.props.bookId}/${music.filename}`} />)
-    }
+
     return (
       //onTouchStart="this.classList.toggle('hover');
       <tr>
         <td><span style={{ fontFamily: 'Arial', fontSize: '14px', overflow: 'hidden',width:'200px',
           OTextOverflow: 'ellipsis', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{music.filename}</span></td>
         <td>{icon}</td>
-        <td ><audio controls src={`/api/upload/audio/${this.props.bookId}/${music.filename}`} style={{width:'400px'}}/></td>
+        <td >
+          <audio controls onClick={this.onPlay.bind(this)} src={`/api/upload/audio/${this.props.bookId}/${music.filename}`} style={{width:'400px'}}/>
+      </td>
         {/*<td>{share}</td>*/}
 
         <Modal
@@ -135,12 +122,12 @@ BookItem.propTypes = {
   music: PropTypes.object.isRequired,
   bookId: PropTypes.object.isRequired,
   favourite: PropTypes.func.isRequired,
-  unFavourite: PropTypes.func.isRequired
-
+  unFavourite: PropTypes.func.isRequired,
+  getPlays: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   auth: state.auth,
   folder: state.folder
 });
 
-export default connect(mapStateToProps, { downloadFile, favourite, unFavourite })(BookItem);
+export default connect(mapStateToProps, { downloadFile, favourite, unFavourite, getPlays })(BookItem);

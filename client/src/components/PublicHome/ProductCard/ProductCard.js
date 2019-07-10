@@ -61,28 +61,6 @@ class ProductCard extends Component {
     this.onStarClick = this.onStarClick.bind(this)
   }
   componentDidMount () {
-    // axios.post('/api/upload/displayImage', { id: this.props.folder._id },
-    //   { responseType: 'arraybuffer' }).then(res => {
-    //   if (res !== null) {
-    //     console.log({res:res})
-    //     try {
-    //       let arrayBufferView = new Uint8Array( res.data );
-    //
-    //       let blob = new Blob( [ arrayBufferView ], { type: "image/jpeg" } );
-    //       console.log({blob: blob})
-    //       let urlCreator = window.URL || window.webkitURL;
-    //       let imageUrl = urlCreator.createObjectURL( blob );
-    //       let img = document.querySelector( "#display" );
-    //       img.src = imageUrl;
-    //     } catch (e) {
-    //       console.log({Error:e})
-    //     }
-    //   }
-    // }).catch(err => {
-    //     console.log({ err: err })
-    //   }
-    // )
-
     let index = this.props.folder.fav.findIndex((item, i) => {
       return item.id===this.props.auth.id
     })
@@ -202,9 +180,6 @@ class ProductCard extends Component {
       )
     }
 
-    let share = (
-      <p>share</p>
-    )
     let fav
     if(this.state.favo) {
       fav = (

@@ -23,12 +23,17 @@ class Landing extends Component {
     this.changeHandler = this.changeHandler.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onSelectType = this.onSelectType.bind(this)
+    this.handleClick = this.handleClick.bind(this)
 
   }
   changeHandler(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
-
+  handleClick(event) {
+    this.setState({
+      currentPage: Number(event.target.id)
+    });
+  }
   componentDidMount () {
     if(this.props.auth.isAuthenticated) {
       this.props.history.push('/dashboard');
@@ -93,8 +98,8 @@ class Landing extends Component {
         if(this.state.category===null || this.state.category.value==='all') {
           const currentFolder = land.all.slice(indexOfFirstTodo, indexOfLastTodo);
           const render = (  currentFolder.map(land => (
-            <ProductCard folder={land} key={land._id}/>
-            // <TableItem folder={land} key={land._id}/>
+             <TableItem folder={land} key={land._id}/>
+            //<ProductCard folder={land} key={land._id}/>
           )))
           for (let i = 1; i <= Math.ceil(land.all.length / todosPerPage); i++) {
             pageNumbers.push(i);
@@ -157,7 +162,8 @@ class Landing extends Component {
       <div className='container-fluid'>
         <div className="displayFolder " style={{width:'100%'}}>
           <div className=" row d-flex justify-content-start" >
-            <nav className='navbar navbar-expand-sm justify-content-between col-md-12' style={{ background:'#ffa726', width:'100%', height:'40px'}}>
+            <nav className='navbar navbar-expand-sm justify-content-between col-md-12'
+                 style={{ background:'#ffa726', width:'100%', height:'40px'}}>
               {heading}
               <div className='col-md-4'>
                 <Select
@@ -167,28 +173,25 @@ class Landing extends Component {
                 </Select>
               </div>
             </nav>
-            <div className='d-flex row justify-content-start' style={{margin:'20px', padding:'5px'}}>
+            <table className="table table-bordered  mb-0">
+              <thead>
+              <tr>
+                <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Category</th>
+                <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Book Title</th>
+                <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Number of Tracks</th>
+                <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Language</th>
+                <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Author</th>
+                <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Grade</th>
+                <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Download</th>
+                <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>View</th>
+                <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Rate</th>
+                <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Share</th>
+              </tr>
+              </thead>
+              <tbody>
               {allFoldersContent}
-            </div>
-
-            {/*<table className="table table-bordered  mb-0">*/}
-            {/*  <thead>*/}
-            {/*  <tr>*/}
-            {/*    <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Category</th>*/}
-            {/*    <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Book Title</th>*/}
-            {/*    <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Number of Tracks</th>*/}
-            {/*    <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Language</th>*/}
-            {/*    <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Author</th>*/}
-            {/*    <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Grade</th>*/}
-            {/*    <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Download</th>*/}
-            {/*    <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>View</th>*/}
-            {/*    <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Rate</th>*/}
-            {/*    <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Share</th>*/}
-            {/*  </tr>*/}
-            {/*  </thead>*/}
-            {/*  <tbody>*/}
-            {/*  </tbody>*/}
-            {/*</table>*/}
+              </tbody>
+            </table>
             {noContent}
             {spinner}
           </div>

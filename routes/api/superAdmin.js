@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const bcrypt = require('bcryptjs')
 const passport = require('passport')
-
+const excel = require('exceljs');
 const validateRegisterInput = require('../../validations/register')
 const validateDiagnosticsInput = require('../../validations/newDiagnostics')
 const validateResetPassword = require('../../validations/resetPassword')
@@ -142,6 +142,65 @@ router.get('/lvpeiUsers', passport.authenticate('super_admin', { session: false 
     res.json(users)
   })
 });
+
+router.get('/getReports', passport.authenticate('super_admin', {session: false}), (req, res) => {
+  Music.find().then(music => {
+    res.json(music)
+  })
+})
+
+router.get('/downloadExcel',
+  (req, res) => {
+  let dummy=[]
+    Music.find().then( async music => {
+      let workbook = new excel.Workbook();
+      workbook.creator = 'LVPEI';
+      workbook.properties.date1904 = true;
+
+      workbook.views = [
+        {
+          x: 0, y: 0, width: 10000, height: 20000,
+          firstSheet: 0, activeTab: 1, visibility: 'visible'
+        }
+      ];
+      let sheet = workbook.addWorksheet('UsageReport');
+      sheet.columns = [
+        { header: 'Category', key: 'name', width: 20 },
+        { header: 'Book Title', key: 'name', width: 40 },
+        { header: 'Language', key: 'name', width: 20},
+        { header: 'author', key: 'name', width: 20},
+        { header: 'Tracks', key: 'id', width: 10},
+        { header: 'Downloads', key: 'id', width: 10 },
+        { header: 'Plays', key: 'id', width: 10 },
+        { header: 'Favourites', key: 'id', width: 10 },
+        { header: 'Ratings', key: 'name', width: 10 },
+      ];
+      music.map(book => {
+        dummy.push(new Promise((resolve, reject) =>{
+          let length = book.rating.length*5
+          let totalRatings = 0, rateDisplay=0, number=book.rating.length
+          book.rating.map(single => {
+            totalRatings= totalRatings + single.rate
+          })
+          if(isNaN((totalRatings/length)*5)) {
+            rateDisplay=0
+          }else {
+            rateDisplay=(totalRatings/length)*5
+          }
+          // sheet.addRow({Category: book.category, title: book.title, tracks: book.tracks,downloads: book.downloads,
+          //   plays: book.plays, favs: book.fav.length, rating: rateDisplay+'('+number+')'})
+          sheet.addRow([book.category,book.title,book.language,book.author, book.tracks,book.downloads,
+            book.plays, book.fav.length,rateDisplay+'/5 '+'('+number+')'])
+        }))
+      })
+      await Promise.all([res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')])
+      await Promise.all([res.setHeader("Content-Disposition", "attachment; filename=" + 'UsageReport.xlsx')])
+
+      await Promise.all([workbook.xlsx.write(res).then(() => {
+        res.end();
+      })])
+    })
+})
 
 router.get('/deAssignedUsers', passport.authenticate('super_admin', { session: false }), (req, res) => {
   User.find({role: 'lvpei',access: false}).then(users => {

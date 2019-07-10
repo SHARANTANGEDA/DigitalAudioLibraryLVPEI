@@ -149,6 +149,12 @@ class Navbar extends Component {
                 Home
               </Link>
             </li>
+            <li className='nav-item'  style={{color: 'white',background:'#008cff' , borderRadius: '5px'
+            }}>
+              <Link className='nav-link' to="/report" style={{color: 'white', borderRadius: '5px' }}>
+                Usage Reports
+              </Link>
+            </li>
             <li className="nav-item dropdown" style={{color: 'white',background:'#008cff' , borderRadius: '5px'
                }}>
                 <Link className="nav-link nav-item d-flex justify-content-around" to="" data-toggle="dropdown"

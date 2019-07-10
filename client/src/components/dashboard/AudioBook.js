@@ -20,9 +20,7 @@ class AudioBook extends Component {
     }
   }
   componentDidMount () {
-    if (this.props.auth.user.role === 'world') {
-      this.props.getAudioBook(this.props.match.params.id)
-    }
+     this.props.getAudioBook(this.props.match.params.id)
   }
 
 

@@ -16,8 +16,7 @@ import {
 } from 'react-share';
 
 import {
-  addRating, changeRating, downloadFolder, favourite, getPlays, unFavourite
-} from '../../../actions/homeActions'
+  addRating, changeRating, downloadFolder, favourite, unFavourite } from '../../../actions/homeActions'
 import downloading from '../../common/downloading.gif'
 import Modal from 'react-modal'
 import ModalLogin from '../../layout/ModalLogin'
@@ -45,7 +44,8 @@ class TableItem extends Component {
       rating: 0,
       hasRated: false,
       percent: 50,
-      alreadyMounted: false
+      alreadyMounted: false,
+      noRatings: 0
     };
     this.onOpen = this.onOpen.bind(this);
     this.onDownload = this.onDownload.bind(this)
@@ -97,7 +97,12 @@ class TableItem extends Component {
     this.setState({file: true})
   }
   onPlay (e) {
-    window.location.href=`/audioBook/${this.props.folder._id}`
+    if(this.props.auth===null || this.props.auth.isAuthenticated===false) {
+      this.setState({modalIsOpen: true})
+    } else {
+      this.setState({ file2: true })
+      window.location.href=`/audioBook/${this.props.folder._id}`
+    }
   }
 
   onStarClick (e) {
@@ -141,7 +146,7 @@ class TableItem extends Component {
   }
   render () {
     const {folder} = this.props;
-    let icon;
+    let icon,icon2;
     if(!this.state.file) {
       icon= (<button className='btn-sm btn' style={{background: 'green', color: 'white',marginRight: '10px'}}
                      onClick={this.onDownload.bind(this)}><i className="fa fa-download" aria-hidden="true"/>
@@ -157,69 +162,21 @@ class TableItem extends Component {
     // icon2= (<button className='btn-sm btn' style={{background: 'whit', color: 'black',marginRight: '10px'}}
     //                   onClick={this.onPlay.bind(this)}><i className="fas fa-play"/>
     //   </button>)
-    let fav
-    if(this.state.favo) {
-      fav = (
-        <button onClick={this.onUnFav} style={{color:'red'}} className='btn btn-sm'><i className="fas fa-heart fa-2x"/></button>
-      )
-    }else {
-      fav = (
-        <button onClick={this.onFav} style={{color:'red'}} className='btn btn-sm'><i className="far fa-heart fa-2x"/></button>
-      )
-    }
 
     return (
       //onTouchStart="this.classList.toggle('hover');
       <tr>
         <td><span style={{ fontFamily: 'Arial', fontSize: '14px' }}>{folder.category}</span></td>
         <td><span style={{ fontFamily: 'Arial', fontSize: '14px' }}>{folder.title}</span></td>
-        <td><span style={{ fontFamily: 'Arial', fontSize: '14px' }}>{folder.tracks}</span></td>
         <td><span style={{ fontFamily: 'Arial', fontSize: '14px' }}>{folder.language}</span></td>
-        <td><span style={{ fontFamily: 'Arial', fontSize: '14px'  }}>{folder.author}</span></td>
-        <td><span style={{ fontFamily: 'Arial', fontSize: '14px' }}>{folder.grade}</span></td>
-        <td>{icon}</td>
-        <td><button className='btn-sm btn' style={{background: 'green', color: 'white',marginRight: '10px'}}
-                    onClick={this.onPlay.bind(this)}>View</button></td>
-        {this.props.auth.isAuthenticated ? <td>{fav}</td>: null}
+        <td><span style={{ fontFamily: 'Arial', fontSize: '14px' }}>{folder.author}</span></td>
+
+        <td><span style={{ fontFamily: 'Arial', fontSize: '14px' }}>{folder.tracks}</span></td>
+        <td><span style={{ fontFamily: 'Arial', fontSize: '14px' }}>{folder.downloads}</span></td>
+        <td><span style={{ fontFamily: 'Arial', fontSize: '14px' }}>{folder.plays}</span></td>
+        <td><span style={{ fontFamily: 'Arial', fontSize: '14px' }}>{folder.fav.length}</span></td>
         <td>{<div ><i style={{color:'gold'}} className="fas fa-star fa-2x"/>{this.state.percent}/5
           <span>({this.state.noRatings})</span></div>}</td>
-        {this.props.auth.isAuthenticated ?<td><StarRatingComponent
-          name="rating"
-          starCount={5}
-          value={this.state.rating}
-          onStarClick={this.onStarClick.bind(this)}
-          renderStarIcon={() => {
-            return (
-              <span>
-                  <i className='fas fa-star '/>
-                </span>
-            )}}
-          editing={true}
-        /></td>: null}
-        <td><div className='row' style={{margin:'1px'}}>
-          <button style={{borderStyle:'none', background:'white'}}>
-            <TwitterShareButton url={URL()+`audioBook/${this.props.folder._id}`}><TwitterIcon size={25} round={true} />
-          </TwitterShareButton></button>
-          <button style={{borderStyle:'none', background:'white'}}>
-          <WhatsappShareButton url={URL()+`audioBook/${this.props.folder._id}`}><WhatsappIcon size={25} round={true} />
-          </WhatsappShareButton></button>
-          <button style={{borderStyle:'none', background:'white'}}>
-          <FacebookShareButton url={URL()+`audioBook/${this.props.folder._id}`}><FacebookIcon size={25} round={true} />
-          </FacebookShareButton></button>
-          <button style={{borderStyle:'none', background:'white'}}>
-          <LinkedinShareButton url={URL()+`audioBook/${this.props.folder._id}`}><LinkedinIcon size={25} round={true} />
-          </LinkedinShareButton></button>
-
-        </div>
-        </td>
-        <Modal
-          isOpen={this.state.modalIsOpen}
-          onAfterOpen={this.afterOpenModal}
-          onRequestClose={this.closeModal}
-          style={customStyles}
-          contentLabel="Patient Data"
-          ariaHideApp={false}
-        >{<ModalLogin/>}</Modal>
       </tr>
 
     )
@@ -232,10 +189,9 @@ TableItem.propTypes = {
   favourite: PropTypes.func.isRequired,
   unFavourite: PropTypes.func.isRequired,
   addRating: PropTypes.func.isRequired,
-  changeRating: PropTypes.func.isRequired,
-  getPlays: PropTypes.func.isRequired
+  changeRating: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   auth: state.auth
 });
-export default connect(mapStateToProps, {downloadFolder, favourite, unFavourite, addRating, changeRating, getPlays})(TableItem);
+export default connect(mapStateToProps, {downloadFolder, favourite, unFavourite, addRating, changeRating})(TableItem);

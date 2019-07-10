@@ -2,7 +2,7 @@ import axios from 'axios'
 
 import {
   CLEAR_ERRORS, GET_ACTIVE,
-  GET_ERRORS, GET_INACTIVE, GET_LVPEI_USERS, HOME_LOADING, ON_POST_FAIL, VIEW_LOADING
+  GET_ERRORS, GET_INACTIVE, GET_LVPEI_USERS, GET_REPORT_DATA, HOME_LOADING, ON_POST_FAIL, REPORT_LOADING, VIEW_LOADING
 } from './types'
 
 
@@ -18,6 +18,21 @@ export const addDiagnostics = (userData) => dispatch => {
     })
   )
 };
+
+export const getReportData = () => dispatch => {
+  dispatch(reportLoading())
+  axios.get('/api/superAdmin/getReports')
+    .then(res => {
+      dispatch({
+        type:GET_REPORT_DATA,
+        payload: res.data
+      })
+    }).catch(err => {
+      console.log(err)
+  })
+}
+
+
 
 export const ControlLvpeiUsers = () => dispatch => {
   dispatch(setLoading())
@@ -144,9 +159,9 @@ export const setLoading = () => {
     type: VIEW_LOADING
   };
 };
-export const homeLoading = () => {
+export const reportLoading = () => {
   return {
-    type: HOME_LOADING
+    type: REPORT_LOADING
   };
 };
 // Clear errors

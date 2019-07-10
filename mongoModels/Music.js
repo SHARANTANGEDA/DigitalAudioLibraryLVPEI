@@ -57,6 +57,10 @@ const MusicSchema = new Schema({
     type: Number,
     default: 0
   },
+  plays: {
+    type: Number,
+    default: 0
+  },
   rating: [{
     id: {
       type: String,
