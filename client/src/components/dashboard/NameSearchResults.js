@@ -1,13 +1,8 @@
 import React, { Component } from 'react'
 import { PropTypes } from 'prop-types'
 import { connect } from 'react-redux'
-import { Collapse } from 'react-collapse'
-import PatientRow from '../display/Patients/PatientRow'
-import Spinner from '../common/Spinner'
-import FolderRow from '../display/Folders/FolderRow'
+// import FolderRow from '../display/Folders/FolderRow'
 import { getNameResults } from '../../actions/homeActions'
-import getLocalDate from '../../utils/getLocalDate'
-import { Link } from 'react-router-dom'
 
 class NameSearchResults extends Component {
   constructor () {
@@ -48,7 +43,7 @@ class NameSearchResults extends Component {
               </tr>
               </thead>
               <tbody>
-              <FolderRow folders={resultsName.name}/>
+              {/*<FolderRow folders={resultsName.name}/>*/}
               </tbody>
             </table>
           )

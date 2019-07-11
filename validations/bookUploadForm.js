@@ -15,6 +15,10 @@ module.exports = (data) => {
   if (Validator.isEmail(data.author)) {
     errors.author = 'Book author name is required';
   }
+  if(data.language===null) {
+    errors.language = 'Enter language in which the book is recorded'
+  }
+
   if(Validator.isEmpty(data.language)) {
     errors.language = 'Enter language in which the book is recorded'
   }

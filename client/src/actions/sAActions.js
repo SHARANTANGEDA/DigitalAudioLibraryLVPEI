@@ -1,10 +1,16 @@
 import axios from 'axios'
 
 import {
-  CLEAR_ERRORS, GET_ACTIVE,
-  GET_ERRORS, GET_INACTIVE, GET_LVPEI_USERS, GET_REPORT_DATA, HOME_LOADING, ON_POST_FAIL, REPORT_LOADING, VIEW_LOADING
+  CLEAR_ERRORS,
+  GET_ACTIVE,
+  GET_ERRORS,
+  GET_INACTIVE,
+  GET_LVPEI_USERS,
+  GET_REPORT_DATA,
+  ON_POST_FAIL,
+  REPORT_LOADING,
+  VIEW_LOADING
 } from './types'
-
 
 export const addDiagnostics = (userData) => dispatch => {
   dispatch(clearErrors())

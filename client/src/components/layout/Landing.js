@@ -1,13 +1,10 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import { PropTypes } from 'prop-types'
 import { connect } from 'react-redux'
-import TextFieldGroup from '../common/TextFieldGroup'
 import { getAllBooks, loginUser } from '../../actions/authActions'
 import Spinner from '../common/Spinner'
 import Select from 'react-select'
 import TableItem from '../PublicHome/Single/TableItem'
-import ProductCard from '../PublicHome/ProductCard/ProductCard'
 
 class Landing extends Component {
   constructor () {
@@ -63,11 +60,19 @@ class Landing extends Component {
   }
 
   render() {
+    function sort_by_key(array, key)
+    {
+      return array.sort(function(a, b)
+      {
+        let x = a[key]; let y = b[key];
+        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+      });
+    }
     let categoryArray=[{value: 'School (I – V)', label: 'School (I – V)'},
       {value: 'School (VI – X)', label: 'School (VI – X)'},
       {value: 'Intermediate (XI & XII)', label: 'Intermediate (XI & XII)'},
       {value: 'Undergraduate', label: 'Undergraduate'},
-      {value: 'Postgraduate', label: 'P`ostgraduate'},
+      {value: 'Postgraduate', label: 'Postgraduate'},
       {value: 'Law', label: 'Law'},
       {value: 'Psychology', label: 'Psychology'},
       {value: 'Competitive Exam', label: 'Competitive Exam'},
@@ -75,7 +80,6 @@ class Landing extends Component {
       {value: 'Children Stories', label: 'Children Stories'},
       {value: 'Religious', label: 'Religious'},
       {value: 'Other', label: 'Other'}]
-    const {errors} = this.state;
     const {loading, land} = this.props.auth
     const {  currentPage, todosPerPage } = this.state;
     const indexOfLastTodo = currentPage * todosPerPage;
@@ -128,7 +132,14 @@ class Landing extends Component {
 
         } else {
           let newFolders = land.all.filter(folder => folder.category === this.state.category.value.toString())
-          const currentFolder = newFolders.slice(indexOfFirstTodo, indexOfLastTodo);
+          let currentFolder = newFolders.slice(indexOfFirstTodo, indexOfLastTodo);
+          // const sortByKey = (array, key) => array.sort(function (a, b) {
+          //   let x = a[key];
+          //   let y = b[key];
+          //   // (x < y) ? -1 : ((x > y) ? 1 : 0)
+          //   return (x<y);
+          // })
+          currentFolder = sort_by_key(currentFolder, 'title');
           const render = (  currentFolder.map(folder => (
             <TableItem folder={land} key={land._id}/>
           )))
@@ -159,8 +170,8 @@ class Landing extends Component {
       }
     }
     return (
-      <div className='container-fluid'>
-        <div className="displayFolder " style={{width:'100%'}}>
+      <div className='container-fluid' style={{minWidth:'100%', padding: '0px'}}>
+        <div className="displayFolders " >
           <div className=" row d-flex justify-content-start" >
             <nav className='navbar navbar-expand-sm justify-content-between col-md-12'
                  style={{ background:'#ffa726', width:'100%', height:'40px'}}>
@@ -182,7 +193,6 @@ class Landing extends Component {
                 <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Language</th>
                 <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Author</th>
                 <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Grade</th>
-                <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Download</th>
                 <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>View</th>
                 <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Rate</th>
                 <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Share</th>

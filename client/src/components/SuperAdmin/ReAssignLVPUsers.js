@@ -3,9 +3,8 @@ import { PropTypes } from 'prop-types'
 import { connect } from 'react-redux'
 import './scroll.css'
 import ShowTable from '../SuperAdmin/tableDisplay/ShowTable'
-import Card from 'react-bootstrap/Card'
 import Spinner from '../common/Spinner'
-import {  InactiveLVPEIUsers } from '../../actions/sAActions'
+import { InactiveLVPEIUsers } from '../../actions/sAActions'
 
 class ManageLVPEIUsers extends Component {
   componentDidMount () {

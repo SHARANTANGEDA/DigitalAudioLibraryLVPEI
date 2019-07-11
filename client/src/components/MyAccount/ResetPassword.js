@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
-import { changePassword, resetPassword } from '../../actions/profileActions'
+import { resetPassword } from '../../actions/profileActions'
 
 import classnames from 'classnames'
 

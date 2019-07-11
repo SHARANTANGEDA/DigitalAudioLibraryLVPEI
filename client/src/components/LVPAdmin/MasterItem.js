@@ -1,13 +1,23 @@
 import React, { Component } from 'react'
 import { PropTypes } from 'prop-types'
 import { connect } from 'react-redux'
+import { addRating, changeRating, downloadFolder, favourite, getPlays, unFavourite } from '../../actions/homeActions'
+import Modal from 'react-modal'
+import EditBook from './EditBook'
+import UploadFiles from '../upload/UploadFiles'
 
-import { addRating, changeRating, downloadFolder, favourite, unFavourite } from '../../../actions/homeActions'
-import downloading from '../../common/downloading.gif'
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '0',
+    transform: 'translate(-50%, -50%)'
+  }
+}
 
-
-
-class TableItem extends Component {
+class MasterItem extends Component {
   constructor () {
     super();
     this.state = {
@@ -19,18 +29,15 @@ class TableItem extends Component {
       rating: 0,
       hasRated: false,
       percent: 50,
-      alreadyMounted: false,
-      noRatings: 0
+      alreadyMounted: false
     };
     this.onOpen = this.onOpen.bind(this);
-    this.onDownload = this.onDownload.bind(this)
+    // this.onDownload = this.onDownload.bind(this)
     this.openModal = this.openModal.bind(this)
     this.afterOpenModal = this.afterOpenModal.bind(this)
     this.closeModal = this.closeModal.bind(this)
     this.onPlay = this.onPlay.bind(this)
-    this.onFav = this.onFav.bind(this)
-    this.onUnFav = this.onUnFav.bind(this)
-    this.onStarClick = this.onStarClick.bind(this)
+    this.openEditModal = this.openEditModal.bind(this)
   }
   componentDidMount () {
     let index = this.props.folder.fav.findIndex((item, i) => {
@@ -55,7 +62,6 @@ class TableItem extends Component {
     }else {
       this.setState({percent: (totalRatings/length)*5})
     }
-
     let rateIndex = this.props.folder.rating.findIndex((item, i) => {
       return item.id===this.props.auth.user.id
     })
@@ -73,56 +79,36 @@ class TableItem extends Component {
     this.setState({file: true})
   }
   onPlay (e) {
-    if(this.props.auth===null || this.props.auth.isAuthenticated===false) {
-      this.setState({modalIsOpen: true})
-    } else {
-      this.setState({ file2: true })
-      window.location.href=`/audioBook/${this.props.folder._id}`
-    }
+    window.location.href=`/audioBook/${this.props.folder._id}`
   }
 
-  onStarClick (e) {
-    this.setState({rating: e})
-    if(this.state.hasRated) {
-      this.props.changeRating(this.props.folder._id, e)
-    }else {
-      this.props.addRating(this.props.folder._id, e)
-    }
-  }
-  onDownload(e) {
-    if(this.props.auth===null || this.props.auth.isAuthenticated===false) {
-      this.setState({modalIsOpen: true})
-    } else {
-      e.preventDefault()
-      this.setState({file: true})
-      this.props.downloadFolder(this.props.folder._id )
-    }
+  // onDownload(e) {
+  //   if(this.props.auth===null || this.props.auth.isAuthenticated===false) {
+  //     this.setState({modalIsOpen: true})
+  //   } else {
+  //     e.preventDefault()
+  //     this.setState({file: true})
+  //     this.props.downloadFolder(this.props.folder._id )
+  //   }
+  // }
 
+  openEditModal () {
+    this.setState({ modalIsOpen: true, uploadModal: false })
   }
-
   closeModal () {
     this.setState({ modalIsOpen: false })
   }
 
   openModal () {
-    this.setState({ modalIsOpen: true })
+    this.setState({ modalIsOpen: true, uploadModal: true })
   }
 
   afterOpenModal () {
 
   }
-  onUnFav (e) {
-    this.props.unFavourite(this.props.folder._id, this.props.folder.rating)
-    this.setState({favo: false})
-
-  }
-  onFav (e) {
-    this.props.favourite(this.props.folder._id, this.props.folder.rating)
-    this.setState({favo: true})
-  }
   render () {
     const {folder} = this.props;
-    // let icon,icon2;
+    let modalContent;
     // if(!this.state.file) {
     //   icon= (<button className='btn-sm btn' style={{background: 'green', color: 'white',marginRight: '10px'}}
     //                  onClick={this.onDownload.bind(this)}><i className="fa fa-download" aria-hidden="true"/>
@@ -135,39 +121,65 @@ class TableItem extends Component {
     //   />
     //   </button>)
     // }
-    // icon2= (<button className='btn-sm btn' style={{background: 'whit', color: 'black',marginRight: '10px'}}
-    //                   onClick={this.onPlay.bind(this)}><i className="fas fa-play"/>
-    //   </button>)
-
+    if(this.state.modalIsOpen && this.state.uploadModal) {
+      modalContent=(<UploadFiles bookId={folder._id}/>)
+    }else if(this.state.modalIsOpen && !this.state.uploadModal) {
+      modalContent = (
+        <EditBook bookId={folder._id}/>)
+    }
     return (
-      //onTouchStart="this.classList.toggle('hover');
       <tr>
         <td><span style={{ fontFamily: 'Arial', fontSize: '14px' }}>{folder.category}</span></td>
         <td><span style={{ fontFamily: 'Arial', fontSize: '14px' }}>{folder.title}</span></td>
-        <td><span style={{ fontFamily: 'Arial', fontSize: '14px' }}>{folder.language}</span></td>
-        <td><span style={{ fontFamily: 'Arial', fontSize: '14px' }}>{folder.author}</span></td>
-
         <td><span style={{ fontFamily: 'Arial', fontSize: '14px' }}>{folder.tracks}</span></td>
-        <td><span style={{ fontFamily: 'Arial', fontSize: '14px' }}>{folder.downloads}</span></td>
-        <td><span style={{ fontFamily: 'Arial', fontSize: '14px' }}>{folder.plays}</span></td>
-        <td><span style={{ fontFamily: 'Arial', fontSize: '14px' }}>{folder.fav.length}</span></td>
+        <td><span style={{ fontFamily: 'Arial', fontSize: '14px' }}>{folder.language}</span></td>
+        <td><span style={{ fontFamily: 'Arial', fontSize: '14px'  }}>{folder.author}</span></td>
+        <td><span style={{ fontFamily: 'Arial', fontSize: '14px' }}>{folder.grade}</span></td>
+        <td><button className='btn-sm btn' style={{background: 'green', color: 'white',marginRight: '10px'}}
+                    onClick={this.onPlay.bind(this)}>View</button></td>
         <td>{<div ><i style={{color:'gold'}} className="fas fa-star fa-2x"/>{this.state.percent}/5
           <span>({this.state.noRatings})</span></div>}</td>
+        <td>
+          <button onClick={this.openEditModal} style={{color:'blue'}} className='btn btn-sm'>
+            Edit Info</button>
+        </td>
+        <td>
+          <button onClick={this.openModal} style={{color:'green'}} className='btn btn-sm'>
+            Add Track</button>
+
+        </td>
+        <Modal
+          isOpen={this.state.modalIsOpen}
+          onAfterOpen={this.afterOpenModal}
+          onRequestClose={this.closeModal}
+          style={customStyles}
+          contentLabel="Modal Data"
+          ariaHideApp={false}
+        ><div className='row col-md-12'>
+          <div className='row'>
+            {modalContent}
+          </div>
+          <div className='row'>
+            <button className='btn btn-sm' onClick={this.closeModal} style={{color: 'white', background:'red'}}>close</button>
+          </div>
+        </div>
+        </Modal>
       </tr>
 
     )
   }
 }
 
-TableItem.propTypes = {
+MasterItem.propTypes = {
   folder: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
   favourite: PropTypes.func.isRequired,
   unFavourite: PropTypes.func.isRequired,
   addRating: PropTypes.func.isRequired,
-  changeRating: PropTypes.func.isRequired
+  changeRating: PropTypes.func.isRequired,
+  getPlays: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   auth: state.auth
 });
-export default connect(mapStateToProps, {downloadFolder, favourite, unFavourite, addRating, changeRating})(TableItem);
+export default connect(mapStateToProps, {downloadFolder, favourite, unFavourite, addRating, changeRating, getPlays})(MasterItem);

@@ -1,9 +1,10 @@
 import {
-  GET_FILES,
   FOLDER_LOADING,
-  NO_FILES,
+  GET_FILES,
   GET_FILES_SINGLE_FOLDER,
-  NO_FILES_IN_FOLDER, GET_PATIENTS_HOME,
+  GET_PATIENTS_HOME,
+  NO_FILES,
+  NO_FILES_IN_FOLDER,
 } from '../actions/types'
 
 const initialState = {

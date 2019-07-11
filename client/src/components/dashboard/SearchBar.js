@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Select from 'react-select'
 import classnames from 'classnames'
 import { getSearchResults } from '../../actions/homeActions'
-
 
 class SearchBar extends Component {
   constructor (props) {

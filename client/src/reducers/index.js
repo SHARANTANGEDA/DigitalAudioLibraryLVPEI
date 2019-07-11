@@ -8,7 +8,6 @@ import viewCentreReducer from './viewCentreReducer'
 import accountReducer from './accountReducer'
 import reportReducer from './reportReducer'
 
-
 export default combineReducers({
   auth: authReducer,
   errors: errorReducer,

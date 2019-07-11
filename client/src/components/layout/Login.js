@@ -70,8 +70,9 @@ class Login extends Component {
                   />
                   <input type="submit" className="btn btn-info btn-block mt-4"/>
                 </form>
+                <hr/>
                 <p style={{color: 'white'}}>Don't have an account yet?,
-                  <Link  to={"/register"} className={"text-primary"}> Click Here </Link> to register</p>
+                  <Link  to={"/register"} className={"btn btn-sm text-primary"}>Sign Up </Link> to register</p>
               </div>
             </div>
           </div>

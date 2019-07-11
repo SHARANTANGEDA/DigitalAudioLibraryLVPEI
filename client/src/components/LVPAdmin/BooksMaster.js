@@ -1,13 +1,16 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { getSADetails } from '../../actions/homeActions'
 import Spinner from '../common/Spinner'
 import Select from 'react-select'
-import { getReportData } from '../../actions/sAActions'
-import ReportItem from './tableDisplay/ReportItem'
-import { getReports } from '../../actions/homeActions'
+import { getAllBooks } from '../../actions/authActions'
+import MasterItem from './MasterItem'
+import NotFound from '../layout/NotFound'
 
-class Report extends Component {
+
+
+class BooksMaster extends Component {
   constructor () {
     super()
     this.state = {
@@ -15,9 +18,11 @@ class Report extends Component {
       errors: {},
       modalIsOpen: false,
       uploadModal: false,
+      category: { value: 'all', label: 'Choose book Category to filter' },
+      campusCode: { value: 'all', label: 'Choose Campus' },
       currentPage: 1,
       todosPerPage: 25,
-      category: null
+      filter: null
     }
     this.changeHandler = this.changeHandler.bind(this)
     this.openModal = this.openModal.bind(this)
@@ -28,22 +33,21 @@ class Report extends Component {
     this.onDiscard = this.onDiscard.bind(this)
     this.onSelectType = this.onSelectType.bind(this)
     this.codeSelect = this.codeSelect.bind(this)
-    this.onConvertToExcel = this.onConvertToExcel.bind(this)
     this.handleClick = this.handleClick.bind(this)
   }
 
   componentDidMount () {
-    if (this.props.auth.user.role === 'super_admin' ) {
-      this.props.getReportData(this.props.match.params.id)
-    }
+      this.props.getAllBooks(this.props.match.params.id)
   }
 
   openModal () {
     this.setState({ modalIsOpen: true })
   }
 
-  onConvertToExcel () {
-    this.props.getReports(this.props.match.params.id)
+  handleClick(event) {
+    this.setState({
+      currentPage: Number(event.target.id)
+    });
   }
 
   openNextModal () {
@@ -73,11 +77,7 @@ class Report extends Component {
   closeModal () {
     this.setState({ modalIsOpen: false })
   }
-  handleClick(event) {
-    this.setState({
-      currentPage: Number(event.target.id)
-    });
-  }
+
   changeHandler (e) {
     this.setState({ [e.target.name]: e.target.value })
   }
@@ -98,7 +98,6 @@ class Report extends Component {
         return ((x < y) ? -1 : ((x > y) ? 1 : 0));
       });
     }
-    if(this.props.auth.user.role==='super_admin') {
       let categoryArray=[{value:'all', label: 'all'},{value: 'School (I – V)', label: 'School (I – V)'},
         {value: 'School (VI – X)', label: 'School (VI – X)'},
         {value: 'Intermediate (XI & XII)', label: 'Intermediate (XI & XII)'},
@@ -111,29 +110,36 @@ class Report extends Component {
         {value: 'Children Stories', label: 'Children Stories'},
         {value: 'Religious', label: 'Religious'},
         {value: 'Other', label: 'Other'}]
-      const {loading, report} = this.props.report
+      const {loading, land} = this.props.auth
       const {  currentPage, todosPerPage } = this.state;
       const indexOfLastTodo = currentPage * todosPerPage;
       const indexOfFirstTodo = indexOfLastTodo - todosPerPage;
       const pageNumbers = [];
-      let allFoldersContent,  renderpn;
-      if (loading || report===null) {
+      let allFoldersContent, heading, renderpn;
+      if (loading || land===null) {
         allFoldersContent = (<Spinner/>)
       } else {
-        if(report.length===0) {
+        if(land.all.length===0) {
           allFoldersContent = (
             <h5>Nothing is uploaded yet, please check back later</h5>
           )
+          heading=null
         }else {
-          // allFoldersContent = (
-
+          heading = null
           if(this.state.category===null || this.state.category.value==='all') {
-            const currentFolder =report.slice(indexOfFirstTodo, indexOfLastTodo);
-            const render = (  currentFolder.map(report => (
-              <ReportItem folder={report} key={report._id}/>
-              //{/*<ProductCard folder={land} key={land._id}/>*/}
+            let currentFolder = land.all.slice(indexOfFirstTodo, indexOfLastTodo);
+            // const sortByKey = (array, key) => array.sort(function (a, b) {
+            //   let x = a[key];
+            //   let y = b[key];
+            //   // (x < y) ? -1 : ((x > y) ? 1 : 0)
+            //   return (x<y);
+            // })
+            // currentFolder = sortByKey(currentFolder, 'title');
+            const render = (  currentFolder.map(land => (
+              // <ProductCard folder={land} key={land._id}/>
+              <MasterItem folder={land} key={land._id}/>
             )))
-            for (let i = 1; i <= Math.ceil(report.length / todosPerPage); i++) {
+            for (let i = 1; i <= Math.ceil(land.all.length / todosPerPage); i++) {
               pageNumbers.push(i);
             }
             const renderPageNumbers = (
@@ -155,15 +161,13 @@ class Report extends Component {
                   {renderPageNumbers}
                 </ul>
               </nav>
-
             )
-
           } else {
-            let newFolders = report.filter(folder => folder.category === this.state.category.value.toString())
+            let newFolders = land.all.filter(folder => folder.category === this.state.category.value.toString())
             let currentFolder = newFolders.slice(indexOfFirstTodo, indexOfLastTodo);
-            currentFolder = sort_by_key(currentFolder,'title')
+            currentFolder = sort_by_key(currentFolder, 'title');
             const render = (  currentFolder.map(folder => (
-              <ReportItem folder={folder} key={folder._id}/>
+              <MasterItem folder={folder} key={folder._id}/>
             )))
             for (let i = 1; i <= Math.ceil(newFolders.length / todosPerPage); i++) {
               pageNumbers.push(i);
@@ -191,16 +195,14 @@ class Report extends Component {
           }
         }
       }
-      return (
-        <div className='container-fluid' style={{minWidth:'100%', padding:'0px'}}>
-          <div className="displayFolder " >
-            <div className=" row d-flex justify-content-start" >
-              <nav className='navbar navbar-expand-sm justify-content-between col-md-12'
-                   style={{ background:'#ffa726', width:'100%', height:'40px'}}>
-                  <button className='btn btn-primary' onClick={this.onConvertToExcel}
-                      style={{ background: '#0bc107', color: 'white', borderStyle: 'solid', marginRight:'10px' }}>
-                Convert to Excel</button>
-              <div className='col-md-4'>
+      let content;
+    if(this.props.auth.user.role==='lvpei') {
+      content= (
+        <div className="displayFolder container-fluid" style={{width:'100%'}}>
+          <div className="App-content row d-flex justify-content-center" >
+            <nav className='navbar navbar-expand-sm justify-content-between col-md-12' style={{ background:'#ffa726', width:'100%', height:'40px'}}>
+              {heading}
+              <div className='col-md-3'>
                 <Select
                   options={categoryArray}
                   className='isSearchable' placeholder="Select a book category to filter"
@@ -208,43 +210,52 @@ class Report extends Component {
                 </Select>
               </div>
             </nav>
-              <table className="table table-bordered  mb-0" style={{minWidth:'100%'}}>
-                <thead>
-                <tr>
-                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Category</th>
-                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Book Title</th>
-                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Language</th>
-                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Author/Publication</th>
-                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Tracks</th>
-                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Number of Downloads</th>
-                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Number of Plays</th>
-                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Favourites</th>
-                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Rating</th>
-                </tr>
-                </thead>
-                <tbody>
-                {allFoldersContent}
-                </tbody>
-              </table>
-            </div>
-            <div className='d-flex justify-content-end'>
-              {renderpn}
-            </div>
+            <table className="table table-bordered  mb-0">
+              <thead>
+              <tr>
+                <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Category</th>
+                <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Book Title</th>
+                <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Number of Tracks</th>
+                <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Language</th>
+                <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Author</th>
+                <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Grade</th>
+                <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>View</th>
+                <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Rating</th>
+                <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Edit Info</th>
+                <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Add Track</th>
+              </tr>
+              </thead>
+              <tbody>
+              {allFoldersContent}
+              </tbody>
+            </table>
+          </div>
+          <div className='d-flex justify-content-end'>
+            {renderpn}
+          </div>
         </div>
+      )
+    }else {
+      content=(<NotFound/>)
+    }
+      return (
+        <div className='bookMaster'>
+          {content}
         </div>
       );
     }
-  }
 }
 
-Report.propTypes = {
-  getReportData: PropTypes.func.isRequired,
+BooksMaster.propTypes = {
+  home: PropTypes.object.isRequired,
+  getSADetails: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  report: PropTypes.object.isRequired,
-  getReports: PropTypes.func.isRequired
+  folder: PropTypes.object.isRequired,
+  getAllBooks: PropTypes.func.isRequired
 }
 const mapStateToProps = state => ({
+  home: state.home,
   auth: state.auth,
-  report: state.report
+  folder: state.folder
 })
-export default connect(mapStateToProps, {getReportData, getReports})(Report)
+export default connect(mapStateToProps, {getSADetails, getAllBooks})(BooksMaster)

@@ -3,20 +3,20 @@ import axios from 'axios'
 import {
   CLEAR_ERRORS,
   FOLDER_LOADING,
-  GET_ACTIVE, GET_DIAG_USER_HOME,
+  GET_ACTIVE,
+  GET_FAV_BOOKS,
   GET_FILES,
-  GET_FILES_SINGLE_FOLDER, GET_NAME_RESULTS,
-  GET_PATIENTS_HOME, GET_REPORT_DATA,
+  GET_NAME_RESULTS,
+  GET_PATIENTS_HOME,
   GET_SA_HOME,
   GET_SEARCH_RESULTS,
   HOME_LOADING,
   NO_FILES,
-  NO_FILES_IN_FOLDER,
   ON_POST_FAIL,
   SEARCH_LOADING,
   VIEW_LOADING
 } from './types'
-import { reportLoading } from './sAActions'
+
 export const getWorldHome = () => dispatch => {
   dispatch(setLoading())
   dispatch(homeLoading())
@@ -170,6 +170,22 @@ export const getPlays = (id) => dispatch => {
     })
 }
 
+
+export const getFavBooks = () => dispatch => {
+  console.log('here')
+  axios.get(`/api/users/getFavBooks`)
+    .then(res => {
+      dispatch({
+        type: GET_FAV_BOOKS,
+        payload: res.data
+      })
+    }).catch(err => {
+    dispatch({
+      type: NO_FILES,
+      payload: err.data
+    })
+  })
+}
 export const getReports = () => dispatch => {
   axios.get(`/api/superAdmin/downloadExcel`, { responseType: 'arraybuffer' })
     .then(res => {
@@ -250,34 +266,6 @@ export const downloadSelectedFiles = (id) => dispatch => {
   }).catch(err =>
     dispatch({
       type: NO_FILES,
-      payload: err.data
-    })
-  )
-}
-export const getFilesByFolder = (id) => dispatch => {
-  dispatch(setLoading())
-  axios.get(`/api/upload/files/${id}`).then(res => {
-    dispatch({
-      type: GET_FILES_SINGLE_FOLDER,
-      payload: res.data
-    })
-  }).catch(err =>
-    dispatch({
-      type: NO_FILES_IN_FOLDER,
-      payload: err.data
-    })
-  )
-}
-export const getSelectedFilesByFolder = (id) => dispatch => {
-  dispatch(setLoading())
-  axios.get(`/api/upload/selectedFiles/${id}`).then(res => {
-    dispatch({
-      type: GET_FILES_SINGLE_FOLDER,
-      payload: res.data
-    })
-  }).catch(err =>
-    dispatch({
-      type: NO_FILES_IN_FOLDER,
       payload: err.data
     })
   )

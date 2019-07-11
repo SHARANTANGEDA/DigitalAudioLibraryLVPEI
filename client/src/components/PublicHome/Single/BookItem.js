@@ -2,16 +2,19 @@ import React, { Component } from 'react'
 import { PropTypes } from 'prop-types'
 import { connect } from 'react-redux'
 // import '../allFolders.css'
-import {
-  deleteFolder,
-  downloadFile,
-  downloadFolder,
-  downloadSelectedFiles, favourite, getPlays,
-  pinFile, unFavourite, unPinFile
-} from '../../../actions/homeActions'
+import { downloadFile, favourite, getPlays, unFavourite } from '../../../actions/homeActions'
 import downloading from '../../common/downloading.gif'
 import Modal from 'react-modal'
 import ModalLogin from '../../layout/ModalLogin'
+import {
+  FacebookIcon,
+  FacebookShareButton, LinkedinIcon, LinkedinShareButton,
+  TwitterIcon,
+  TwitterShareButton,
+  WhatsappIcon,
+  WhatsappShareButton
+} from 'react-share'
+import URL from '../../../utils/URL'
 
 const customStyles = {
   content: {
@@ -93,14 +96,36 @@ class BookItem extends Component {
     return (
       //onTouchStart="this.classList.toggle('hover');
       <tr>
+        <td>check box</td>
         <td><span style={{ fontFamily: 'Arial', fontSize: '14px', overflow: 'hidden',width:'200px',
           OTextOverflow: 'ellipsis', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{music.filename}</span></td>
-        <td>{icon}</td>
         <td >
           <audio controls onClick={this.onPlay.bind(this)} src={`/api/upload/audio/${this.props.bookId}/${music.filename}`} style={{width:'400px'}}/>
-      </td>
-        {/*<td>{share}</td>*/}
+        </td>
+        <td>{icon}</td>
 
+        <td>status</td>
+        <td><div className='row' style={{margin:'1px'}}>
+          <button style={{borderStyle:'none', background:'white'}}>
+            <TwitterShareButton title={'Hey!!, checkout this great audio book '+this.props.folder.title+' by LVPEI'}
+                                hastags={['SupportVisionImpaired','L V Prasad Eye Institute']}
+                                url={URL()+`audioBook/${this.props.folder._id}`}><TwitterIcon size={25} round={true} />
+            </TwitterShareButton></button>
+          <button style={{borderStyle:'none', background:'white'}}>
+            <WhatsappShareButton title={'Hey!!, checkout this great audio book '+this.props.folder.title+' by LVPEI'}
+                                 url={URL()+`audioBook/${this.props.folder._id}`}><WhatsappIcon size={25} round={true} />
+            </WhatsappShareButton></button>
+          <button style={{borderStyle:'none', background:'white'}}>
+            <FacebookShareButton quote={'Hey!!, checkout this great audio book '+this.props.folder.title+' by LVPEI'}
+                                 hastag={'#SupportVisionImpaired #LVPEI'}
+                                 url={URL()+`audioBook/${this.props.folder._id}`}><FacebookIcon size={25} round={true} />
+            </FacebookShareButton></button>
+          <button style={{borderStyle:'none', background:'white'}}>
+            <LinkedinShareButton
+              url={URL()+`audioBook/${this.props.folder._id}`}><LinkedinIcon size={25} round={true} />
+            </LinkedinShareButton></button>
+        </div>
+        </td>
         <Modal
           isOpen={this.state.modalIsOpen}
           onAfterOpen={this.afterOpenModal}

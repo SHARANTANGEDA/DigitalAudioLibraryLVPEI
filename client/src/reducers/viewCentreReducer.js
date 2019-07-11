@@ -1,8 +1,4 @@
-import {
-  GET_INACTIVE,
-  GET_ACTIVE,
-  VIEW_LOADING, GET_LVPEI_USERS
-} from '../actions/types'
+import { GET_ACTIVE, GET_INACTIVE, GET_LVPEI_USERS, VIEW_LOADING } from '../actions/types'
 
 const initialState = {
   active: null,

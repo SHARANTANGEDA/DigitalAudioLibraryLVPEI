@@ -117,7 +117,7 @@ class Register extends Component {
         <div className="container " style={{maxHeight:'100%'}}>
           <div className="row">
             <div className="col-md-6 m-auto">
-              <h2 className="text-center" style={{color: 'white'}}>Sign Up</h2>
+              <h1 className="text-center" style={{color: 'white'}}>Sign Up</h1>
               <p className="lead text-center"  style={{color: 'white'}}>Create a free account to downloads Audio books</p>
               <form noValidate onSubmit={this.onSubmit} className='text-center'>
                 <div className="row">

@@ -4,16 +4,12 @@ import { connect } from 'react-redux'
 import '../allFolders.css'
 import { deleteFile, displayDicom, downloadFile, pinFile, unPinFile } from '../../../actions/homeActions'
 import Modal from 'react-modal'
-import getLocalDate from '../../../utils/getLocalDate'
 import DwvComponent from '../../DicomWebViewer/DwvComponent'
 import dwv from 'dwv'
 import '../../DicomWebViewer/DwvComponent.css'
 import axios from 'axios'
 // import ReactHover from 'react-hover'
-import { Document, Page} from 'react-pdf'
-
-
-
+import { Document, Page } from 'react-pdf'
 
 const customStyles = {
   content: {

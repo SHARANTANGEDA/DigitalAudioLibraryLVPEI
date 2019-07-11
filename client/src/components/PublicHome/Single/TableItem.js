@@ -1,23 +1,20 @@
 import React, { Component } from 'react'
 import { PropTypes } from 'prop-types'
 import { connect } from 'react-redux'
-import StarRatingComponent from 'react-star-rating-component';
+import StarRatingComponent from 'react-star-rating-component'
 import URL from '../../../utils/URL'
 import {
   FacebookIcon,
-  TwitterIcon,
-  WhatsappIcon,
-  LinkedinIcon, } from 'react-share';
-import {
   FacebookShareButton,
+  LinkedinIcon,
   LinkedinShareButton,
+  TwitterIcon,
   TwitterShareButton,
+  WhatsappIcon,
   WhatsappShareButton,
-} from 'react-share';
+} from 'react-share'
 
-import {
-  addRating, changeRating, downloadFolder, favourite, getPlays, unFavourite
-} from '../../../actions/homeActions'
+import { addRating, changeRating, downloadFolder, favourite, getPlays, unFavourite } from '../../../actions/homeActions'
 import downloading from '../../common/downloading.gif'
 import Modal from 'react-modal'
 import ModalLogin from '../../layout/ModalLogin'
@@ -83,7 +80,12 @@ class TableItem extends Component {
     let rateIndex = this.props.folder.rating.findIndex((item, i) => {
       return item.id===this.props.auth.user.id
     })
-    console.log(rateIndex)
+    let favIndex = this.props.folder.fav.findIndex((item, i) => {
+      return item.id===this.props.auth.user.id
+    })
+    if(favIndex!==-1) {
+      this.setState({favo: true})
+    }
     if(!this.state.alreadyMounted)
       if(rateIndex===-1) {
         this.setState({hasRated: false, alreadyMounted: true})
@@ -154,9 +156,6 @@ class TableItem extends Component {
       />
       </button>)
     }
-    // icon2= (<button className='btn-sm btn' style={{background: 'whit', color: 'black',marginRight: '10px'}}
-    //                   onClick={this.onPlay.bind(this)}><i className="fas fa-play"/>
-    //   </button>)
     let fav
     if(this.state.favo) {
       fav = (
@@ -167,17 +166,15 @@ class TableItem extends Component {
         <button onClick={this.onFav} style={{color:'red'}} className='btn btn-sm'><i className="far fa-heart fa-2x"/></button>
       )
     }
-
     return (
-      //onTouchStart="this.classList.toggle('hover');
       <tr>
-        <td><span style={{ fontFamily: 'Arial', fontSize: '14px' }}>{folder.category}</span></td>
-        <td><span style={{ fontFamily: 'Arial', fontSize: '14px' }}>{folder.title}</span></td>
-        <td><span style={{ fontFamily: 'Arial', fontSize: '14px' }}>{folder.tracks}</span></td>
-        <td><span style={{ fontFamily: 'Arial', fontSize: '14px' }}>{folder.language}</span></td>
-        <td><span style={{ fontFamily: 'Arial', fontSize: '14px'  }}>{folder.author}</span></td>
-        <td><span style={{ fontFamily: 'Arial', fontSize: '14px' }}>{folder.grade}</span></td>
-        <td>{icon}</td>
+        <td><span style={{ fontFamily: 'Arial', fontSize: '16px' }}>{folder.category}</span></td>
+        <td><span style={{ fontFamily: 'Arial', fontSize: '16px' }}>{folder.title}</span></td>
+        <td><span style={{ fontFamily: 'Arial', fontSize: '16px' }}>{folder.tracks}</span></td>
+        <td><span style={{ fontFamily: 'Arial', fontSize: '16px' }}>{folder.language}</span></td>
+        <td><span style={{ fontFamily: 'Arial', fontSize: '16px'  }}>{folder.author}</span></td>
+        <td><span style={{ fontFamily: 'Arial', fontSize: '16px' }}>{folder.grade}</span></td>
+        {/*<td>{icon}</td>*/}
         <td><button className='btn-sm btn' style={{background: 'green', color: 'white',marginRight: '10px'}}
                     onClick={this.onPlay.bind(this)}>View</button></td>
         {this.props.auth.isAuthenticated ? <td>{fav}</td>: null}
@@ -198,18 +195,23 @@ class TableItem extends Component {
         /></td>: null}
         <td><div className='row' style={{margin:'1px'}}>
           <button style={{borderStyle:'none', background:'white'}}>
-            <TwitterShareButton url={URL()+`audioBook/${this.props.folder._id}`}><TwitterIcon size={25} round={true} />
+            <TwitterShareButton title={'Hey!!, checkout this great audio book '+this.props.folder.title+' by LVPEI'}
+                                hastags={['SupportVisionImpaired','L V Prasad Eye Institute']}
+                                url={URL()+`audioBook/${this.props.folder._id}`}><TwitterIcon size={25} round={true} />
           </TwitterShareButton></button>
           <button style={{borderStyle:'none', background:'white'}}>
-          <WhatsappShareButton url={URL()+`audioBook/${this.props.folder._id}`}><WhatsappIcon size={25} round={true} />
+          <WhatsappShareButton title={'Hey!!, checkout this great audio book '+this.props.folder.title+' by LVPEI'}
+            url={URL()+`audioBook/${this.props.folder._id}`}><WhatsappIcon size={25} round={true} />
           </WhatsappShareButton></button>
           <button style={{borderStyle:'none', background:'white'}}>
-          <FacebookShareButton url={URL()+`audioBook/${this.props.folder._id}`}><FacebookIcon size={25} round={true} />
+          <FacebookShareButton quote={'Hey!!, checkout this great audio book '+this.props.folder.title+' by LVPEI'}
+                               hastag={'#SupportVisionImpaired #LVPEI'}
+            url={URL()+`audioBook/${this.props.folder._id}`}><FacebookIcon size={25} round={true} />
           </FacebookShareButton></button>
           <button style={{borderStyle:'none', background:'white'}}>
-          <LinkedinShareButton url={URL()+`audioBook/${this.props.folder._id}`}><LinkedinIcon size={25} round={true} />
+          <LinkedinShareButton
+            url={URL()+`audioBook/${this.props.folder._id}`}><LinkedinIcon size={25} round={true} />
           </LinkedinShareButton></button>
-
         </div>
         </td>
         <Modal

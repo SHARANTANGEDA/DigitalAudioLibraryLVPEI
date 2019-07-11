@@ -2,16 +2,13 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
-import { changePassword } from '../../actions/profileActions'
-
 import classnames from 'classnames'
 import TextFieldGroup from '../common/TextFieldGroup'
-import { continueToUpload, deleteResidual, getPatientDetails, getUploadModal } from '../../actions/dAActions'
+import { continueToUpload, deleteResidual, getUploadModal } from '../../actions/dAActions'
 import Spinner from '../common/Spinner'
 import UploadFiles from './UploadFiles'
 import Modal from 'react-modal'
 import Select from 'react-select'
-
 
 const customStyles = {
   content: {
@@ -108,15 +105,20 @@ class UploadForm extends Component {
 
   onSubmit (e) {
     e.preventDefault()
-    const userData = {
-      title: this.state.title,
-      author: this.state.author,
-      language: this.state.language.value,
-      grade: this.state.grade,
-      organization: this.state.organization,
-      category: this.state.category.value,
-    }
+    if(this.state.language!==null && this.state.category!==null) {
+      const userData = {
+        title: this.state.title,
+        author: this.state.author,
+        language: this.state.language.value,
+        grade: this.state.grade,
+        organization: this.state.organization,
+        category: this.state.category.value,
+      }
       this.props.getUploadModal(userData)
+    }else {
+      this.setState({errors:{title: 'make sure all inputs are entered'}})
+    }
+
   }
 
 
@@ -157,11 +159,11 @@ class UploadForm extends Component {
       if (loading2 || patientData === null) {
         showModal = <Spinner/>
       } else {
-
+        console.log({form:this.props.home.patientData.mid})
           showModal = (
             <div >
                 <div className='row text-center'>
-                  <UploadFiles/>
+                  <UploadFiles bookId={this.props.home.patientData.mid}/>
                 </div>
               <button onClick={this.onDiscard} className='btn btn-warning'
                       style={{ background: 'red', color: 'white' }}>discard
@@ -177,7 +179,7 @@ class UploadForm extends Component {
       }else {
         showModal = (
           <div>
-            <UploadFiles/>
+            <UploadFiles bookId={this.props.home.patientData.mid}/>
             <div className='row d-flex justify-content-around'>
               <button onClick={this.onDiscard} className='btn btn-warning'
                       style={{ background: 'red', color: 'white' }}>discard

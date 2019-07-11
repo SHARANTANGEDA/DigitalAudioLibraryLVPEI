@@ -2,10 +2,9 @@ import React, { Component } from 'react'
 import { PropTypes } from 'prop-types'
 import { connect } from 'react-redux'
 import TextFieldGroup from '../common/TextFieldGroup'
-import { confirmEmail, sendAgain } from '../../actions/authActions'
+import { confirmEmail } from '../../actions/authActions'
 import { green } from '@material-ui/core/colors'
 import axios from 'axios'
-import { GET_ERRORS } from '../../actions/types'
 
 class EnterPin extends Component {
   constructor () {

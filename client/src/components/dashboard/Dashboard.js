@@ -6,21 +6,8 @@ import Spinner from '../common/Spinner'
 import Card from '@material-ui/core/Card'
 import TableItem from '../PublicHome/Single/TableItem'
 import Select from 'react-select'
-import { Link } from 'react-router-dom'
 import { getAllBooks } from '../../actions/authActions'
 import Warning from '../layout/Warning'
-import ProductCard from '../PublicHome/ProductCard/ProductCard'
-
-const customStyles = {
-  content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '0',
-    transform: 'translate(-50%, -50%)'
-  }
-}
 
 class Dashboard extends Component {
   constructor () {
@@ -105,6 +92,14 @@ class Dashboard extends Component {
   }
 
   render () {
+    function sort_by_key(array, key)
+    {
+      return array.sort(function(a, b)
+      {
+        let x = a[key]; let y = b[key];
+        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+      });
+    }
     if (this.props.auth.user.role === 'lvpei' || this.props.auth.user.role === 'super_admin') {
       const { loading, home } = this.props.home
       let showContent=null
@@ -350,11 +345,12 @@ class Dashboard extends Component {
             </div>
           )
     }else if(this.props.auth.user.role==='world') {
+
       let categoryArray=[{value:'all', label: 'all'},{value: 'School (I – V)', label: 'School (I – V)'},
         {value: 'School (VI – X)', label: 'School (VI – X)'},
         {value: 'Intermediate (XI & XII)', label: 'Intermediate (XI & XII)'},
         {value: 'Undergraduate', label: 'Undergraduate'},
-        {value: 'Postgraduate', label: 'P`ostgraduate'},
+        {value: 'Postgraduate', label: 'Postgraduate'},
         {value: 'Law', label: 'Law'},
         {value: 'Psychology', label: 'Psychology'},
         {value: 'Competitive Exam', label: 'Competitive Exam'},
@@ -383,8 +379,8 @@ class Dashboard extends Component {
           if(this.state.category===null || this.state.category.value==='all') {
             const currentFolder = land.all.slice(indexOfFirstTodo, indexOfLastTodo);
             const render = (  currentFolder.map(land => (
-              <ProductCard folder={land} key={land._id}/>
-              // <TableItem folder={land} key={land._id}/>
+             // <ProductCard folder={land} key={land._id}/>
+               <TableItem folder={land} key={land._id}/>
             )))
             for (let i = 1; i <= Math.ceil(land.all.length / todosPerPage); i++) {
               pageNumbers.push(i);
@@ -413,7 +409,14 @@ class Dashboard extends Component {
 
           } else {
             let newFolders = land.all.filter(folder => folder.category === this.state.category.value.toString())
-            const currentFolder = newFolders.slice(indexOfFirstTodo, indexOfLastTodo);
+            let currentFolder = newFolders.slice(indexOfFirstTodo, indexOfLastTodo);
+            // const sortByKey = (array, key) => array.sort(function (a, b) {
+            //   let x = a[key];
+            //   let y = b[key];
+            //   // (x < y) ? -1 : ((x > y) ? 1 : 0)
+            //   return (x<y);
+            // })
+            currentFolder = sort_by_key(currentFolder, 'title');
             const render = (  currentFolder.map(folder => (
               <TableItem folder={folder} key={folder._id}/>
             )))
@@ -444,8 +447,8 @@ class Dashboard extends Component {
         }
       }
       return (
-        <div className=''>
-          <div className="displayFolder container-fluid" style={{width:'100%'}}>
+        <div className='container-fluid' style={{minWidth:'100%', padding: '0px'}}>
+          <div className="displayFolder " >
             <div className="App-content row d-flex justify-content-center" >
               {!this.props.auth.user.verified ? <Warning/>: null}
               <nav className='navbar navbar-expand-sm justify-content-between col-md-12' style={{ background:'#ffa726', width:'100%', height:'40px'}}>
@@ -458,29 +461,29 @@ class Dashboard extends Component {
                   </Select>
                 </div>
               </nav>
-              {allFoldersContent}
 
-              {/*<table className="table table-bordered  mb-0">*/}
-              {/*  <thead>*/}
-              {/*  <tr>*/}
-              {/*    <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Category</th>*/}
-              {/*    <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Book Title</th>*/}
-              {/*    <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Number of Tracks</th>*/}
-              {/*    <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Language</th>*/}
-              {/*    <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Author</th>*/}
-              {/*    <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Grade</th>*/}
-              {/*    <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Download</th>*/}
-              {/*    <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>View</th>*/}
-              {/*    <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Favourite</th>*/}
-              {/*    <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Rating</th>*/}
-              {/*    <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Rate</th>*/}
-              {/*    <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Share</th>*/}
 
-              {/*  </tr>*/}
-              {/*  </thead>*/}
-              {/*  <tbody>*/}
-              {/*  </tbody>*/}
-              {/*</table>*/}
+              <table className="table table-bordered  mb-0">
+                <thead>
+                <tr>
+                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Category</th>
+                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Book Title</th>
+                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Number of Tracks</th>
+                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Language</th>
+                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Author</th>
+                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Grade</th>
+                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>View</th>
+                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Favourite</th>
+                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Rating</th>
+                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Rate</th>
+                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Share</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                {allFoldersContent}
+                </tbody>
+              </table>
             </div>
             <div className='d-flex justify-content-end'>
               {renderpn}

@@ -1,9 +1,6 @@
 import axios from 'axios'
 
-import {
-  ACCOUNT_LOADING, CLEAR_ERRORS, GET_ACCOUNT_DETAILS, GET_ERRORS } from './types'
-
-
+import { ACCOUNT_LOADING, CLEAR_ERRORS, GET_ACCOUNT_DETAILS, GET_BOOK_DETAILS, GET_ERRORS } from './types'
 
 export const getProfileInfo = () => dispatch => {
   dispatch(setLoading())
@@ -30,6 +27,32 @@ export const updateInfo = (data) => dispatch => {
     })
   )
 }
+
+export const getBookInfo = (id) => dispatch => {
+  dispatch(setLoading())
+  axios.get(`/api/users/changeBook/${id}`)
+    .then(res => {
+      dispatch({
+        type: GET_BOOK_DETAILS,
+        payload: res.data
+      })
+    }).catch(err =>
+    {console.log(err)}
+  )
+}
+
+export const updateBook = (id,data) => dispatch => {
+  dispatch(clearErrors())
+  axios.post(`/api/users/updateBookInfo/${id}`, data).then(res => {
+    window.location.href='/dashboard'
+  }).catch(err =>
+    dispatch({
+      type: GET_ERRORS,
+      payload: err.response.data
+    })
+  )
+}
+
 export const setLoading = () => {
   return {
     type: ACCOUNT_LOADING

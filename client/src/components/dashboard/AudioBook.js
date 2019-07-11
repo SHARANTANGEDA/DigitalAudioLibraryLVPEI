@@ -1,15 +1,9 @@
 import React, { Component } from 'react'
 import { PropTypes } from 'prop-types'
 import { connect } from 'react-redux'
-import { Collapse } from 'react-collapse'
-import PatientRow from '../display/Patients/PatientRow'
 import Spinner from '../common/Spinner'
-import PatientItem from '../display/Patients/PatientItem'
-import Select from 'react-select'
-import classnames from 'classnames'
 import { Link } from 'react-router-dom'
 import { getAudioBook } from '../../actions/homeActions'
-import TableItem from '../PublicHome/Single/TableItem'
 import BookItem from '../PublicHome/Single/BookItem'
 
 class AudioBook extends Component {
@@ -51,9 +45,12 @@ class AudioBook extends Component {
           <table className="table table-bordered mb-0" >
             <thead>
             <tr>
+              <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Select files for download</th>
               <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Track Name</th>
-              <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Download Track</th>
               <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Play Track</th>
+              <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Download Track</th>
+              <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Status</th>
+              <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Share</th>
               {/*<th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Share</th>*/}
             </tr>
             </thead>

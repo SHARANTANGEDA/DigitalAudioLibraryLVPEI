@@ -1,5 +1,4 @@
 
-const dateDiffInDays = require( '../../validations/dateDiffInDays')
 const Grid = require('gridfs-stream')
 const multer = require('multer')
 const GridFsStorage = require('multer-gridfs-storage')
@@ -8,7 +7,6 @@ const router = express.Router()
 const passport = require('passport')
 const archiver = require('archiver')
 // ObjectId = require('mongodb').ObjectID;
-const fs = require('fs')
 //@MongoDB Atlas Connection
 const db = require('../../config/keys').mongoURI
 const mongoose = require('mongoose')
@@ -33,6 +31,7 @@ const storage = new GridFsStorage({
   file: (req, file) => {
 
     return new Promise((resolve, reject) => {
+
       if(file.mimetype==='image/jpeg' || file.mimetype==='image/png' || file.mimetype==='image/jpg') {
         Music.findOneAndUpdate({ picTransit: true, uploadedBy: req.user.emailId, transit: false},
           {picture: true, picTransit: false}, { new: true }).then(music => {
@@ -55,7 +54,7 @@ const storage = new GridFsStorage({
           reject(err)
         })
       }else {
-        Music.findOneAndUpdate({ transit: true, uploadedBy: req.user.emailId },
+        Music.findByIdAndUpdate(req.params.id,
           { $inc:{ tracks: 1 }}, { new: true }).then(music => {
           User.findOneAndUpdate({emailId: req.user.emailId},{$inc: {uploads: 1}},
             { new: true }).then(user => {
@@ -81,13 +80,45 @@ const storage = new GridFsStorage({
     })
   }
 })
-const upload = multer({ storage })
 
+// const storageII = new GridFsStorage({
+//   url: require('../../config/keys').mongoURI,
+//   file: (req, file) => {
+//     return new Promise((resolve, reject) => {
+//       console.log({params: req.params.id, hello: file})
+//         Music.findByIdAndUpdate(req.params.id,
+//           { $inc:{ tracks: 1 }}, {new: true}).then(music => {
+//           console.log({params: req.params.id, hello: music})
+//           User.findOneAndUpdate({emailId: req.user.emailId},{$inc: {uploads: 1}},
+//             { new: true }).then(user => {
+//             const filename =file.originalname
+//             const fileInfo = {
+//               filename: filename,
+//               metadata: {
+//                 title: music.title,
+//                 category: music.category,
+//                 bookId: music._id.toString()
+//               },
+//               bucketName: 'uploads'
+//             }
+//             resolve(fileInfo)
+//           }).catch(err => {
+//             reject(err)
+//           })
+//         }).catch(err => {
+//           reject(err)
+//         })
+//     })
+// //   }
+// })
+
+const upload = multer({ storage })
+// const upload2 = multer({storageII})
 
 
 // @route POST /upload
 // @desc  Uploads musicFiles to DB
-router.post('/upload', passport.authenticate('lvpei', { session: false }),
+router.post('/upload/:id', passport.authenticate('lvpei', { session: false }),
   upload.array('file'), (req, res) => {
     Music.findOneAndUpdate({ transit: true,uploadedBy: req.user.emailId },
       { transit: false, picTransit: true}).then(patient => {
@@ -96,6 +127,21 @@ router.post('/upload', passport.authenticate('lvpei', { session: false }),
       })
     })
 })
+
+// @route POST /upload
+// @desc  Add musicFiles to DB
+// router.post('/addTracks/:id', passport.authenticate('lvpei', { session: false }),
+//   upload2.array('file'), (req, res) => {
+//   console.log(req.params.id)
+//   Music.findById(req.params.id).then(music => {
+//     console.log(music)
+//     return res.json({
+//       success: true
+//     })
+//   })
+//
+//   })
+
 router.get('/favourite/:id',passport.authenticate('world',{session: false}), (req, res) => {
   Music.findById(req.params.id).then(music => {
     music.fav.unshift({id:req.user.id})

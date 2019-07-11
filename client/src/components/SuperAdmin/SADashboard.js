@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { PropTypes } from 'prop-types'
 import { connect } from 'react-redux'
 import './scroll.css'
-import ShowTable from '../SuperAdmin/tableDisplay/ShowTable'
 import Card from 'react-bootstrap/Card'
 import Spinner from '../common/Spinner'
 

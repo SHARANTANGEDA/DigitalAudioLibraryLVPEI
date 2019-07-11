@@ -10,12 +10,13 @@ const validateLoginInput = require('../../validations/login')
 const validateChangeInput = require('../../validations/editProfile/editProfileLVPEI')
 const validateWorldChangeInput = require('../../validations/editProfile/editProfileWorld')
 const validateWorldRegisterInput = require('../../validations/worldRegister')
+const validateBookInput = require('../../validations/bookUploadForm')
 
 const User = require('../../mongoModels/User');
 const Music = require('../../mongoModels/Music');
 const nodemailer = require("nodemailer");
 const shortid = require('shortid');
-const dateDiffInDays = require( '../../validations/dateDiffInDays')
+
 //@Register
 router.post('/register', (req, res) => {
   const { errors, isValid } = validateWorldRegisterInput(req.body)
@@ -271,9 +272,36 @@ router.get('/home',(req, res) => {
   })
 });
 
+router.get('/getFavBooks', passport.authenticate('world', { session: false }), (req, res) => {
+  Music.find().then(async records => {
+    let arr = [], dummy=[]
+    records.map(record => {
+
+      dummy.push(new Promise((resolve, reject) => {
+        // console.log(record)
+        let rateIndex = record.fav.findIndex((item, i) => {
+          return item.id === req.user.id
+        })
+        if (rateIndex !== -1) {
+          console.log( rateIndex)
+          arr.push(record)
+        }
+      }))
+    })
+    console.log(await Promise.all(arr))
+    res.json(await Promise.all(arr))
+  })
+} )
+
 router.get('/addPlay/:id',(req, res) => {
   Music.findByIdAndUpdate(req.params.id,{$inc:{plays: 1}}).then( records => {
     res.json({ success: true })
+  })
+})
+
+router.get('/changeBook/:id', passport.authenticate('lvpei', { session: false }), (req, res) => {
+  Music.findById(req.params.id).then( record => {
+    res.json(record)
   })
 })
 router.get('/myAccount', passport.authenticate('non_super', { session: false }),
@@ -321,5 +349,27 @@ router.post('/myAccount/change', passport.authenticate('non_super', { session: f
   }
 );
 
+router.post('/updateBookInfo/:id', passport.authenticate('lvpei', { session: false }),
+  (req, res) => {
+      Music.findById(req.params.id).then(book => {
+        const {errors, isValid} = validateBookInput(req.body)
+        if (!isValid) {
+          return res.status(400).json(errors);
+        }
+        book.category= req.body.category
+        book.title= req.body.title
+        book.author= req.body.author
+        book.language= req.body.language
+        book.grade= req.body.grade
+        book.organization= req.body.organization
+
+        book.save().then(music => {
+          res.json({success: true})
+        }).catch(err => {
+          console.log(err)
+        })
+      })
+  }
+);
 
 module.exports = router

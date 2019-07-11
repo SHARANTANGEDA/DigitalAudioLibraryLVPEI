@@ -1,14 +1,10 @@
-import {
-  GET_FILES,
-  FOLDER_LOADING,
-  NO_FILES,
-  GET_FILES_SINGLE_FOLDER,
-  NO_FILES_IN_FOLDER, GET_PATIENTS_HOME, GET_ACCOUNT_DETAILS, ACCOUNT_LOADING,
-} from '../actions/types'
+import { ACCOUNT_LOADING, GET_ACCOUNT_DETAILS, GET_BOOK_DETAILS, } from '../actions/types'
 
 const initialState = {
   loading: true,
-  details: null
+  details: null,
+  loading2: true,
+  book: null
 };
 
 export default function(state = initialState, action) {
@@ -19,7 +15,9 @@ export default function(state = initialState, action) {
       return {
         ...state,
         loading: true,
-        details: null
+        details: null,
+        book: null,
+        loading2: true
       }
     case GET_ACCOUNT_DETAILS:
       return {
@@ -27,6 +25,12 @@ export default function(state = initialState, action) {
         details: action.payload,
         loading: false,
       };
+    case GET_BOOK_DETAILS:
+      return {
+        ...state,
+        book: action.payload,
+        loading2: false,
+      }
     default:
       return state;
 

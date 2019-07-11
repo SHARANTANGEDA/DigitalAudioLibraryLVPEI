@@ -1,12 +1,16 @@
 import axios from 'axios'
 
 import {
-  CLEAR_ERRORS, ON_POST_FAIL,
-  GET_DA_HOME, HOME_LOADING, GET_PATIENT_DETAILS, GET_INVALID_MR, GET_ERRORS, GET_MR, GET_LVPEI_USERS
+  CLEAR_ERRORS,
+  GET_DA_HOME,
+  GET_ERRORS,
+  GET_INVALID_MR,
+  GET_LVPEI_USERS,
+  GET_MR,
+  GET_PATIENT_DETAILS,
+  HOME_LOADING,
+  ON_POST_FAIL
 } from './types'
-
-
-
 
 export const getDAHome = () => dispatch => {
 setLoading()

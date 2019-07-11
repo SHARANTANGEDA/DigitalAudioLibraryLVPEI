@@ -5,8 +5,6 @@ import { connect } from 'react-redux'
 import { logoutUser } from '../../actions/authActions'
 import { getSearchResults } from '../../actions/homeActions'
 
-
-
 class Navbar extends Component {
   constructor (props) {
     super(props)
@@ -33,7 +31,6 @@ class Navbar extends Component {
     if(this.state.category.value==='mr.No') {
       this.props.getSearchResults(newSearch)
     }else if(this.state.category.value==='name') {
-      console.log({name:`/nameSearchResults/${this.state.search}`})
       window.location.href=`/nameSearchResults/${this.state.search}`
     }
   }
@@ -125,15 +122,22 @@ class Navbar extends Component {
     const guestLink1 = (
       <ul className="navbar-nav components d-flex justify-content-around" style={{ height: '100%' }}>
         <li className='nav-item' style={{color: 'white',background:'#008cff' , borderRadius: '5px'
+        }}>
+          <Link className="nav-link" to="/home"
+                style={{color: 'white', borderRadius: '5px' }}>
+            {' '}View Audio Books</Link>
+        </li>
+        <li className='nav-item' style={{color: 'white',background:'#008cff' , borderRadius: '5px'
            }}>
-          <Link className="nav-link" to="/login"
+          <Link className="nav-link" to="/"
                 style={{color: 'white', borderRadius: '5px' }}>
             {' '}Login</Link>
         </li>
+
         <li className="nav-item pull-right" style={{color: 'white',background:'#008cff' , borderRadius: '5px'
            }}>
           <Link className='nav-link' to="/register" style={{color: 'white', borderRadius: '5px' }}>
-            register
+            Register
           </Link>
         </li>
       </ul>
@@ -207,6 +211,12 @@ class Navbar extends Component {
               Upload Book
             </Link>
           </li>
+          <li className='nav-item' style={{color: 'white',background:'#008cff' , borderRadius: '5px'
+          }}>
+            <Link className='nav-link'  to="/lvpBooks" style={{color: 'white', borderRadius: '5px' }}>
+              View All Books
+            </Link>
+          </li>
           <li className="nav-item dropdown " style={{color: 'white',background:'#008cff' , borderRadius: '5px'
             ,minWidth:'150px' }}>
             <Link className="nav-link nav-item d-flex justify-content-around" to=""  data-toggle="dropdown"
@@ -237,6 +247,12 @@ class Navbar extends Component {
             }}>
             <Link className='nav-link' to="/dashboard" style={{color: 'white', borderRadius: '5px' }}>
               Home
+            </Link>
+          </li>
+          <li className='nav-item' style={{color: 'white',background:'#008cff' , borderRadius: '5px'
+          }}>
+            <Link className='nav-link' to="/favourites" style={{color: 'white', borderRadius: '5px' }}>
+              Favourite Books
             </Link>
           </li>
           <li className="nav-item dropdown " style={{color: 'white',background:'#008cff' , borderRadius: '5px'

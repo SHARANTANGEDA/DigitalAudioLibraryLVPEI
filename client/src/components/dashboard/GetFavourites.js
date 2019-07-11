@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { getFavBooks } from '../../actions/homeActions'
 import Spinner from '../common/Spinner'
+import TableItem from '../PublicHome/Single/TableItem'
 import Select from 'react-select'
-import { getReportData } from '../../actions/sAActions'
-import ReportItem from './tableDisplay/ReportItem'
-import { getReports } from '../../actions/homeActions'
+import Warning from '../layout/Warning'
 
-class Report extends Component {
+
+class GetFavourites extends Component {
   constructor () {
     super()
     this.state = {
@@ -15,44 +16,37 @@ class Report extends Component {
       errors: {},
       modalIsOpen: false,
       uploadModal: false,
+      category: { value: 'all', label: 'Choose book Category to filter' },
+      campusCode: { value: 'all', label: 'Choose Campus' },
       currentPage: 1,
       todosPerPage: 25,
-      category: null
+      filter: null
     }
     this.changeHandler = this.changeHandler.bind(this)
     this.openModal = this.openModal.bind(this)
     this.afterOpenModal = this.afterOpenModal.bind(this)
     this.closeModal = this.closeModal.bind(this)
     this.closeFlushModal = this.closeFlushModal.bind(this)
-    this.openNextModal = this.openNextModal.bind(this)
     this.onDiscard = this.onDiscard.bind(this)
     this.onSelectType = this.onSelectType.bind(this)
     this.codeSelect = this.codeSelect.bind(this)
-    this.onConvertToExcel = this.onConvertToExcel.bind(this)
-    this.handleClick = this.handleClick.bind(this)
   }
 
   componentDidMount () {
-    if (this.props.auth.user.role === 'super_admin' ) {
-      this.props.getReportData(this.props.match.params.id)
-    }
+      this.props.getFavBooks(this.props.match.params.id)
   }
 
   openModal () {
     this.setState({ modalIsOpen: true })
   }
 
-  onConvertToExcel () {
-    this.props.getReports(this.props.match.params.id)
+  handleClick(event) {
+    this.setState({
+      currentPage: Number(event.target.id)
+    });
   }
 
-  openNextModal () {
-    this.setState({ uploadModal: true })
-    const userData = {
-      patient: this.state.patient
-    }
-    this.props.continueToUpload(userData)
-  }
+
 
   afterOpenModal () {
 
@@ -73,11 +67,7 @@ class Report extends Component {
   closeModal () {
     this.setState({ modalIsOpen: false })
   }
-  handleClick(event) {
-    this.setState({
-      currentPage: Number(event.target.id)
-    });
-  }
+
   changeHandler (e) {
     this.setState({ [e.target.name]: e.target.value })
   }
@@ -90,15 +80,7 @@ class Report extends Component {
   }
 
   render () {
-    function sort_by_key(array, key)
-    {
-      return array.sort(function(a, b)
-      {
-        let x = a[key]; let y = b[key];
-        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
-      });
-    }
-    if(this.props.auth.user.role==='super_admin') {
+    if(this.props.auth.user.role==='world') {
       let categoryArray=[{value:'all', label: 'all'},{value: 'School (I – V)', label: 'School (I – V)'},
         {value: 'School (VI – X)', label: 'School (VI – X)'},
         {value: 'Intermediate (XI & XII)', label: 'Intermediate (XI & XII)'},
@@ -111,29 +93,31 @@ class Report extends Component {
         {value: 'Children Stories', label: 'Children Stories'},
         {value: 'Religious', label: 'Religious'},
         {value: 'Other', label: 'Other'}]
-      const {loading, report} = this.props.report
+      const {loading2, getFav} = this.props.report
       const {  currentPage, todosPerPage } = this.state;
       const indexOfLastTodo = currentPage * todosPerPage;
       const indexOfFirstTodo = indexOfLastTodo - todosPerPage;
       const pageNumbers = [];
-      let allFoldersContent,  renderpn;
-      if (loading || report===null) {
+      let allFoldersContent, heading, renderpn;
+      console.log({getout: getFav})
+      if (loading2 || getFav===null) {
         allFoldersContent = (<Spinner/>)
       } else {
-        if(report.length===0) {
+        console.log({get: getFav})
+        if(getFav.length===0) {
           allFoldersContent = (
-            <h5>Nothing is uploaded yet, please check back later</h5>
+            <h5>No favourites add one</h5>
           )
+          heading=null
         }else {
           // allFoldersContent = (
-
+          heading = null
           if(this.state.category===null || this.state.category.value==='all') {
-            const currentFolder =report.slice(indexOfFirstTodo, indexOfLastTodo);
-            const render = (  currentFolder.map(report => (
-              <ReportItem folder={report} key={report._id}/>
-              //{/*<ProductCard folder={land} key={land._id}/>*/}
+            const currentFolder = getFav.slice(indexOfFirstTodo, indexOfLastTodo);
+            const render = (  currentFolder.map(land => (
+              <TableItem folder={land} key={land._id}/>
             )))
-            for (let i = 1; i <= Math.ceil(report.length / todosPerPage); i++) {
+            for (let i = 1; i <= Math.ceil(getFav.length / todosPerPage); i++) {
               pageNumbers.push(i);
             }
             const renderPageNumbers = (
@@ -159,11 +143,10 @@ class Report extends Component {
             )
 
           } else {
-            let newFolders = report.filter(folder => folder.category === this.state.category.value.toString())
-            let currentFolder = newFolders.slice(indexOfFirstTodo, indexOfLastTodo);
-            currentFolder = sort_by_key(currentFolder,'title')
+            let newFolders = getFav.filter(folder => folder.category === this.state.category.value.toString())
+            const currentFolder = newFolders.slice(indexOfFirstTodo, indexOfLastTodo);
             const render = (  currentFolder.map(folder => (
-              <ReportItem folder={folder} key={folder._id}/>
+              <TableItem folder={folder} key={folder._id}/>
             )))
             for (let i = 1; i <= Math.ceil(newFolders.length / todosPerPage); i++) {
               pageNumbers.push(i);
@@ -192,34 +175,36 @@ class Report extends Component {
         }
       }
       return (
-        <div className='container-fluid' style={{minWidth:'100%', padding:'0px'}}>
-          <div className="displayFolder " >
-            <div className=" row d-flex justify-content-start" >
-              <nav className='navbar navbar-expand-sm justify-content-between col-md-12'
-                   style={{ background:'#ffa726', width:'100%', height:'40px'}}>
-                  <button className='btn btn-primary' onClick={this.onConvertToExcel}
-                      style={{ background: '#0bc107', color: 'white', borderStyle: 'solid', marginRight:'10px' }}>
-                Convert to Excel</button>
-              <div className='col-md-4'>
-                <Select
-                  options={categoryArray}
-                  className='isSearchable' placeholder="Select a book category to filter"
-                  name="category" value={this.state.category} onChange={this.onSelectType}>
-                </Select>
-              </div>
-            </nav>
-              <table className="table table-bordered  mb-0" style={{minWidth:'100%'}}>
+        <div className='container-fluid' style={{minWidth:'100%', padding: '0px'}}>
+          <div className="displayFolder ">
+            <div className="App-content row d-flex justify-content-center" >
+              {!this.props.auth.user.verified ? <Warning/>: null}
+              <nav className='navbar navbar-expand-sm justify-content-between col-md-12' style={{ background:'#ffa726', width:'100%', height:'40px'}}>
+                {heading}
+                <div className='col-md-3'>
+                  <Select
+                    options={categoryArray}
+                    className='isSearchable' placeholder="Select a book category to filter"
+                    name="category" value={this.state.category} onChange={this.onSelectType}>
+                  </Select>
+                </div>
+              </nav>
+
+              <table className="table table-bordered  mb-0">
                 <thead>
                 <tr>
                   <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Category</th>
                   <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Book Title</th>
+                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Number of Tracks</th>
                   <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Language</th>
-                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Author/Publication</th>
-                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Tracks</th>
-                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Number of Downloads</th>
-                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Number of Plays</th>
-                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Favourites</th>
+                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Author</th>
+                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Grade</th>
+                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>View</th>
+                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Favourite</th>
                   <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Rating</th>
+                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Rate</th>
+                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Share</th>
+
                 </tr>
                 </thead>
                 <tbody>
@@ -230,21 +215,22 @@ class Report extends Component {
             <div className='d-flex justify-content-end'>
               {renderpn}
             </div>
-        </div>
+          </div>
         </div>
       );
     }
   }
 }
 
-Report.propTypes = {
-  getReportData: PropTypes.func.isRequired,
+GetFavourites.propTypes = {
+  home: PropTypes.object.isRequired,
+  getFavBooks: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   report: PropTypes.object.isRequired,
-  getReports: PropTypes.func.isRequired
 }
 const mapStateToProps = state => ({
+  home: state.home,
   auth: state.auth,
   report: state.report
 })
-export default connect(mapStateToProps, {getReportData, getReports})(Report)
+export default connect(mapStateToProps, {getFavBooks})(GetFavourites)

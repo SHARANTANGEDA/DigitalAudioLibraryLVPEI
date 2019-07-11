@@ -1,9 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import NotFound from '../../img/404.gif'
-
 
 class SearchNotFound extends Component {
 

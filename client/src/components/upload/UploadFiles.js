@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import axios from 'axios'
-import Success from './Success'
 import ProgressBar from 'react-bootstrap/ProgressBar'
-
+import { PropTypes } from 'prop-types'
 
 class UploadFiles extends Component {
   constructor(props) {
@@ -35,18 +34,20 @@ class UploadFiles extends Component {
     {
       this.setState({error: 'Please choose at least one file to upload'})
       return
+    }else if(Array.from(this.state.files).length>25) {
+      this.setState({error: 'You can choose 25 files at maximum'})
+      return
     }
     this.setState({spinner: true})
     Array.from(this.state.files).forEach((file, i) => {
       data.append("file", file, file.name);
     });
-
-    axios.post('/api/upload/upload',data,{onUploadProgress: this.myUploadProgress()}).then(res => {
+    axios.post(`/api/upload/upload/${this.props.bookId}`,data,{onUploadProgress: this.myUploadProgress()}).then(res => {
         this.setState({spinner: false})
         if (res.data.success) {
-          // window.location.reload()
+          window.location.href='/lvpBooks'
           console.log('success')
-          this.setState({picModal: true})
+          // this.setState({picModal: true})
           // this.loadFiles();
         } else {
           alert('Upload failed');
@@ -56,14 +57,7 @@ class UploadFiles extends Component {
 
 
   render() {
-    if(this.state.picModal) {
-      let content=<Success/>
-      return (
-        <div>
-          {content}
-        </div>
-      )
-    }else {
+
       let spin = (
         <div>
           {/*<FileUpload/>*/}
@@ -91,7 +85,7 @@ class UploadFiles extends Component {
         )
       }
       return (
-        <div className="uploadMultipleFiles" style={{maxWidth: '330px', margin:'5px'}}>
+        <div className="uploadMultipleFiles" style={{minWidth: '330px', margin:'5px'}}>
           <div className="App-content row d-flex justify-content-center" >
             <div className="grid text-center col-md-12">
               <h3 className="grid--cell fl1 fs-headline1 text-center" style={{
@@ -108,11 +102,15 @@ class UploadFiles extends Component {
               {!this.state.spinner ? downloadBut : null}
               {this.state.spinner ? spin : null}
             </div>
-
           </div>
         </div>
       );
     }
-  }
 }
+
+UploadFiles.propTypes = {
+  bookId: PropTypes.string.isRequired,
+};
+
+
 export default UploadFiles;
