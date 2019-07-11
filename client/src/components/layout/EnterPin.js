@@ -54,13 +54,18 @@ class EnterPin extends Component {
     const userData = {
       pin: this.state.pin,
     };
+    console.log(userData)
     this.props.confirmEmail(userData);
   }
   render() {
     const {errors} = this.state;
     let content=null
     if(this.state.sent==='true') {
-      content=(<p>Verification code is sent,Check your email!!</p>)
+      content=(<div><p>Verification code is sent,Check your email!!</p>
+        <button style={{color: 'white', background: 'green'}} onClick={this.reGenerate}
+                className="btn btn-sm"> Generate Again </button>
+      </div>
+      )
     }else if(this.state.sent===''){
       content=(<p>Did'nt receive it yet?,
         <button style={{color: 'white', background: 'green'}} onClick={this.reGenerate}

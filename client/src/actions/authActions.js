@@ -80,6 +80,7 @@ export const getAllBooks = () => dispatch => {
 }
 
 export const confirmEmail = (userData) => dispatch => {
+  console.log('test')
   axios.post('/api/users/verifyEmail', userData).then(res => {
     const {token} = res.data;
     localStorage.setItem('jwtToken',token);
@@ -94,18 +95,7 @@ export const confirmEmail = (userData) => dispatch => {
     })
   })
 }
-export const sendAgain = () => dispatch => {
-  axios.get('/api/users/sendAgain').then(res => {
-    if(res.data.success===true) {
 
-    }
-  }).catch(err => {
-    dispatch({
-      type: GET_ERRORS,
-      payload: err.response.data
-    })
-  })
-}
 export const setLoading = () => {
   return {
     type: HOME_LOADING

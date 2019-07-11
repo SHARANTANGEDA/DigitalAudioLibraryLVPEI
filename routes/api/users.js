@@ -16,7 +16,8 @@ const User = require('../../mongoModels/User');
 const Music = require('../../mongoModels/Music');
 const nodemailer = require("nodemailer");
 const shortid = require('shortid');
-
+const senderEmail = require('../../config/keys').senderEmail
+const senderPassword = require('../../config/keys').senderPassword
 //@Register
 router.post('/register', (req, res) => {
   const { errors, isValid } = validateWorldRegisterInput(req.body)
@@ -32,21 +33,22 @@ router.post('/register', (req, res) => {
       let pin = shortid.generate()
       let testAccount = await nodemailer.createTestAccount();
       let transporter = nodemailer.createTransport({
-        host: "smtp.ethereal.email",
-        port: 587,
+        // host: "smtp.ethereal.email",
+        service: 'gmail',
+        // port: 587,
         secure: false, // true for 465, false for other ports
         auth: {
-          user: testAccount.user, // generated ethereal user
-          pass: testAccount.pass // generated ethereal password
+          user: senderEmail, // generated ethereal user
+          pass: senderPassword // generated ethereal password
         }
       });
       let info = await transporter.sendMail({
-        from: '"LVPEI Test Server" <SoundCloud@gmail.com>', // sender address
+        from: ' <ghotden@gmail.com>', // sender address
         to: req.body.emailId, // list of receivers
         subject: "Audio Digital Library Email Verification", // Subject line
         text: "pin:"+pin, // plain text body
-        html: "<div><h4>Use the PIN below to verify your email</h4></div>"
-          +"<h6>Verification Pin:</h6>" + pin // html body
+        html: "<div><h2>Use the PIN below to verify your email</h2></div>"
+          +"<h3>Verification Pin:</h3>" + "<h1>{pin}</h1>" // html body
       });
       const newUser = new User({
         firstName: req.body.firstName,
@@ -105,9 +107,11 @@ router.post('/verifyEmail',passport.authenticate('world',{session: false}),(req,
       return res.status(400).json('err')
     }
     if(req.body.pin.length===0) {
+      let errors={}
       errors.pin = 'Please enter the verification code to sent to your mail'
       return res.status(400).json(errors)
     }
+    console.log(req.body.pin, user.otpKey)
     if(user.otpKey === req.body.pin) {
       console.log({otp: user.otpKey, pin: req.body.pin})
       user.verified = true;
@@ -135,7 +139,8 @@ router.post('/verifyEmail',passport.authenticate('world',{session: false}),(req,
       })
         .catch(err => console.log(err))
     } else {
-      res.status(404).json({success: false})
+      let errors={pin:'Pin entered is wrong'}
+      res.status(404).json(errors)
     }
   })
 })
@@ -146,21 +151,22 @@ router.get('/sendAgain',passport.authenticate('world',{session: false}),(req, re
     let pin = shortid.generate()
     let testAccount = await nodemailer.createTestAccount();
     let transporter = nodemailer.createTransport({
-      host: "smtp.ethereal.email",
-      port: 587,
+      // host: "smtp.ethereal.email",
+      service: 'gmail',
+      // port: 587,
       secure: false, // true for 465, false for other ports
       auth: {
-        user: testAccount.user, // generated ethereal user
-        pass: testAccount.pass // generated ethereal password
+        user: senderEmail, // generated ethereal user
+        pass: senderPassword // generated ethereal password
       }
     });
     let info = await transporter.sendMail({
-      from: '"LVPEI Test Server" <SoundCloud@gmail.com>', // sender address
+      from: '"LVPEI Test Server" <ghotden@gmail.com>', // sender address
       to: user.emailId, // list of receivers
       subject: "Audio Digital Library Email Verification", // Subject line
       text: "pin:" + pin, // plain text body
       html: "<div><h4>Use the PIN below to verify your email</h4></div>"
-        + "<h6>Verification Pin:</h6>" + pin // html body
+        + "<h6>Verification Pin:</h6>" +"<h1>{pin}</h1>"// html body
     });
     console.log("Message sent: %s", info.messageId);
     console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
