@@ -129,23 +129,23 @@ class MasterItem extends Component {
     }
     return (
       <tr>
-        <td><span style={{ fontFamily: 'Arial', fontSize: '14px' }}>{folder.category}</span></td>
-        <td><span style={{ fontFamily: 'Arial', fontSize: '14px' }}>{folder.title}</span></td>
-        <td><span style={{ fontFamily: 'Arial', fontSize: '14px' }}>{folder.tracks}</span></td>
-        <td><span style={{ fontFamily: 'Arial', fontSize: '14px' }}>{folder.language}</span></td>
-        <td><span style={{ fontFamily: 'Arial', fontSize: '14px'  }}>{folder.author}</span></td>
-        <td><span style={{ fontFamily: 'Arial', fontSize: '14px' }}>{folder.grade}</span></td>
+        <td><span style={{ fontFamily: 'Arial', fontSize: '16px' }}>{folder.category}</span></td>
+        <td><span style={{ fontFamily: 'Arial', fontSize: '16px' }}>{folder.title}</span></td>
+        <td><span style={{ fontFamily: 'Arial', fontSize: '16px' }}>{folder.tracks}</span></td>
+        <td><span style={{ fontFamily: 'Arial', fontSize: '16px' }}>{folder.language}</span></td>
+        <td><span style={{ fontFamily: 'Arial', fontSize: '16px'  }}>{folder.author}</span></td>
+        <td><span style={{ fontFamily: 'Arial', fontSize: '16px' }}>{folder.grade}</span></td>
         <td><button className='btn-sm btn' style={{background: 'green', color: 'white',marginRight: '10px'}}
                     onClick={this.onPlay.bind(this)}>View</button></td>
-        <td>{<div ><i style={{color:'gold'}} className="fas fa-star fa-2x"/>{this.state.percent}/5
-          <span>({this.state.noRatings})</span></div>}</td>
+        <td>{<div ><i style={{color:'gold'}} className="fas fa-star fa-2x"/>{this.state.percent}/5</div>}</td>
+          {/*<span>({this.state.noRatings})</span>*/}
         <td>
           <button onClick={this.openEditModal} style={{color:'blue'}} className='btn btn-sm'>
-            Edit Info</button>
+            <i className="fas fa-edit fa-2x"/></button>
         </td>
         <td>
           <button onClick={this.openModal} style={{color:'green'}} className='btn btn-sm'>
-            Add Track</button>
+            <i className="fas fa-plus-circle fa-2x"/></button>
 
         </td>
         <Modal

@@ -113,17 +113,17 @@ class Dashboard extends Component {
           <div className=' ' style={{minWidth:'100%', minHeight:'100%'}}>
             <div className='row d-flex justify-content-between' style={{margin: '5px'}}>
               <Card style={{
-                backgroundColor: '#f44336', marginRight: '20px', padding:'5px', minWidth:'250px'//, maxHeight:
+                backgroundColor: '#f44336', marginRight: '20px', padding:'5px', minWidth:'380px'//, maxHeight:
                 // '100px',
                 // maxWidth:
                 // '250px'
               }}>
                 <div className='row d-flex justify-content-between'>
-                  <div className=' col-md-8'>
+                  <div className=' col-md-4'>
                     <p style={{ color: 'white' }}>LVPEI Users</p>
                     <img style={{width:'auto'}} src={require('../../img/SAIcons/doctor.png')} alt=''/>
                   </div>
-                  <div className='d-flex justify-content-end col-md-4'>
+                  <div className='d-flex justify-content-end col-md-8'>
                     <h1 style={{ color: 'white', fontWeight: 'bold' }}>
                       {lvpei.length}
                     </h1>
@@ -131,13 +131,13 @@ class Dashboard extends Component {
                 </div>
               </Card>
               <Card style={{
-                backgroundColor: '#00acc1', marginRight: '20px', padding:'5px', minWidth:'255px' }}>
+                backgroundColor: '#00acc1', marginRight: '20px', padding:'5px', minWidth:'450px' }}>
                 <div className='row d-flex justify-content-between'>
-                  <div className=' col-md-8'>
+                  <div className=' col-md-5'>
                     <p style={{ color: 'white' }}>Users across world</p>
-                    <img style={{width:'50px', maxHeight:'50px'}} src={require('../../img/SAIcons/customers.png')} alt=''/>
+                    <img style={{width:'65px', maxHeight:'90px'}} src={require('../../img/SAIcons/customers.png')} alt=''/>
                   </div>
-                  <div className='d-flex justify-content-end col-md-4'>
+                  <div className='d-flex justify-content-end col-md-7'>
                     <h1 style={{ color: 'white', fontWeight: 'bold' }}>
                       {world.length}
                     </h1>
@@ -145,14 +145,14 @@ class Dashboard extends Component {
                 </div>
               </Card>
               <Card style={{
-                backgroundColor: '#4caf50', marginRight: '20px', padding:'5px', minWidth:'250px'
+                backgroundColor: '#4caf50', marginRight: '20px', padding:'5px', minWidth:'380px'
               }}>
                 <div className='row d-flex justify-content-between'>
-                  <div className=' col-md-8'>
+                  <div className=' col-md-4'>
                     <p style={{ color: 'white' }}>Total Books</p>
-                    <img style={{width:'auto'}} src={require('../../img/SAIcons/centerUser.png')} alt=''/>
+                    <img style={{width:'60px'}} src={require('../../img/icons/audioBook.png')} alt=''/>
                   </div>
-                  <div className='d-flex justify-content-end col-md-4'>
+                  <div className='d-flex justify-content-end col-md-8'>
                     <h1 style={{ color: 'white', fontWeight: 'bold' }}>
                       {all.length}
                     </h1>
@@ -161,30 +161,32 @@ class Dashboard extends Component {
               </Card>
             </div>
             <div style={{
-              backgroundColor: '#d4d4d4', marginRight: '20px', padding:'5px', minWidth:'250px' }}
+              backgroundColor: '#d4d4d4', marginRight: '20px', padding:'5px', minWidth:'380px' }}
                  className='row  d-flex justify-content-between'>
-              <div className='col-6 col-md-3'>
-                <Card style={{ color: 'black',
-                  margin: '5px', padding:'5px', minWidth:'250px', height:'100px'
+              <div className='col-6 col-md-4'>
+                <Card style={{
+                  margin: '5px', padding:'5px', minWidth:'380px'
                 }}>
-                  <div className='row'>
-                    <div className='d-flex justify-content-start col-md-9'>
+                  <div className='row d-flex justify-content-between'>
+                    <div className=' col-md-4'>
                       <p >School (I – V)</p>
+                      <img style={{width:'60px'}} src={require('../../img/icons/school.png')} alt=''/>
                     </div>
-                    <div className='d-flex justify-content-end col-md-3 pull-right'>
-                      <h1 style={{fontWeight: 'bold' }}>
+                    <div className='d-flex justify-content-end col-md-8'>
+                      <h1 style={{  fontWeight: 'bold' }}>
                         {school1.length}
                       </h1>
                     </div>
                   </div>
                 </Card>
                 <Card  style={{
-                  color: 'black', margin: '5px', padding:'5px', minWidth:'250px', height:'100px'}}>
+                  color: 'black', margin: '5px', padding:'5px', minWidth:'380px'}}>
                   <div className='row d-flex justify-content-between'>
-                    <div className=' col-md-8'>
+                    <div className=' col-md-5'>
                       <p >School (VI – X)</p>
+                      <img style={{width:'60px'}} src={require('../../img/icons/school.png')} alt=''/>
                     </div>
-                    <div className='d-flex justify-content-end col-md-4'>
+                    <div className='d-flex justify-content-end col-md-7'>
                       <h1 style={{fontWeight: 'bold' }}>
                         {school2.length}
                       </h1>
@@ -192,52 +194,59 @@ class Dashboard extends Component {
                   </div>
                 </Card>
                 <Card  style={{
-                  color: 'black', margin: '5px', padding:'5px', minWidth:'250px', height:'100px'
+                  color: 'black', margin: '5px', padding:'5px', minWidth:'380px'
                 }}>
                   <div className='row d-flex justify-content-between'>
-                    <div className=' col-md-8'>
+                    <div className=' col-md-6'>
                       <p >Intermediate (XI & XII)</p>
+                      <img style={{width:'60px'}} src={require('../../img/icons/school.png')} alt=''/>
+
                     </div>
-                    <div className='d-flex justify-content-end col-md-4'>
+                    <div className='d-flex justify-content-end col-md-6'>
                       <h1 style={{fontWeight: 'bold' }}>
                         {inter.length}
                       </h1>
                     </div>
                   </div>
                 </Card>
-              </div>
-              <div className='col-6 col-md-3'>
-                <Card  style={{color: 'black', margin: '5px', padding:'5px', minWidth:'250px'
-                  , height:'100px'}}>
+                <Card  style={{color: 'black', margin: '5px', padding:'5px', minWidth:'380px'
+                  }}>
                   <div className='row d-flex justify-content-between'>
-                    <div className=' col-md-8'>
+                    <div className=' col-md-6'>
                       <p >Undergraduate</p>
+                      <img style={{width:'90px'}} src={require('../../img/icons/graduate.png')} alt=''/>
+
                     </div>
-                    <div className='d-flex justify-content-end col-md-4'>
+                    <div className='d-flex justify-content-end col-md-6'>
                       <h1 style={{fontWeight: 'bold' }}>
                         {ug.length}
                       </h1>
                     </div>
                   </div>
                 </Card>
-                <Card  style={{color: 'black', margin: '5px', padding:'5px', minWidth:'250px'
-                  , height:'100px'}}>
+              </div>
+              <div className='col-6 col-md-4'>
+
+                <Card  style={{color: 'black', margin: '5px', padding:'5px', minWidth:'380px'
+                  }}>
                   <div className='row d-flex justify-content-between'>
-                    <div className=' col-md-8'>
+                    <div className=' col-md-4'>
                       <p >Postgraduate</p>
+                      <img style={{width:'90px'}} src={require('../../img/icons/graduate.png')} alt=''/>
                     </div>
-                    <div className='d-flex justify-content-end col-md-4'>
+                    <div className='d-flex justify-content-end col-md-8'>
                       <h1 style={{fontWeight: 'bold' }}>
                         {pg.length}
                       </h1>
                     </div>
                   </div>
                 </Card>
-                <Card  style={{color: 'black', margin: '5px', padding:'5px', minWidth:'250px'
-                  , height:'100px'}}>
+                <Card  style={{color: 'black', margin: '5px', padding:'5px', minWidth:'380px'
+                  }}>
                   <div className='row d-flex justify-content-between'>
-                    <div className=' col-md-8'>
+                    <div className=' col-md-4'>
                       <p >Law</p>
+                      <img style={{width:'60px'}} src={require('../../img/icons/hammer.png')} alt=''/>
                     </div>
                     <div className='d-flex justify-content-end col-md-4'>
                       <h1 style={{ fontWeight: 'bold' }}>
@@ -246,82 +255,89 @@ class Dashboard extends Component {
                     </div>
                   </div>
                 </Card>
-              </div>
-              <div className='col-6 col-md-3'>
-                <Card  style={{color: 'black', margin: '5px', padding:'5px', minWidth:'250px'
-                  , height:'100px'}}>
+                <Card  style={{color: 'black', margin: '5px', padding:'5px', minWidth:'380px'
+                 }}>
                   <div className='row d-flex justify-content-between'>
-                    <div className=' col-md-8'>
+                    <div className=' col-md-4'>
                       <p >Psychology</p>
+                      <img style={{width:'50px'}} src={require('../../img/icons/psy.png')} alt=''/>
                     </div>
-                    <div className='d-flex justify-content-end col-md-4'>
+                    <div className='d-flex justify-content-end col-md-8'>
                       <h1 style={{fontWeight: 'bold' }}>
                         {psy.length}
                       </h1>
                     </div>
                   </div>
                 </Card>
-                <Card  style={{color: 'black', margin: '5px', padding:'5px', minWidth:'250px'
-                  , height:'100px'}}>
+                <Card  style={{color: 'black', margin: '5px', padding:'5px', minWidth:'380px'
+                  }}>
                   <div className='row d-flex justify-content-between'>
-                    <div className=' col-md-8'>
+                    <div className=' col-md-6'>
                       <p >Competitive Exam</p>
+                      <img style={{width:'60px'}} src={require('../../img/icons/competitveExam.png')} alt=''/>
+
                     </div>
-                    <div className='d-flex justify-content-end col-md-4'>
+                    <div className='d-flex justify-content-end col-md-6'>
                       <h1 style={{ fontWeight: 'bold' }}>
                         {ce.length}
                       </h1>
                     </div>
                   </div>
                 </Card>
-                <Card  style={{color: 'black',margin: '5px', padding:'5px', minWidth:'250px'
-                  , height:'100px'}}>
+              </div>
+              <div className='col-6 col-md-4'>
+
+                <Card  style={{color: 'black',margin: '5px', padding:'5px', minWidth:'380px'
+                  }}>
                   <div className='row d-flex justify-content-between'>
-                    <div className=' col-md-8'>
+                    <div className=' col-md-5'>
                       <p >English Grammar</p>
+                      <img style={{width:'58px'}} src={require('../../img/icons/alpha.png')} alt=''/>
+
                     </div>
-                    <div className='d-flex justify-content-end col-md-4'>
+                    <div className='d-flex justify-content-end col-md-7'>
                       <h1 style={{fontWeight: 'bold' }}>
                         {eg.length}
                       </h1>
                     </div>
                   </div>
                 </Card>
-              </div>
-              <div className='col-6 col-md-3' >
-                <Card  style={{color: 'black', margin: '5px', padding:'5px', minWidth:'250px'
-                  , height:'100px'}}>
+                <Card  style={{color: 'black', margin: '5px', padding:'5px', minWidth:'380px'
+                  }}>
                   <div className='row d-flex justify-content-between'>
-                    <div className=' col-md-8'>
+                    <div className=' col-md-5'>
                       <p >Children Stories</p>
+                      <img style={{width:'80px'}} src={require('../../img/icons/stories.png')} alt=''/>
+
                     </div>
-                    <div className='d-flex justify-content-end col-md-4'>
+                    <div className='d-flex justify-content-end col-md-7'>
                       <h1 style={{ fontWeight: 'bold' }}>
                         {cs.length}
                       </h1>
                     </div>
                   </div>
                 </Card>
-                <Card  style={{color: 'black', margin: '5px', padding:'5px', minWidth:'250px'
-                  , height:'100px'}}>
+                <Card  style={{color: 'black', margin: '5px', padding:'5px', minWidth:'380px'
+                  }}>
                   <div className='row d-flex justify-content-between'>
-                    <div className=' col-md-8'>
+                    <div className=' col-md-4'>
                       <p >Religious</p>
+                      <img style={{width:'60px'}} src={require('../../img/icons/world.png')} alt=''/>
                     </div>
-                    <div className='d-flex justify-content-end col-md-4'>
+                    <div className='d-flex justify-content-end col-md-8'>
                       <h1 style={{fontWeight: 'bold' }}>
                         {reg.length}
                       </h1>
                     </div>
                   </div>
                 </Card>
-                <Card style={{color: 'black', margin: '5px', padding:'5px', minWidth:'250px'
-                  , height:'100px'}}>
+                <Card style={{color: 'black', margin: '5px', padding:'5px', minWidth:'380px'}}>
                   <div className='row d-flex justify-content-between'>
-                    <div className=' col-md-8'>
+                    <div className=' col-md-4'>
                       <p >Others</p>
+                      <img style={{width:'60px'}} src={require('../../img/icons/others.png')} alt=''/>
                     </div>
-                    <div className='d-flex justify-content-end col-md-4'>
+                    <div className='d-flex justify-content-end col-md-8'>
                       <h1 style={{ fontWeight: 'bold' }}>
                         {ot.length}
                       </h1>
@@ -329,6 +345,7 @@ class Dashboard extends Component {
                   </div>
                 </Card>
               </div>
+
             </div>
 
           </div>
@@ -337,8 +354,8 @@ class Dashboard extends Component {
           return (
             <div>
               {showContent}
-              <footer className="text-white mt-5 p-4 text-center" style={{ height:'40px ',left:0,
-                bottom:0,background:'#008cff',
+              <footer className="text-white mt-5 p-4 text-center" style={{ height:'30px ',left:0,
+                bottom:0,background:'#008cff',minWidth: '100%',
                 right:0}}>
                 Copyright &copy; {new Date().getFullYear()} L V Prasad Eye Institute
               </footer>

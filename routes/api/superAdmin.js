@@ -168,12 +168,14 @@ router.get('/downloadExcel',
         { header: 'Category', key: 'name', width: 20 },
         { header: 'Book Title', key: 'name', width: 40 },
         { header: 'Language', key: 'name', width: 20},
-        { header: 'author', key: 'name', width: 20},
+        { header: 'Author', key: 'name', width: 20},
         { header: 'Tracks', key: 'id', width: 10},
         { header: 'Downloads', key: 'id', width: 10 },
         { header: 'Plays', key: 'id', width: 10 },
         { header: 'Favourites', key: 'id', width: 10 },
-        { header: 'Ratings', key: 'name', width: 10 },
+        { header: 'Rating', key: 'name', width: 10 },
+        { header: 'People Rated', key: 'name', width: 15 },
+
       ];
       music.map(book => {
         dummy.push(new Promise((resolve, reject) =>{
@@ -190,7 +192,7 @@ router.get('/downloadExcel',
           // sheet.addRow({Category: book.category, title: book.title, tracks: book.tracks,downloads: book.downloads,
           //   plays: book.plays, favs: book.fav.length, rating: rateDisplay+'('+number+')'})
           sheet.addRow([book.category,book.title,book.language,book.author, book.tracks,book.downloads,
-            book.plays, book.fav.length,rateDisplay+'/5 '+'('+number+')'])
+            book.plays, book.fav.length,rateDisplay+'/5 ',number])
         }))
       })
       await Promise.all([res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')])

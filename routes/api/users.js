@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken')
 const keys = require('../../config/keys')
 const bcrypt = require('bcryptjs')
 const passport = require('passport')
+const smtpTransport = require("nodemailer-smtp-transport");
 
 const validatePassword = require('../../validations/ChangePassword')
 const validateLoginInput = require('../../validations/login')
@@ -18,6 +19,8 @@ const nodemailer = require("nodemailer");
 const shortid = require('shortid');
 const senderEmail = require('../../config/keys').senderEmail
 const senderPassword = require('../../config/keys').senderPassword
+const SMTPConnection = require("nodemailer/lib/smtp-connection");
+
 //@Register
 router.post('/register', (req, res) => {
   const { errors, isValid } = validateWorldRegisterInput(req.body)
@@ -32,24 +35,63 @@ router.post('/register', (req, res) => {
     } else {
       let pin = shortid.generate()
       let testAccount = await nodemailer.createTestAccount();
-      let transporter = nodemailer.createTransport({
-        // host: "smtp.ethereal.email",
-        service: 'gmail',
-        // port: 587,
-        secure: false, // true for 465, false for other ports
+      console.log(senderPassword, senderEmail)
+      // let transporter = nodemailer.createTransport({
+      //   host: 'lvp.lvpei.org',
+      //   ignoreTLS: true,
+      //   port: 25,
+      //   secureConnection: 'false', // false for TLS
+      //   type:'smtp',
+      //   secure: false, // true for 465, false for other ports
+      //   auth: {
+      //     user: senderEmail, // generated ethereal user
+      //     pass: senderPassword // generated ethereal password
+      //   },
+      //   // tls:{
+      //   //   ciphers:'SSLv3'
+      //   // }
+      //   tls: {
+      //     rejectUnauthorized: false
+      //   }
+      // });
+      let transporter = nodemailer.createTransport(smtpTransport({
+        host: `lvp.lvpei.org`,
+        ignoreTLS: true,
+        port: 25,
+        // secureConnection: false, // false for TLS
+        authMethod: 'LOGIN',
         auth: {
           user: senderEmail, // generated ethereal user
           pass: senderPassword // generated ethereal password
+        },
+        secure: false,
+        // tls:{
+        //   ciphers:'SSLv3'
+        // }
+        tls: {
+          rejectUnauthorized: false
+        }
+      }))
+      await transporter.verify(function(error, success) {
+        if (error) {
+          console.log({ERROR:error});
+        } else {
+          console.log("Server is ready to take our messages");
         }
       });
+      console.log(transporter)
       let info = await transporter.sendMail({
-        from: ' <ghotden@gmail.com>', // sender address
+        from: '"Digital Audio Library LVPEI" <support.dal@lvpei.org>', // sender address
         to: req.body.emailId, // list of receivers
         subject: "Audio Digital Library Email Verification", // Subject line
         text: "pin:"+pin, // plain text body
         html: "<div><h2>Use the PIN below to verify your email</h2></div>"
           +"<h3>Verification Pin:</h3>" + "<h1>{pin}</h1>" // html body
+      })
+        .catch(err =>{
+        console.log({HERE:err})
       });
+      console.log('below')
       const newUser = new User({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
@@ -150,18 +192,18 @@ router.get('/sendAgain',passport.authenticate('world',{session: false}),(req, re
   User.findById(req.user.id).then(async user => {
     let pin = shortid.generate()
     let testAccount = await nodemailer.createTestAccount();
-    let transporter = nodemailer.createTransport({
-      // host: "smtp.ethereal.email",
-      service: 'gmail',
-      // port: 587,
+    let transporter = nodemailer.createTransport(smtpTransport({
+      host: 'lvp.lvpei.org',
+      // address: 'lvp.lvpei.org',
+      port: 25,
       secure: false, // true for 465, false for other ports
       auth: {
         user: senderEmail, // generated ethereal user
         pass: senderPassword // generated ethereal password
       }
-    });
+    }));
     let info = await transporter.sendMail({
-      from: '"LVPEI Test Server" <ghotden@gmail.com>', // sender address
+      from: '"Digital Audio Library LVPEI" <support.dal@lvpei.org>', // sender address
       to: user.emailId, // list of receivers
       subject: "Audio Digital Library Email Verification", // Subject line
       text: "pin:" + pin, // plain text body

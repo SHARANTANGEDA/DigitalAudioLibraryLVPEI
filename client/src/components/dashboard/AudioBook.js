@@ -27,11 +27,18 @@ class AudioBook extends Component {
       // console.log({patients:folders})
       heading=(
         <nav className='navbar navbar-expand-sm justify-content-between col-md-12' style={{ background:'#ffa726', width:'100%', height:'40px'}}>
-        <p>Book Name: {folders.music.title}</p>
-        <p>Author: {folders.music.author}</p>
-        <p>Downloads: {folders.music.downloads}</p>
-        <Link to='/dashboard' className='btn' style={{background:'#ffa726', color: 'green'}}>
-          BACK</Link>
+          <Link to='/dashboard' className='btn' style={{background:'#ffa726', color: 'green'}}>
+            BACK</Link>
+
+            <h6 className='d-flex align-items-center'>
+              <button className='btn btn-sm' style={{background:'#00006d', color:'white', height:'30px', fontSize:'14px'}}
+              >Book Name</button>:{folders.music.title}</h6>
+          <h6 className='d-flex align-items-center'>
+            <button className='btn btn-sm' style={{background:'#00006d', color:'white', height:'30px', fontSize:'14px'}}
+            >Author</button>:{folders.music.author}</h6>
+          <h6 className='d-flex align-items-center'>
+            <button className='btn btn-sm' style={{background:'#00006d', color:'white', height:'30px', fontSize:'14px'}}
+            >Downloads</button>:{folders.music.downloads}</h6>
       </nav>)
         content=(  folders.files.map(folder => (
           <BookItem music={folder} bookId={folders.music._id} key={folder._id}/>

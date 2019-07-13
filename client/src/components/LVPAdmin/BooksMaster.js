@@ -214,8 +214,8 @@ class BooksMaster extends Component {
               <thead>
               <tr>
                 <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Category</th>
-                <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Book Title</th>
-                <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Number of Tracks</th>
+                <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1', minWidth:'200px'}}>Book Title</th>
+                <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Tracks</th>
                 <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Language</th>
                 <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Author</th>
                 <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Grade</th>
