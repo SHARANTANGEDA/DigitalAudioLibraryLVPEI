@@ -164,7 +164,7 @@ class Dashboard extends Component {
               backgroundColor: '#d4d4d4', marginRight: '20px', padding:'5px', minWidth:'380px' }}
                  className='row  d-flex justify-content-between'>
               <div className='col-6 col-md-4'>
-                <Card style={{
+                <Card className='DashCard' style={{
                   margin: '5px', padding:'5px', minWidth:'380px'
                 }}>
                   <div className='row d-flex justify-content-between'>
@@ -179,7 +179,7 @@ class Dashboard extends Component {
                     </div>
                   </div>
                 </Card>
-                <Card  style={{
+                <Card className='DashCard' style={{
                   color: 'black', margin: '5px', padding:'5px', minWidth:'380px'}}>
                   <div className='row d-flex justify-content-between'>
                     <div className=' col-md-5'>
@@ -193,7 +193,7 @@ class Dashboard extends Component {
                     </div>
                   </div>
                 </Card>
-                <Card  style={{
+                <Card className='DashCard' style={{
                   color: 'black', margin: '5px', padding:'5px', minWidth:'380px'
                 }}>
                   <div className='row d-flex justify-content-between'>
@@ -209,7 +209,7 @@ class Dashboard extends Component {
                     </div>
                   </div>
                 </Card>
-                <Card  style={{color: 'black', margin: '5px', padding:'5px', minWidth:'380px'
+                <Card className='DashCard' style={{color: 'black', margin: '5px', padding:'5px', minWidth:'380px'
                   }}>
                   <div className='row d-flex justify-content-between'>
                     <div className=' col-md-6'>
@@ -227,7 +227,7 @@ class Dashboard extends Component {
               </div>
               <div className='col-6 col-md-4'>
 
-                <Card  style={{color: 'black', margin: '5px', padding:'5px', minWidth:'380px'
+                <Card className='DashCard' style={{color: 'black', margin: '5px', padding:'5px', minWidth:'380px'
                   }}>
                   <div className='row d-flex justify-content-between'>
                     <div className=' col-md-4'>
@@ -241,7 +241,7 @@ class Dashboard extends Component {
                     </div>
                   </div>
                 </Card>
-                <Card  style={{color: 'black', margin: '5px', padding:'5px', minWidth:'380px'
+                <Card className='DashCard' style={{color: 'black', margin: '5px', padding:'5px', minWidth:'380px'
                   }}>
                   <div className='row d-flex justify-content-between'>
                     <div className=' col-md-4'>
@@ -255,7 +255,7 @@ class Dashboard extends Component {
                     </div>
                   </div>
                 </Card>
-                <Card  style={{color: 'black', margin: '5px', padding:'5px', minWidth:'380px'
+                <Card className='DashCard'  style={{color: 'black', margin: '5px', padding:'5px', minWidth:'380px'
                  }}>
                   <div className='row d-flex justify-content-between'>
                     <div className=' col-md-4'>
@@ -269,7 +269,7 @@ class Dashboard extends Component {
                     </div>
                   </div>
                 </Card>
-                <Card  style={{color: 'black', margin: '5px', padding:'5px', minWidth:'380px'
+                <Card className='DashCard' style={{color: 'black', margin: '5px', padding:'5px', minWidth:'380px'
                   }}>
                   <div className='row d-flex justify-content-between'>
                     <div className=' col-md-6'>
@@ -287,7 +287,7 @@ class Dashboard extends Component {
               </div>
               <div className='col-6 col-md-4'>
 
-                <Card  style={{color: 'black',margin: '5px', padding:'5px', minWidth:'380px'
+                <Card className='DashCard' style={{color: 'black',margin: '5px', padding:'5px', minWidth:'380px'
                   }}>
                   <div className='row d-flex justify-content-between'>
                     <div className=' col-md-5'>
@@ -302,7 +302,7 @@ class Dashboard extends Component {
                     </div>
                   </div>
                 </Card>
-                <Card  style={{color: 'black', margin: '5px', padding:'5px', minWidth:'380px'
+                <Card className='DashCard' style={{color: 'black', margin: '5px', padding:'5px', minWidth:'380px'
                   }}>
                   <div className='row d-flex justify-content-between'>
                     <div className=' col-md-5'>
@@ -317,7 +317,7 @@ class Dashboard extends Component {
                     </div>
                   </div>
                 </Card>
-                <Card  style={{color: 'black', margin: '5px', padding:'5px', minWidth:'380px'
+                <Card className='DashCard' style={{color: 'black', margin: '5px', padding:'5px', minWidth:'380px'
                   }}>
                   <div className='row d-flex justify-content-between'>
                     <div className=' col-md-4'>
@@ -331,7 +331,7 @@ class Dashboard extends Component {
                     </div>
                   </div>
                 </Card>
-                <Card style={{color: 'black', margin: '5px', padding:'5px', minWidth:'380px'}}>
+                <Card className='DashCard' style={{color: 'black', margin: '5px', padding:'5px', minWidth:'380px'}}>
                   <div className='row d-flex justify-content-between'>
                     <div className=' col-md-4'>
                       <p >Others</p>
@@ -468,7 +468,8 @@ class Dashboard extends Component {
           <div className="displayFolder " >
             <div className="App-content row d-flex justify-content-center" >
               {!this.props.auth.user.verified ? <Warning/>: null}
-              <nav className='navbar navbar-expand-sm justify-content-between col-md-12' style={{ background:'#ffa726', width:'100%', height:'40px'}}>
+              <nav className='navbar navbar-expand-sm justify-content-between col-md-12' style={{ background:'#ffa726',
+                width:'100%', height:'40px'}}>
                 {heading}
                 <div className='col-md-3'>
                   <Select
@@ -484,8 +485,8 @@ class Dashboard extends Component {
                 <thead>
                 <tr>
                   <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Category</th>
-                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Book Title</th>
-                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Number of Tracks</th>
+                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1', minWidth:'200px'}}>Book Title</th>
+                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Tracks</th>
                   <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Language</th>
                   <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Author</th>
                   <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Grade</th>

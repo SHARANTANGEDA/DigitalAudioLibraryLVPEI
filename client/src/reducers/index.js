@@ -7,6 +7,7 @@ import searchReducer from './searchReducer'
 import viewCentreReducer from './viewCentreReducer'
 import accountReducer from './accountReducer'
 import reportReducer from './reportReducer'
+import checkboxReducer from './checkboxReducer'
 
 export default combineReducers({
   auth: authReducer,
@@ -16,5 +17,6 @@ export default combineReducers({
   search: searchReducer,
   view: viewCentreReducer,
   account: accountReducer,
-  report: reportReducer
+  report: reportReducer,
+  checkbox: checkboxReducer
 })

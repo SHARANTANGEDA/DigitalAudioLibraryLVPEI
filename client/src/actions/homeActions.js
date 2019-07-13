@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 import {
+  CHECK_BOX_LOADING,
   CLEAR_ERRORS,
   FOLDER_LOADING,
   GET_ACTIVE,
@@ -100,6 +101,25 @@ export const downloadFile = (id) => dispatch => {
   )
 }
 
+export const downloadSelected = (id,data) => dispatch => {
+  console.log({'In download folder':id})
+  axios.post(`/api/upload/downloadSelected/${id}`,data, { responseType: 'blob' }).then(res => {
+    const url = window.URL.createObjectURL(new Blob([res.data]))
+    const link = document.createElement('a')
+    console.log(url)
+    link.href = url
+    link.setAttribute('download',  id+ '.zip')
+    document.body.appendChild(link)
+    link.click()
+    window.location.href = '/dashboard'
+  }).catch(err =>
+    dispatch({
+      type: NO_FILES,
+      payload: err.data
+    })
+  )
+}
+
 export const downloadFolder = (id) => dispatch => {
   console.log('In download folder')
   axios.get(`/api/upload/downloadFolder/${id}`, { responseType: 'blob' }).then(res => {
@@ -123,6 +143,22 @@ export const getAudioBook = (id) => dispatch => {
   dispatch(setLoading())
   dispatch(homeLoading())
   axios.get(`/api/upload/folders/${id}`).then(res => {
+    dispatch({
+      type: GET_FILES,
+      payload: res.data
+    })
+  }).catch(err =>
+    dispatch({
+      type: NO_FILES,
+      payload: err.data
+    })
+  )
+}
+
+export const getLoggedAudioBook = (id) => dispatch => {
+  dispatch(setLoading())
+  dispatch(homeLoading())
+  axios.get(`/api/upload/secureFolders/${id}`).then(res => {
     dispatch({
       type: GET_FILES,
       payload: res.data
@@ -326,7 +362,11 @@ export const setSearchLoading = () => {
     type: SEARCH_LOADING
   }
 }
-
+export const clearCheckBox = () => {
+  return {
+    type: CHECK_BOX_LOADING
+  }
+}
 // Clear errors
 export const clearErrors = () => {
   return {

@@ -17,6 +17,7 @@ import {
 import URL from '../../../utils/URL'
 import { CHECK_BOX_EVENT, GET_BOOK_DETAILS, NO_FILES } from '../../../actions/types'
 import axios from 'axios'
+import { Public } from '@material-ui/icons'
 
 
 const customStyles = {
@@ -30,7 +31,7 @@ const customStyles = {
   }
 }
 
-class BookItem extends Component {
+class PublicBookItem extends Component {
   constructor () {
     super();
     this.state = {
@@ -54,7 +55,7 @@ class BookItem extends Component {
   onSelect (e) {
     this.setState({selected: true})
     let getSelected = this.props.checkbox.selected;
-      getSelected.push(this.props.music._id)
+    getSelected.push(this.props.music._id)
     console.log({selected: getSelected})
     this.props.checkbox.selected = getSelected
     console.log({afterSelect: this.props.checkbox.selected})
@@ -76,7 +77,7 @@ class BookItem extends Component {
     this.setState({file: true})
   }
   onPlay (e) {
-      this.setState({ file2: true })
+    this.setState({ file2: true })
     this.props.getPlays(this.props.folder._id)
 
   }
@@ -126,7 +127,6 @@ class BookItem extends Component {
   render () {
     const {music} = this.props;
     let icon,icon2;
-    let downloadTimes
     console.log({item:music})
     if(!this.state.file) {
       icon= (<button className='btn-sm btn' style={{background: 'green', color: 'white',marginRight: '10px'}}
@@ -174,14 +174,15 @@ class BookItem extends Component {
       unit='TB'
     }
 
-    let index =this.props.user.downloads.findIndex((item, i) => {
-      return item.id === this.props.music._id
-    })
-    if(index!==-1) {
-      downloadTimes=this.props.user.downloads[index].times
-    }else {
-      downloadTimes=0
-    }
+    // let downloadTimes
+    // let index =this.props.user.downloads.findIndex((item, i) => {
+    //   return item.id === this.props.auth.user.id
+    // })
+    // if(index!==-1) {
+    //   downloadTimes=this.props.user.downloads[index].times
+    // }else {
+    //   downloadTimes=0
+    // }
     return (
       //onTouchStart="this.classList.toggle('hover');
       <tr>
@@ -198,7 +199,7 @@ class BookItem extends Component {
         </td>
         <td>{icon}</td>
 
-        <td>{downloadTimes}</td>
+        {/*<td>{downloadTimes}</td>*/}
         <td><div className='row' style={{margin:'1px'}}>
           <button style={{borderStyle:'none', background:'white'}}>
             <TwitterShareButton title={'Hey!!, checkout this great audio book '+this.props.folder.title+' by LVPEI'}
@@ -234,7 +235,7 @@ class BookItem extends Component {
   }
 }
 
-BookItem.propTypes = {
+PublicBookItem.propTypes = {
   folder: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
   downloadFile: PropTypes.func.isRequired,
@@ -244,7 +245,6 @@ BookItem.propTypes = {
   unFavourite: PropTypes.func.isRequired,
   getPlays: PropTypes.func.isRequired,
   checkbox: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired
 };
 const mapStateToProps = state => ({
   auth: state.auth,
@@ -252,4 +252,4 @@ const mapStateToProps = state => ({
   checkbox: state.checkbox
 });
 
-export default connect(mapStateToProps, { downloadFile, favourite, unFavourite, getPlays })(BookItem);
+export default connect(mapStateToProps, { downloadFile, favourite, unFavourite, getPlays })(PublicBookItem);

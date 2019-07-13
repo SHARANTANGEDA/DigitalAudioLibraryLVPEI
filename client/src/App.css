@@ -17,6 +17,9 @@ div {
   margin-top: 0;
   margin-bottom: -50px;
 }
+.DashCard:hover {background-color: #fff04a
+}
+
 
 /*.container {*/
 /*  padding: 4px;*/

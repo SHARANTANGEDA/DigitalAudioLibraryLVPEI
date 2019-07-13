@@ -116,7 +116,7 @@ class TableItem extends Component {
     } else {
       e.preventDefault()
       this.setState({file: true})
-      this.props.downloadFolder(this.props.folder._id )
+      this.props.downloadFolder(this.props.folder._id)
     }
 
   }
@@ -178,8 +178,8 @@ class TableItem extends Component {
         <td><button className='btn-sm btn' style={{background: 'green', color: 'white',marginRight: '10px'}}
                     onClick={this.onPlay.bind(this)}>View</button></td>
         {this.props.auth.isAuthenticated ? <td>{fav}</td>: null}
-        <td>{<div ><i style={{color:'gold'}} className="fas fa-star fa-2x"/>{this.state.percent}/5
-          <span>({this.state.noRatings})</span></div>}</td>
+        <td>{<div ><i style={{color:'gold'}} className="fas fa-star fa-2x"/>{this.state.percent}/5</div>}</td>
+          {/*<span>({this.state.noRatings})</span></div>}</td>*/}
         {this.props.auth.isAuthenticated ?<td><StarRatingComponent
           name="rating"
           starCount={5}

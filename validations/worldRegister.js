@@ -11,6 +11,9 @@ module.exports = (data) => {
   data.city = !isEmpty(data.city) ? data.city : '';
   data.state = !isEmpty(data.state) ? data.state : '';
   data.country = !isEmpty(data.country) ? data.country : '';
+  if(data.country===null) {
+    errors.country = 'Please enter the Country'
+  }
 
   if (Validator.isEmpty(data.emailId)) {
     errors.emailId = 'Unique lab name is required';

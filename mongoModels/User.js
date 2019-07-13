@@ -49,6 +49,15 @@ const UserSchema = new Schema({
   otpKey: {
     type: String
   },
+  downloads: [{ //World
+    id: {
+      type: String
+    },
+    times: {
+      type: Number,
+      default: 0
+    }
+  }],
   time: {
     type: Date,
     default: Date.now()
