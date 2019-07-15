@@ -1,9 +1,14 @@
+const getAge =require( '../../validations/ageValidation/getAge')
+const categorizeAge = require('../../validations/ageValidation/categorizeAge')
+const getQuarter = require('../../validations/ageValidation/getQuarter')
 const express = require('express')
 const router = express.Router()
 const jwt = require('jsonwebtoken')
 const keys = require('../../config/keys')
 const bcrypt = require('bcryptjs')
 const passport = require('passport')
+const sqlDB = require('../../models')
+
 // const smtpTransport = require("nodemailer-smtp-transport");
 
 const validatePassword = require('../../validations/ChangePassword')
@@ -12,7 +17,8 @@ const validateChangeInput = require('../../validations/editProfile/editProfileLV
 const validateWorldChangeInput = require('../../validations/editProfile/editProfileWorld')
 const validateWorldRegisterInput = require('../../validations/worldRegister')
 const validateBookInput = require('../../validations/bookUploadForm')
-
+const validateNewPassword = require('../../validations/resetPassword')
+const validateSearchInput = require('../../validations/search')
 const User = require('../../mongoModels/User');
 const Music = require('../../mongoModels/Music');
 const nodemailer = require("nodemailer");
@@ -23,7 +29,6 @@ const senderPassword = require('../../config/keys').senderPassword
 //@Register
 router.post('/register', (req, res) => {
   const { errors, isValid } = validateWorldRegisterInput(req.body)
-
   if (!isValid) {
     return res.status(400).json(errors)
   }
@@ -33,6 +38,7 @@ router.post('/register', (req, res) => {
       return res.status(400).json(errors)
     } else {
       let pin = shortid.generate()
+      console.log('here')
       // let transporter = nodemailer.createTransport({
       //   host: 'lvp.lvpei.org',
       //   ignoreTLS: true,
@@ -106,11 +112,11 @@ router.post('/register', (req, res) => {
         pinCode: req.body.pinCode,
         city: req.body.city,
         state: req.body.state,
-        country: req.body.country,
+        country: req.body.country.label,
         otpKey: pin,
         dob: req.body.dob,
-        gender: req.body.gender,
-        qualification: req.body.qualification,
+        gender: req.body.gender.value,
+        qualification: req.body.qualification.value,
         role: 'world'
       })
       console.log("Message sent: %s", info.messageId);
@@ -151,6 +157,148 @@ router.post('/register', (req, res) => {
   })
 })
 
+router.post('/search',(req, res) => {
+  const { errors, isValid } = validateSearchInput(req.body)
+  if (!isValid) {
+    return res.status(400).json(errors)
+  }
+  if(req.body.category === 'title') {
+    let dummy=[], arr=[]
+    Music.find().then( async music => {
+      console.log({m:music})
+      if (music.length === 0) {
+        return res.json({ success: false })
+      }
+      music.map(async record => {
+        dummy.push(new Promise((resolve, reject) => {
+          let title = record.title.toLowerCase()
+          let key = req.body.search.toLowerCase()
+          console.log({title:title, key: key, comp: title.includes(key)})
+          if (title.includes(key)) {
+            arr.push(record)
+          }
+        }))
+      })
+      res.json({ results: await Promise.all(arr), success: true })
+    }).catch(err => {
+      res.json({success: false})
+    })
+  }else if(req.body.category === 'author') {
+    let dummy=[], arr=[]
+    Music.find().then( async music => {
+      if (music.length === 0) {
+        return res.json({ success: false })
+      }
+      music.map(async record => {
+        dummy.push(new Promise((resolve, reject) => {
+          let author = record.author.toLowerCase()
+          let key = req.body.search.toLowerCase()
+          if (author.includes(key)) {
+            arr.push(record)
+          }
+        }))
+      })
+      res.json({ results: await Promise.all(arr), success: true })
+    }).catch(err => {
+      res.json({success: false})
+    })
+  }
+})
+
+
+router.post('/resetPasswordSend',(req, res) => {
+  let errors = {}
+  User.findOne({emailId:req.body.emailId}).then(async user => {
+    if (!user) {
+      errors.email = 'Please enter the correct EmailId'
+      return res.status(400).json(errors)
+    }
+    let pin = shortid.generate()
+    let transporter = nodemailer.createTransport({
+      service: 'Gmail',
+      auth: {
+        user: senderEmail, // generated ethereal user
+        pass: senderPassword // generated ethereal password
+      },
+      secure: false,
+    })
+    await transporter.verify(function (error, success) {
+      if (error) {
+        console.log({ ERROR: error });
+      } else {
+        console.log("Server is ready to take our messages");
+      }
+    });
+    let info = await transporter.sendMail({
+      from: '"Digital Audio Library LVPEI" <support.dal@lvpei.org>', // sender address
+      to: req.body.emailId, // list of receivers
+      subject: "Audio Digital Library Reset Password", // Subject line
+      text: "pin:" + pin, // plain text body
+      html: "<div><h2>Use the PIN below to Reset Password</h2></div>"
+        + "<h3>Verification Pin:</h3>" + `<h1>${pin}</h1>` // html body
+    })
+      .catch(err => {
+        console.log({ HERE: err })
+      });
+    user.otpKey=pin;
+    user.save().then(user => {
+      res.json({sent: true})
+    })
+  })
+})
+router.post('/resetPasswordReceive',(req, res) => {
+  User.findOne({emailId: req.body.emailId}).then(user => {
+    console.log({key:user.otpKey, pin:req.body.pin})
+    if(user.otpKey===req.body.pin) {
+      let payload
+      if (user.access) {
+        console.log(new Date(), user.time)
+        // && dateDiffInDays(new Date(), user.time)>2
+        if (!user.verified) {
+          payload = { id: user._id, role: user.role, emailId: user.emailId, verified: false }
+        } else {
+          payload = { id: user._id, role: user.role, emailId: user.emailId, verified: true }
+        }
+      } else {
+        errors.emailId = 'Your account is blocked!!'
+        return res.status(401).json(errors)
+      }
+      jwt.sign(payload, keys.secretOrKey, { expiresIn: '12h' },
+        (err, token) => {
+          console.log(payload)
+          res.json({
+            success: true,
+            token: 'Bearer ' + token
+          }).catch(err => console.log(err))
+        })
+    }else {
+      let errors={}
+      errors.pin='You have entered In-Correct Verification code'
+      return res.status(400).json(errors);
+    }
+  })
+})
+router.post('/resetPasswordEnter', passport.authenticate('world', { session: false }),
+  (req, res) => {
+    const { errors, isValid } = validateNewPassword(req.body)
+    if (!isValid) {
+      return res.status(404).json(errors)
+    }
+    let newPassword = req.body.newPassword
+    bcrypt.genSalt(10, (err, salt) => {
+      bcrypt.hash(newPassword, salt, (err, hash) => {
+        if (err) throw err
+        newPassword = hash
+        User.findOneAndUpdate({_id: req.user._id}, { password: newPassword }, (err, res) => {
+          if (err) throw err
+        }).then(user => {
+          res.json({ success: true })
+        }).catch(err => {
+          return res.status(404).json({ failed: 'Your password is not updated', err })
+        })
+      })
+    })
+})
 router.post('/verifyEmail',passport.authenticate('world',{session: false}),(req, res) => {
   User.findById(req.user.id).then(user => {
     if (!user) {
@@ -345,11 +493,91 @@ router.get('/getFavBooks', passport.authenticate('world', { session: false }), (
     console.log(await Promise.all(arr))
     res.json(await Promise.all(arr))
   })
-} )
+})
 
-router.get('/addPlay/:id',(req, res) => {
-  Music.findByIdAndUpdate(req.params.id,{$inc:{plays: 1}}).then( records => {
-    res.json({ success: true })
+// router.get('/addPlay/:id',(req, res) => {
+//   Music.findByIdAndUpdate(req.params.id,{$inc:{plays: 1}}).then( music => {
+//     let today = new Date();
+//     let month = today.getMonth()
+//     let year = today.getFullYear()
+//     let quarter = getQuarter()
+//     sqlDB.User.create({age:0,ageCategory:0,gender: 'NA',
+//       qualification: 'NA', address:'NA', pinCode: 0,
+//       city: 'NA', state: 'NA', country: 'NA',
+//       status:'play',bookCategory: music.category, bookLanguage: music.language,
+//       bookAuthor: music.author, month:month, year: year, quarter: quarter}).then(sqlRow => {
+//       res.json({ success: true })
+//     })
+//   })
+// })
+router.get('/catalogue', (req, res) => {
+    let  dummy = [], school1 =[], all=[]
+    let inter=[],school2=[],ug=[], law=[],psy=[],pg=[], ce=[], eg=[], cs=[], reg=[], ot=[]
+
+    Music.find().then(async records => {
+
+      records.map(async record => {
+        dummy.push(new Promise((resolve, reject) => {
+          console.log({record:record})
+          all.push(record)
+          if(record.category==='School (I – V)') {
+            school1.push(record)
+          }else if(record.category==='School (VI – X)') {
+            school2.push(record)
+            console.log(school2.length)
+          }else if(record.category==="Intermediate (XI & XII)") {
+            inter.push(record)
+          }else if(record.category==='Undergraduate') {
+            ug.push(record)
+          }else if(record.category==='Postgraduate') {
+            pg.push(record)
+          }else if(record.category==='Law'){
+            law.push(record)
+          }else if(record.category==='Psychology'){
+            psy.push(record)
+          }else if(record.category==='Competitive Exam'){
+            ce.push(record)
+          }else if(record.category==='English Grammar'){
+            eg.push(record)
+          }else if(record.category==='Children Stories'){
+            cs.push(record)
+          }else if(record.category==='Religious'){
+            reg.push(record)
+          } else if(record.category==='Other'){
+            ot.push(record)
+          }
+          resolve(record)
+        }))
+      })
+      res.json({
+        all: await Promise.all(all),
+        school1: await Promise.all(school1),
+        school2: await Promise.all(school2),inter: await Promise.all(inter),ug: await Promise.all(ug),
+        pg: await Promise.all(pg), law: await Promise.all(law),psy: await Promise.all(psy), ce: await Promise.all(ce),
+        eg: await Promise.all(eg), cs: await Promise.all(cs), reg: await Promise.all(reg), ot: await Promise.all(ot)
+      })
+
+    })
+});
+
+
+router.get('/addAuthPlay/:id',passport.authenticate('world',{session: false}),(req, res) => {
+  User.findById(req.user.id).then(user => {
+    Music.findByIdAndUpdate(req.params.id, { $inc: { plays: 1 } }).then(music => {
+      let age=getAge(user.dob)
+      let ageCategory = categorizeAge(age)
+      let today = new Date();
+      let month = today.getMonth()
+      let year = today.getFullYear()
+      let quarter = getQuarter()
+      sqlDB.User.create({age:age,ageCategory:ageCategory,gender: user.gender,
+        qualification: user.qualification, address: user.address, pinCode: user.pinCode,
+        city: user.city, state: user.state, country: user.country,
+        status:'play',bookCategory: music.category, bookLanguage: music.language,
+        bookAuthor: music.author, month:month, year: year, quarter: quarter}).then(sqlRow => {
+        res.json({ success: true })
+      })
+    })
   })
 })
 

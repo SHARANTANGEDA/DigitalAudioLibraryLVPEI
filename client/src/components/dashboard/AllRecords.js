@@ -3,18 +3,17 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { getSADetails } from '../../actions/homeActions'
 import Spinner from '../common/Spinner'
+import TableItem from '../PublicHome/Single/TableItem'
 import Select from 'react-select'
 import { getAllBooks } from '../../actions/authActions'
-import MasterItem from './MasterItem'
-import NotFound from '../layout/NotFound'
-import SearchBar from '../dashboard/SearchBar'
-
+import Warning from '../layout/Warning'
+import SearchBar from './SearchBar'
+import 'react-dates/initialize';
 import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import moment from 'moment'
 
-
-class BooksMaster extends Component {
+class AllRecords extends Component {
   constructor () {
     super()
     this.state = {
@@ -46,11 +45,18 @@ class BooksMaster extends Component {
   }
 
   componentDidMount () {
+  if(this.props.auth.isAuthenticated) {
       this.props.getAllBooks(this.props.match.params.id)
+      this.setState({category:{label: this.props.match.params.id, value: this.props.match.params.id}})
+    }
   }
 
   openModal () {
     this.setState({ modalIsOpen: true })
+  }
+
+  filterDate() {
+    this.setState({dateFilter: true})
   }
 
   handleClick(event) {
@@ -67,13 +73,11 @@ class BooksMaster extends Component {
     this.props.continueToUpload(userData)
   }
 
+
   afterOpenModal () {
 
   }
 
-  filterDate() {
-    this.setState({dateFilter: true})
-  }
   onDiscard () {
     this.setState({ modalIsOpen: false, patient: '' })
     const mid = {
@@ -100,6 +104,7 @@ class BooksMaster extends Component {
   codeSelect(e) {
     this.setState({campusCode: e})
   }
+
   isOutsideRange = () => false;
 
   render () {
@@ -111,6 +116,8 @@ class BooksMaster extends Component {
         return ((x < y) ? -1 : ((x > y) ? 1 : 0));
       });
     }
+
+
       let categoryArray=[{value:'all', label: 'all'},{value: 'School (I – V)', label: 'School (I – V)'},
         {value: 'School (VI – X)', label: 'School (VI – X)'},
         {value: 'Intermediate (XI & XII)', label: 'Intermediate (XI & XII)'},
@@ -138,31 +145,26 @@ class BooksMaster extends Component {
           )
           heading=null
         }else {
+          // allFoldersContent = (
           heading = null
+
           if(this.state.category===null || this.state.category.value==='all') {
             let newFolders
             if(this.state.dateFilter) {
               land.all.map(folder =>
                 console.log({1:moment(this.state.startDate).isBefore(folder.uploadAt),
-                  2: moment(this.state.endDate).isAfter(folder.uploadAt),3: folder.uploadAt}))
+                2: moment(this.state.endDate).isAfter(folder.uploadAt),3: folder.uploadAt}))
               newFolders = land.all.filter(folder => moment(this.state.startDate).isBefore(folder.uploadAt) &&
-                moment(this.state.endDate).isAfter(folder.uploadAt))
+              moment(this.state.endDate).isAfter(folder.uploadAt))
             }else {
               newFolders = land.all
             }
-            let currentFolder = newFolders.slice(indexOfFirstTodo, indexOfLastTodo);
-            // const sortByKey = (array, key) => array.sort(function (a, b) {
-            //   let x = a[key];
-            //   let y = b[key];
-            //   // (x < y) ? -1 : ((x > y) ? 1 : 0)
-            //   return (x<y);
-            // })
-            // currentFolder = sortByKey(currentFolder, 'title');
+            const currentFolder = newFolders.slice(indexOfFirstTodo, indexOfLastTodo);
             const render = (  currentFolder.map(land => (
               // <ProductCard folder={land} key={land._id}/>
-              <MasterItem folder={land} key={land._id}/>
+              <TableItem folder={land} key={land._id}/>
             )))
-            for (let i = 1; i <= Math.ceil(land.all.length / todosPerPage); i++) {
+            for (let i = 1; i <= Math.ceil(newFolders.length / todosPerPage); i++) {
               pageNumbers.push(i);
             }
             const renderPageNumbers = (
@@ -184,7 +186,9 @@ class BooksMaster extends Component {
                   {renderPageNumbers}
                 </ul>
               </nav>
+
             )
+
           } else {
 
             let newFolders = land.all.filter(folder => folder.category === this.state.category.value.toString())
@@ -193,9 +197,15 @@ class BooksMaster extends Component {
                 moment(this.state.endDate).isAfter(folder.uploadAt))
             }
             let currentFolder = newFolders.slice(indexOfFirstTodo, indexOfLastTodo);
+            // const sortByKey = (array, key) => array.sort(function (a, b) {
+            //   let x = a[key];
+            //   let y = b[key];
+            //   // (x < y) ? -1 : ((x > y) ? 1 : 0)
+            //   return (x<y);
+            // })
             currentFolder = sort_by_key(currentFolder, 'title');
             const render = (  currentFolder.map(folder => (
-              <MasterItem folder={folder} key={folder._id}/>
+              <TableItem folder={folder} key={folder._id}/>
             )))
             for (let i = 1; i <= Math.ceil(newFolders.length / todosPerPage); i++) {
               pageNumbers.push(i);
@@ -223,79 +233,77 @@ class BooksMaster extends Component {
           }
         }
       }
-      let content;
-    if(this.props.auth.user.role==='lvpei') {
-      content= (
-        <div className="displayFolder container-fluid" style={{minWidth:'100%', padding: '0px'}}>
-          <div className="App-content row d-flex justify-content-between" >
-            <nav className='navbar navbar-expand-sm justify-content-between col-md-12' style={{ background:'#ffa726',
-              width:'100%', height:'50px'}}>
-              {heading}
-              <div className='row col-md-7 d-flex align-items-center'>
-                <div className='col-md-4' >
-                  <Select
-                    options={categoryArray}
-                    className='isSearchable' placeholder="Select a book category to filter"
-                    name="category" value={this.state.category} onChange={this.onSelectType}>
-                  </Select>
-                </div>
-                <DateRangePicker
-                  startDate={this.state.startDate} // momentPropTypes.momentObj or null,
-                  startDateId="startDate" // PropTypes.string.isRequired,
-                  endDate={this.state.endDate} // momentPropTypes.momentObj or null,
-                  isOutsideRange={this.isOutsideRange}
-                  endDateId="endDate" // PropTypes.string.isRequired,
-                  onDatesChange={({ startDate, endDate }) => {
-                    console.log({ startDate:this.state.startDate,endDate: this.state.endDate,
-                      fIn: this.state.focusedInput})
-                    this.setState({ startDate, endDate })
-                  }} // PropTypes.func.isRequired,
-                  focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-                  onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
-                />
-                <button type="submit" onClick={this.filterDate} className="input-group-text cyan lighten-2">
-                  Apply Date filter
-                </button>
-              </div>
-              <SearchBar/>
-            </nav>
-            <table className="table table-bordered  mb-0">
-              <thead>
-              <tr>
-                <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Category</th>
-                <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1', minWidth:'200px'}}>Book Title</th>
-                <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Tracks</th>
-                <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Language</th>
-                <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Author</th>
-                <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Grade</th>
-                <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>View</th>
-                <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Rating</th>
-                <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Edit Info</th>
-                <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Add Track</th>
-              </tr>
-              </thead>
-              <tbody>
-              {allFoldersContent}
-              </tbody>
-            </table>
-          </div>
-          <div className='d-flex justify-content-end'>
-            {renderpn}
-          </div>
-        </div>
-      )
-    }else {
-      content=(<NotFound/>)
-    }
       return (
-        <div className='bookMaster'>
-          {content}
+        <div className='container-fluid' style={{minWidth:'100%', padding: '0px'}}>
+          <div className="displayFolder " >
+            <div className="App-content row d-flex justify-content-between" >
+              {!this.props.auth.user.verified && this.props.auth.user.role==='world'? <Warning/>: null}
+              <nav className='navbar navbar-expand-sm justify-content-between col-md-12' style={{ background:'#ffa726',
+                width:'100%', height:'50px'}}>
+                {heading}
+                <div className='row col-md-7 d-flex align-items-center'>
+                  <div className='col-md-4' >
+                    <Select
+                      options={categoryArray}
+                      className='isSearchable' placeholder="Select a book category to filter"
+                      name="category" value={this.state.category} onChange={this.onSelectType}>
+                    </Select>
+                  </div>
+                    <DateRangePicker
+                      startDate={this.state.startDate} // momentPropTypes.momentObj or null,
+                      startDateId="startDate" // PropTypes.string.isRequired,
+                      endDate={this.state.endDate} // momentPropTypes.momentObj or null,
+                      isOutsideRange={this.isOutsideRange}
+                      endDateId="endDate" // PropTypes.string.isRequired,
+                      onDatesChange={({ startDate, endDate }) => {
+                        console.log({ startDate:this.state.startDate,endDate: this.state.endDate,
+                          fIn: this.state.focusedInput})
+                        this.setState({ startDate, endDate })
+                      }} // PropTypes.func.isRequired,
+                      focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+                      onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
+                    />
+                    <button type="submit" onClick={this.filterDate} className="input-group-text cyan lighten-2">
+                      Apply Date filter
+                    </button>
+                </div>
+                <SearchBar/>
+              </nav>
+
+              <table className="table table-bordered  mb-0">
+                <thead>
+                <tr>
+                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Category</th>
+                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1', minWidth:'200px'}}>Book Title</th>
+                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Tracks</th>
+                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Language</th>
+                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Author</th>
+                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Grade</th>
+                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>View</th>
+                  {this.props.auth.user.role==='world' &&
+                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Favourite</th>}
+                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Rating</th>
+                  {this.props.auth.user.role==='world' &&
+                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Rate</th>}
+                  <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Share</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                {allFoldersContent}
+                </tbody>
+              </table>
+            </div>
+            <div className='d-flex justify-content-end'>
+              {renderpn}
+            </div>
+          </div>
         </div>
       );
     }
 }
 
-BooksMaster.propTypes = {
+AllRecords.propTypes = {
   home: PropTypes.object.isRequired,
   getSADetails: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
@@ -307,4 +315,4 @@ const mapStateToProps = state => ({
   auth: state.auth,
   folder: state.folder
 })
-export default connect(mapStateToProps, {getSADetails, getAllBooks})(BooksMaster)
+export default connect(mapStateToProps, {getSADetails, getAllBooks})(AllRecords)

@@ -14,6 +14,11 @@ import ContactUs from './components/common/ContactUs'
 import Routes from './components/common/Routes/Routes'
 import Login from './components/layout/Login'
 import Register from './components/layout/Register'
+import Footer from './components/layout/Footer'
+import ForgotPassword from './components/layout/ForgotPassword'
+import PublicCatalogue from './components/PublicHome/PublicCatalogue'
+import FilterLanding from './components/layout/FilterLanding'
+import SearchResults from './components/dashboard/SearchResults'
 
 
 //Check for token
@@ -38,11 +43,14 @@ class App extends Component {
         <Switch>
         <Route exact path="/home" component={Landing}/>
           <Route exact path='/' component={Login}/>
+          <Route exact path='/forgotPassword' component={ForgotPassword}/>
           <Route exact path='/register' component={Register}/>
           <Route exact path='/contactUs' component={ContactUs}/>
+          <Route exact path='/browse' component={PublicCatalogue}/>
+          <Route exact path="/home/:id" component={FilterLanding}/>
+          <Route exact path="/search/:category/:search" component={SearchResults}/>
           <Route component={Routes}/>
         </Switch>
-        {/*<Footer/>*/}
       </div>
       </Router>
       </Provider>

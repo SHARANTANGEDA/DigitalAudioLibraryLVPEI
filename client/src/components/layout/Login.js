@@ -4,17 +4,33 @@ import { PropTypes } from 'prop-types'
 import { connect } from 'react-redux'
 import TextFieldGroup from '../common/TextFieldGroup'
 import { getAllBooks, loginUser } from '../../actions/authActions'
+import Modal from 'react-modal'
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '0',
 
+    transform: 'translate(-50%, -50%)'
+  }
+}
 class Login extends Component {
   constructor () {
     super();
     this.state = {
       emailId: '',
       password: '',
+      modalIsOpen: false,
       errors: {}
     };
     this.changeHandler = this.changeHandler.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.openModal = this.openModal.bind(this)
+    this.afterOpenModal = this.afterOpenModal.bind(this)
+    this.closeModal = this.closeModal.bind(this)
+
   }
   changeHandler(e) {
     this.setState({ [e.target.name]: e.target.value });
@@ -35,6 +51,21 @@ class Login extends Component {
     }
   }
 
+
+  openModal () {
+    this.setState({ modalIsOpen: true })
+  }
+
+  afterOpenModal () {
+
+  }
+
+  closeModal () {
+    this.setState({ modalIsOpen: false })
+    window.location.href = '/dashboard'
+  }
+
+
   onSubmit(e) {
     e.preventDefault();
     const userData = {
@@ -47,8 +78,8 @@ class Login extends Component {
     const {errors} = this.state;
 
     return (
-      <div className="login landing " style={{minWidth: '100%'}}>
-        <div className="dark-overlay">
+      <div className="login landing " style={{ maxHeight: '100%' }}>
+        <div className="dark-overlay" >
           <div className="container">
             <div className="row d-flex justify-content-center text-light">
               <div className="col-md-12 text-center">
@@ -68,7 +99,15 @@ class Login extends Component {
                   <TextFieldGroup placeholder="Password" error={errors.password}
                                   type="password" onChange={this.changeHandler} value={this.state.password} name="password"
                   />
-                  <input type="submit" className="btn btn-info btn-block mt-4"/>
+                  <div className="col-md-12 d-flex justify-content-center text-center">
+                    <div className='col-md-6'>
+                      <input style={{maxWidth:'250px'}} value='Login' type="submit" className="btn btn-info btn-block mt-4"/>
+                    </div>
+                    <div className='col-md-6'>
+                      <Link to="/forgotPassword" className='btn btn-info btn-block mt-4'>Forgot Password?</Link>
+                    </div>
+
+                  </div>
                 </form>
                 <hr/>
                 <p style={{color: 'white'}}>Don't have an account yet?,
@@ -82,6 +121,23 @@ class Login extends Component {
           {/*  Copyright &copy; {new Date().getFullYear()} L V Prasad Eye Institute*/}
           {/*</footer>*/}
         </div>
+        <Modal
+          isOpen={this.state.modalIsOpen}
+          onAfterOpen={this.afterOpenModal}
+          onRequestClose={this.closeModal}
+          style={customStyles}
+          contentLabel="Confirm OTP"
+          shouldCloseOnOverlayClick={false}
+          modalOptions={{ dismissible: false }}
+          shouldCloseOnEsc={false}
+          ariaHideApp={false}
+        >{<div className='d-flex justify-content-center'>
+          {/*<ForgotPassword/>*/}
+          <div>
+            <button onClick={this.closeModal} className='btn btn-sm' style={{ color: 'white', background: 'red' }}>
+              <i className="fas fa-times"/></button>
+          </div>
+        </div>}</Modal>
       </div>
     );
   }

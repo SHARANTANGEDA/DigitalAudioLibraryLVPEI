@@ -14,7 +14,7 @@ import {
   WhatsappShareButton,
 } from 'react-share'
 
-import { addRating, changeRating, downloadFolder, favourite, getPlays, unFavourite } from '../../../actions/homeActions'
+import { addRating, changeRating, downloadFolder, favourite, unFavourite } from '../../../actions/homeActions'
 import downloading from '../../common/downloading.gif'
 import Modal from 'react-modal'
 import ModalLogin from '../../layout/ModalLogin'
@@ -64,13 +64,11 @@ class TableItem extends Component {
       this.setState({favo: true})
     }
     let length = this.props.folder.rating.length*5
-    console.log({length:length})
     let totalRatings = 0
     this.setState({noRatings: this.props.folder.rating.length})
     this.props.folder.rating.map(single => {
       totalRatings= totalRatings + single.rate
     })
-    console.log(totalRatings)
     if(isNaN((totalRatings/length)*5)) {
       this.setState({percent: 0})
 
@@ -166,21 +164,24 @@ class TableItem extends Component {
         <button onClick={this.onFav} style={{color:'red'}} className='btn btn-sm'><i className="far fa-heart fa-2x"/></button>
       )
     }
+    function capitalizeFirstLetter(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+    }
     return (
       <tr>
         <td><span style={{ fontFamily: 'Arial', fontSize: '16px' }}>{folder.category}</span></td>
-        <td><span style={{ fontFamily: 'Arial', fontSize: '16px' }}>{folder.title}</span></td>
+        <td><span style={{ fontFamily: 'Arial', fontSize: '16px' }}>{capitalizeFirstLetter(folder.title)}</span></td>
         <td><span style={{ fontFamily: 'Arial', fontSize: '16px' }}>{folder.tracks}</span></td>
         <td><span style={{ fontFamily: 'Arial', fontSize: '16px' }}>{folder.language}</span></td>
-        <td><span style={{ fontFamily: 'Arial', fontSize: '16px'  }}>{folder.author}</span></td>
-        <td><span style={{ fontFamily: 'Arial', fontSize: '16px' }}>{folder.grade}</span></td>
+        <td><span style={{ fontFamily: 'Arial', fontSize: '16px'  }}>{capitalizeFirstLetter(folder.author)}</span></td>
+        <td><span style={{ fontFamily: 'Arial', fontSize: '16px' }}>{capitalizeFirstLetter(folder.grade)}</span></td>
         {/*<td>{icon}</td>*/}
         <td><button className='btn-sm btn' style={{background: 'green', color: 'white',marginRight: '10px'}}
                     onClick={this.onPlay.bind(this)}>View</button></td>
-        {this.props.auth.isAuthenticated ? <td>{fav}</td>: null}
+        {this.props.auth.isAuthenticated && this.props.auth.user.role==='world'? <td>{fav}</td>: null}
         <td>{<div ><i style={{color:'gold'}} className="fas fa-star fa-2x"/>{this.state.percent}/5</div>}</td>
           {/*<span>({this.state.noRatings})</span></div>}</td>*/}
-        {this.props.auth.isAuthenticated ?<td><StarRatingComponent
+        {this.props.auth.isAuthenticated && this.props.auth.user.role==='world'?<td><StarRatingComponent
           name="rating"
           starCount={5}
           value={this.state.rating}
@@ -234,10 +235,9 @@ TableItem.propTypes = {
   favourite: PropTypes.func.isRequired,
   unFavourite: PropTypes.func.isRequired,
   addRating: PropTypes.func.isRequired,
-  changeRating: PropTypes.func.isRequired,
-  getPlays: PropTypes.func.isRequired
+  changeRating: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   auth: state.auth
 });
-export default connect(mapStateToProps, {downloadFolder, favourite, unFavourite, addRating, changeRating, getPlays})(TableItem);
+export default connect(mapStateToProps, {downloadFolder, favourite, unFavourite, addRating, changeRating})(TableItem);

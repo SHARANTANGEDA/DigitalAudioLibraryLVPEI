@@ -8,6 +8,7 @@ import viewCentreReducer from './viewCentreReducer'
 import accountReducer from './accountReducer'
 import reportReducer from './reportReducer'
 import checkboxReducer from './checkboxReducer'
+import resetPasswordReducer from './resetPasswordReducer'
 
 export default combineReducers({
   auth: authReducer,
@@ -18,5 +19,6 @@ export default combineReducers({
   view: viewCentreReducer,
   account: accountReducer,
   report: reportReducer,
-  checkbox: checkboxReducer
+  checkbox: checkboxReducer,
+  reset: resetPasswordReducer
 })

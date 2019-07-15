@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { PropTypes } from 'prop-types'
 import { connect } from 'react-redux'
-import { addRating, changeRating, downloadFolder, favourite, getPlays, unFavourite } from '../../actions/homeActions'
+import { addRating, changeRating, downloadFolder, favourite,  unFavourite } from '../../actions/homeActions'
 import Modal from 'react-modal'
 import EditBook from './EditBook'
 import UploadFiles from '../upload/UploadFiles'
@@ -176,10 +176,9 @@ MasterItem.propTypes = {
   favourite: PropTypes.func.isRequired,
   unFavourite: PropTypes.func.isRequired,
   addRating: PropTypes.func.isRequired,
-  changeRating: PropTypes.func.isRequired,
-  getPlays: PropTypes.func.isRequired
+  changeRating: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   auth: state.auth
 });
-export default connect(mapStateToProps, {downloadFolder, favourite, unFavourite, addRating, changeRating, getPlays})(MasterItem);
+export default connect(mapStateToProps, {downloadFolder, favourite, unFavourite, addRating, changeRating})(MasterItem);

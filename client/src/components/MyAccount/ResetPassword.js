@@ -106,7 +106,7 @@ ResetPassword.propTypes = {
   resetPassword: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
-  emailId: PropTypes.object.isRequired
+  emailId: PropTypes.string.isRequired
 }
 
 const mapStateToProps = state => ({

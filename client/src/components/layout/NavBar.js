@@ -70,20 +70,7 @@ class Navbar extends Component {
 
   render () {
     const { isAuthenticated, user } = this.props.auth
-    const {results, loading} = this.props.search
-    if(loading || results ===null) {
-
-    }else {
-      console.log({results:results})
-      if(!results.success) {
-        window.location.href='/detailsNotFound'
-      } else {
-        if(results.mrNo!==null) {
-          window.location.href=`/displayFolder/${results.mrNo}`
-        }
-      }
-    }
-    const { category, errors } = this.state
+       const { category, errors } = this.state
     const authLinkO = (
       <div className='d-flex justify-content-between align-content-end col-md-12'>
         <div  className="row col-md-6 d-flex justify-content-start align-items-center"
@@ -123,9 +110,9 @@ class Navbar extends Component {
       <ul className="navbar-nav components d-flex justify-content-around" style={{ height: '100%' }}>
         <li className='nav-item' style={{color: 'white',background:'#008cff' , borderRadius: '5px'
         }}>
-          <Link className="nav-link" to="/home"
+          <Link className="nav-link" to="/browse"
                 style={{color: 'white', borderRadius: '5px' }}>
-            {' '}View Audio Books</Link>
+            {' '}PublicCatalogue</Link>
         </li>
         <li className='nav-item' style={{color: 'white',background:'#008cff' , borderRadius: '5px'
            }}>

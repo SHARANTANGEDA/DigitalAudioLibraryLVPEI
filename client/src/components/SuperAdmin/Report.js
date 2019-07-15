@@ -94,7 +94,7 @@ class Report extends Component {
     {
       return array.sort(function(a, b)
       {
-        let x = a[key]; let y = b[key];
+        let x = a[key].toUpperCase(); let y = b[key].toUpperCase();
         return ((x < y) ? -1 : ((x > y) ? 1 : 0));
       });
     }

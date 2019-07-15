@@ -1,10 +1,12 @@
-import { GET_LANDING_HOME, SET_AUTH_LOADING, SET_CURRENT_USER } from '../actions/types'
+import { GET_LANDING_CATALOGUE, GET_LANDING_HOME, SET_AUTH_LOADING, SET_CURRENT_USER } from '../actions/types'
 import isEmpty from '../validation/is-empty'
 
 const initialState = {
   isAuthenticated: false,
   user: {},
   land: null,
+  cat: null,
+  loading2: true,
   loading: true
 }
 
@@ -14,7 +16,9 @@ export default function (state = initialState, action) {
       return {
         ...state,
         loading: true,
-        land: false
+        land: null,
+        cat: null,
+        loading2: true
       }
     case SET_CURRENT_USER:
       return {
@@ -28,7 +32,12 @@ export default function (state = initialState, action) {
         land: action.payload,
         loading: false
       }
-
+    case GET_LANDING_CATALOGUE:
+      return {
+        ...state,
+        cat: action.payload,
+        loading2: false
+      }
     default:
       return state;
   }

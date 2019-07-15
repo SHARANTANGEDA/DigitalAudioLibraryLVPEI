@@ -59,6 +59,7 @@ class AudioBook extends Component {
       // console.log({patients:folders})
       heading = (
         <div className='App-content row d-flex justify-content-center' style={{margin:'0px', minWidth:'100%'}}>
+          {this.props.auth.user.role==='world' &&
           <nav className='navbar navbar-expand-sm justify-content-between col-md-12'
                style={{ background: '#ffa726', width: '100%', height: '40px' }}>
             <Link to='/dashboard' onClick={this.eraseSelections} className='btn'
@@ -77,6 +78,9 @@ class AudioBook extends Component {
             </div>
 
           </nav>
+          }
+
+
           <nav className='container-fluid navbar col-md-12 w-100  d-flex justify-content-between '
                style={{
                  minWidth: '100%',
@@ -121,13 +125,15 @@ class AudioBook extends Component {
         )
         headers=(
           <tr>
-            <th scope="col" style={{ fontSize: '10pt', background: '#c1c1c1' }}>Select</th>
+            {this.props.auth.user.role==='world' &&
+            <th scope="col" style={{ fontSize: '10pt', background: '#c1c1c1' }}>Select</th>}
             <th scope="col" style={{ fontSize: '10pt', background: '#c1c1c1' }}>Track Name</th>
             <th scope="col" style={{ fontSize: '10pt', background: '#c1c1c1', minWidth:'100px' }}>File Size</th>
-
             <th scope="col" style={{ fontSize: '10pt', background: '#c1c1c1' }}>Play Track</th>
-            <th scope="col" style={{ fontSize: '10pt', background: '#c1c1c1' }}>Download Track</th>
-            <th scope="col" style={{ fontSize: '10pt', background: '#c1c1c1' }}>Status</th>
+            {this.props.auth.user.role==='world' &&
+            <th scope="col" style={{ fontSize: '10pt', background: '#c1c1c1' }}>Download Track</th>}
+            {this.props.auth.user.role==='world' &&
+            <th scope="col" style={{ fontSize: '10pt', background: '#c1c1c1' }}>Status</th>}
             <th scope="col" style={{ fontSize: '10pt', background: '#c1c1c1' }}>Share</th>
             {/*<th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Share</th>*/}
           </tr>

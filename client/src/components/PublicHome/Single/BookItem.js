@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import { PropTypes } from 'prop-types'
 import { connect } from 'react-redux'
 // import '../allFolders.css'
-import { downloadFile, favourite, getPlays, unFavourite } from '../../../actions/homeActions'
-import downloading from '../../common/downloading.gif'
+import { downloadFile, favourite, getAuthPlays, unFavourite } from '../../../actions/homeActions'
 import Modal from 'react-modal'
 import ModalLogin from '../../layout/ModalLogin'
 import {
@@ -77,7 +76,7 @@ class BookItem extends Component {
   }
   onPlay (e) {
       this.setState({ file2: true })
-    this.props.getPlays(this.props.folder._id)
+    this.props.getAuthPlays(this.props.folder._id)
 
   }
   myUploadProgress = () => (progress) => {
@@ -184,9 +183,10 @@ class BookItem extends Component {
     }
     return (
       //onTouchStart="this.classList.toggle('hover');
-      <tr>
-        {checkbox}
-        <td><span style={{ fontFamily: 'Arial', fontSize: '14px', overflow: 'hidden',width:'200px',
+
+    <tr>
+      {this.props.auth.user.role==='world' && {checkbox}}
+      <td><span style={{ fontFamily: 'Arial', fontSize: '14px', overflow: 'hidden',width:'200px',
           OTextOverflow: 'ellipsis', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{music.filename}</span></td>
         <td>
           <span style={{ fontFamily: 'Arial', fontSize: '14px'}}>
@@ -196,9 +196,8 @@ class BookItem extends Component {
           <audio controls onClick={this.onPlay.bind(this)}
                  src={`/api/upload/audio/${this.props.bookId}/${music.filename}`} style={{width:'400px'}}/>
         </td>
-        <td>{icon}</td>
-
-        <td>{downloadTimes}</td>
+        {this.props.auth.user.role==='world' && <td>{icon}</td>}
+        {this.props.auth.user.role==='world' && <td>{downloadTimes}</td>}
         <td><div className='row' style={{margin:'1px'}}>
           <button style={{borderStyle:'none', background:'white'}}>
             <TwitterShareButton title={'Hey!!, checkout this great audio book '+this.props.folder.title+' by LVPEI'}
@@ -242,7 +241,7 @@ BookItem.propTypes = {
   bookId: PropTypes.string.isRequired,
   favourite: PropTypes.func.isRequired,
   unFavourite: PropTypes.func.isRequired,
-  getPlays: PropTypes.func.isRequired,
+  getAuthPlays: PropTypes.func.isRequired,
   checkbox: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired
 };
@@ -252,4 +251,4 @@ const mapStateToProps = state => ({
   checkbox: state.checkbox
 });
 
-export default connect(mapStateToProps, { downloadFile, favourite, unFavourite, getPlays })(BookItem);
+export default connect(mapStateToProps, { downloadFile, favourite, unFavourite, getAuthPlays })(BookItem);

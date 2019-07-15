@@ -25,6 +25,8 @@
     "react-collapse": "^4.0.3",
     "react-collapsible": "^2.6.0",
     "react-datepicker": "^2.8.0",
+    "react-dates": "^20.2.5",
+    "react-day-picker": "^7.3.0",
     "react-dialog": "^1.0.2",
     "react-dom": "^16.8.3",
     "react-modal": "^3.8.1",

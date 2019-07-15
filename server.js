@@ -12,6 +12,7 @@ const path = require('path');
 const methodOverride = require('method-override');
 
 const db = require('./config/keys').mongoURI;
+const sqlDB = require("./models");
 
 
 mongoose.connect(db,{useNewUrlParser: true})
@@ -44,5 +45,6 @@ if(process.env.NODE_ENV === 'production') {
 
 const port = process.env.PORT || 5000;
 
-app.listen(port, () => console.log(`server running on port ${port}`));
-
+sqlDB.sequelize.sync().then(() => {
+  app.listen(port, () => console.log(`server running on port ${port}`));
+})

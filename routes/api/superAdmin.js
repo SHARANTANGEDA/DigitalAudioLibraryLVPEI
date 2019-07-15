@@ -4,43 +4,42 @@ const bcrypt = require('bcryptjs')
 const passport = require('passport')
 const excel = require('exceljs');
 const validateRegisterInput = require('../../validations/register')
-const validateDiagnosticsInput = require('../../validations/newDiagnostics')
 const validateResetPassword = require('../../validations/resetPassword')
 const User = require('../../mongoModels/User')
 const Music = require('../../mongoModels/Music');
 
-router.post('/registerSA',(req, res) => {
-  // const { errors, isValid } = validateRegisterInput(req.body)
-  // if (!isValid) {
-  //   return res.status(400).json(errors)
-  // }
-  User.findOne({ emailId: req.body.emailId }).then(user => {
-    console.log(user)
-    if (user) {
-      return res.status(400).json('errors')
-    } else {
-      const newUser = new User({
-        emailId: req.body.emailId,
-        password: req.body.password,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        role: 'super_admin'
-      })
-      bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(newUser.password, salt, (err, hash) => {
-          if (err) throw err
-          newUser.password = hash
-          newUser.save().then(user => {
-            res.json({success: true,user})
-          }).catch(err => {
-            console.log(err)
-            res.json({error: 'creating the user'})
-          })
-        })
-      })
-    }
-  })
-})
+// router.post('/registerSA',(req, res) => {
+//   // const { errors, isValid } = validateRegisterInput(req.body)
+//   // if (!isValid) {
+//   //   return res.status(400).json(errors)
+//   // }
+//   User.findOne({ emailId: req.body.emailId }).then(user => {
+//     console.log(user)
+//     if (user) {
+//       return res.status(400).json('errors')
+//     } else {
+//       const newUser = new User({
+//         emailId: req.body.emailId,
+//         password: req.body.password,
+//         firstName: req.body.firstName,
+//         lastName: req.body.lastName,
+//         role: 'super_admin'
+//       })
+//       bcrypt.genSalt(10, (err, salt) => {
+//         bcrypt.hash(newUser.password, salt, (err, hash) => {
+//           if (err) throw err
+//           newUser.password = hash
+//           newUser.save().then(user => {
+//             res.json({success: true,user})
+//           }).catch(err => {
+//             console.log(err)
+//             res.json({error: 'creating the user'})
+//           })
+//         })
+//       })
+//     }
+//   })
+// })
 router.post('/register', passport.authenticate('super_admin',{session: false}),(req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body)
   if (!isValid) {
@@ -91,7 +90,6 @@ router.get('/home', passport.authenticate('all_lvpei', { session: false }), (req
         })
           records.map(async record => {
             dummy.push(new Promise((resolve, reject) => {
-              console.log({record:record})
             all.push(record)
             if(record.category==='School (I – V)') {
               school1.push(record)
@@ -241,6 +239,7 @@ router.post('/resetPassword',passport.authenticate('super_admin', {session: fals
         if (err) throw err
         user.password = hash
         user.save().then(user => {
+          console.log(user)
           res.json({ success: true })
         }).catch(err => {
           console.log(err)

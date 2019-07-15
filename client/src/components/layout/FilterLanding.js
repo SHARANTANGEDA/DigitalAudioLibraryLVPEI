@@ -10,7 +10,7 @@ import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'rea
 import 'react-dates/lib/css/_datepicker.css';
 import moment from 'moment'
 
-class Landing extends Component {
+class FilterLanding extends Component {
   constructor () {
     super();
     this.state = {
@@ -40,17 +40,19 @@ class Landing extends Component {
       currentPage: Number(event.target.id)
     });
   }
-  filterDate() {
-    this.setState({dateFilter: true})
-  }
-
   componentDidMount () {
     if(this.props.auth.isAuthenticated) {
       this.props.history.push('/dashboard');
     }else {
+      console.log(this.props.match.params.id)
       this.props.getAllBooks(this.props.match.params.id)
+      this.setState({category:{label: this.props.match.params.id, value: this.props.match.params.id}})
     }
   }
+  filterDate() {
+    this.setState({dateFilter: true})
+  }
+  isOutsideRange = () => false;
 
   componentWillReceiveProps (nextProps, nextContext) {
     if(nextProps.auth.isAuthenticated) {
@@ -71,7 +73,6 @@ class Landing extends Component {
     };
     this.props.loginUser(userData);
   }
-  isOutsideRange = () => false;
 
   render() {
     function sort_by_key(array, key)
@@ -116,6 +117,9 @@ class Landing extends Component {
         if(this.state.category===null || this.state.category.value==='all') {
           let newFolders
           if(this.state.dateFilter) {
+            land.all.map(folder =>
+              console.log({1:moment(this.state.startDate).isBefore(folder.uploadAt),
+                2: moment(this.state.endDate).isAfter(folder.uploadAt),3: folder.uploadAt}))
             newFolders = land.all.filter(folder => moment(this.state.startDate).isBefore(folder.uploadAt) &&
               moment(this.state.endDate).isAfter(folder.uploadAt))
           }else {
@@ -123,7 +127,7 @@ class Landing extends Component {
           }
           const currentFolder = newFolders.slice(indexOfFirstTodo, indexOfLastTodo);
           const render = (  currentFolder.map(land => (
-             <TableItem folder={land} key={land._id}/>
+            <TableItem folder={land} key={land._id}/>
             //<ProductCard folder={land} key={land._id}/>
           )))
           for (let i = 1; i <= Math.ceil(land.all.length / todosPerPage); i++) {
@@ -152,6 +156,7 @@ class Landing extends Component {
           )
 
         } else {
+
           let newFolders = land.all.filter(folder => folder.category === this.state.category.value.toString())
           if(this.state.dateFilter) {
             newFolders = newFolders.filter(folder => moment(this.state.startDate).isBefore(folder.uploadAt) &&
@@ -166,7 +171,7 @@ class Landing extends Component {
           // })
           currentFolder = sort_by_key(currentFolder, 'title');
           const render = (  currentFolder.map(folder => (
-            <TableItem folder={land} key={land._id}/>
+            <TableItem folder={folder} key={folder._id}/>
           )))
           for (let i = 1; i <= Math.ceil(newFolders.length / todosPerPage); i++) {
             pageNumbers.push(i);
@@ -229,7 +234,6 @@ class Landing extends Component {
               </div>
               <SearchBar/>
             </nav>
-
             <table className="table table-bordered  mb-0">
               <thead>
               <tr>
@@ -260,7 +264,7 @@ class Landing extends Component {
   }
 }
 
-Landing.propTypes = {
+FilterLanding.propTypes = {
   auth: PropTypes.object.isRequired,
   loginUser:PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
@@ -273,4 +277,4 @@ const mapStateToProps = state => ({
 
 });
 
-export default connect(mapStateToProps,{loginUser,getAllBooks})(Landing);
+export default connect(mapStateToProps,{loginUser,getAllBooks})(FilterLanding);

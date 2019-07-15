@@ -1,3 +1,7 @@
+const getAge =require( '../../validations/ageValidation/getAge')
+const categorizeAge = require('../../validations/ageValidation/categorizeAge')
+const getQuarter = require('../../validations/ageValidation/getQuarter')
+
 const Grid = require('gridfs-stream')
 const multer = require('multer')
 const GridFsStorage = require('multer-gridfs-storage')
@@ -5,14 +9,12 @@ const express = require('express')
 const router = express.Router()
 const passport = require('passport')
 const archiver = require('archiver')
-// ObjectId = require('mongodb').ObjectID;
-//@MongoDB Atlas Connection
 const db = require('../../config/keys').mongoURI
 const mongoose = require('mongoose')
 const User = require('../../mongoModels/User')
 const Music = require('../../mongoModels/Music')
 const validateBookInput = require('../../validations/bookUploadForm')
-// const zipStream = require('zip-stream')
+const sqlDB = require('../../models')
 
 let gfs, dfs
 
@@ -273,7 +275,7 @@ router.get('/folders/:id', (req, res) => {
 
 })
 
-router.get('/secureFolders/:id',passport.authenticate('world', { session: false }), (req, res) => {
+router.get('/secureFolders/:id',passport.authenticate('all', { session: false }), (req, res) => {
   Music.findById(req.params.id).then(patient => {
     console.log(req.user)
     User.findById(req.user.id).then(user => {
@@ -328,15 +330,28 @@ router.get('/downloadFile/:id', passport.authenticate('world', { session: false 
       }
     user.save().then(user => {
       Music.findByIdAndUpdate(files.metadata.bookId, { $inc: { downloads: 1 } }).then(music => {
-        let readstream = gfs.createReadStream({
-          filename: files.filename,
-          root: 'uploads'
+        let age=getAge(user.dob)
+        let ageCategory = categorizeAge(age)
+        let today = new Date();
+        let month = today.getMonth()
+        let year = today.getFullYear()
+        let quarter = getQuarter()
+        sqlDB.User.create({age:age,ageCategory:ageCategory,gender: user.gender,
+        qualification: user.qualification, address: user.address, pinCode: user.pinCode,
+        city: user.city, state: user.state, country: user.country,
+        status:'download',bookCategory: music.category, bookLanguage: music.language,
+        bookAuthor: music.author, month:month, year: year, quarter: quarter}).then(sqlRow => {
+          let readstream = gfs.createReadStream({
+            filename: files.filename,
+            root: 'uploads'
+          })
+          // set the proper content type
+          res.set('Content-Type', files.contentType)
+          res.set('Content-Disposition', 'attachment; filename="' + files.contentType + '"')
+          // Return response
+          readstream.pipe(res)
         })
-        // set the proper content type
-        res.set('Content-Type', files.contentType)
-        res.set('Content-Disposition', 'attachment; filename="' + files.contentType + '"')
-        // Return response
-        readstream.pipe(res)
+
       })
     })
     })
@@ -354,37 +369,52 @@ router.post('/downloadSelected/:id', passport.authenticate('world', { session: f
         err: 'No files exist'
       })
     }
-    Music.findByIdAndUpdate(files[0].metadata.bookId, { $inc: { downloads: files.length } })
-      .then(async music => {
+    User.findById(req.user.id).then(user => {
+      Music.findByIdAndUpdate(files[0].metadata.bookId, { $inc: { downloads: files.length } })
+        .then(async music => {
 
-        let archive = archiver('zip')
-        let dummy = []
-        // archive.on('error', function (err) {
-        //   throw err
-        // })
-        archive.pipe(res)
-        files.forEach(file => {
-          dummy.push(new Promise((resolve, reject) => {
-            if(arr.includes(file._id.toString())) {
-              let readstream = gfs.createReadStream({
-                filename: file.filename,
-                root: 'uploads'
-              })
-              res.set('Content-Type', file.contentType)
-              res.set('Content-Disposition', 'attachment; filename="' + file.contentType + '"')
-              archive.append(readstream, { name: file.filename })
-              // resolve(readstream)
-            }
+          let archive = archiver('zip')
+          let dummy = []
+          // archive.on('error', function (err) {
+          //   throw err
+          // })
+          archive.pipe(res)
+          let age=getAge(user.dob)
+          let ageCategory = categorizeAge(age)
+          let today = new Date();
+          let month = today.getMonth()
+          let year = today.getFullYear()
+          let quarter = getQuarter()
+          sqlDB.User.create({age:age,ageCategory:ageCategory,gender: user.gender,
+            qualification: user.qualification, address: user.address, pinCode: user.pinCode,
+            city: user.city, state: user.state, country: user.country,
+            status:'download',bookCategory: music.category, bookLanguage: music.language,
+            bookAuthor: music.author, month:month, year: year, quarter: quarter}).then(sqlRow => {
+            files.forEach(file => {
+              dummy.push(new Promise((resolve, reject) => {
+                if (arr.includes(file._id.toString())) {
+                  let readstream = gfs.createReadStream({
+                    filename: file.filename,
+                    root: 'uploads'
+                  })
+                  res.set('Content-Type', file.contentType)
+                  res.set('Content-Disposition', 'attachment; filename="' + file.contentType + '"')
+                  archive.append(readstream, { name: file.filename })
+                  // resolve(readstream)
+                }
+              }).catch(err => {
+                console.log({ err: 'New error has occurred' })
+              }))
+            })
+          })
+
+          await Promise.all([archive.finalize()]).then(res => {
           }).catch(err => {
-            console.log({ err: 'New error has occurred' })
-          }))
+            console.log('error: ' + err)
+          })
         })
+    })
 
-        await Promise.all([archive.finalize()]).then(res => {
-        }).catch(err => {
-          console.log('error: ' + err)
-        })
-      })
   })
 })
 
@@ -397,35 +427,53 @@ router.get('/downloadFolder/:id', passport.authenticate('world', { session: fals
         err: 'No files exist'
       })
     }
-    Music.findByIdAndUpdate(files[0].metadata.bookId, { $inc: { downloads: files.length } })
-      .then(async music => {
+    User.findById(req.user.id).then(user => {
 
-        let archive = archiver('zip')
-        let dummy = []
-        // archive.on('error', function (err) {
-        //   throw err
-        // })
-        archive.pipe(res)
-        files.forEach(file => {
-          dummy.push(new Promise((resolve, reject) => {
-            let readstream = gfs.createReadStream({
-              filename: file.filename,
-              root: 'uploads'
+      Music.findByIdAndUpdate(files[0].metadata.bookId, { $inc: { downloads: files.length } })
+        .then(async music => {
+
+          let archive = archiver('zip')
+          let dummy = []
+          // archive.on('error', function (err) {
+          //   throw err
+          // })
+          archive.pipe(res)
+          let age = getAge(user.dob)
+          let ageCategory = categorizeAge(age)
+          let today = new Date();
+          let month = today.getMonth()
+          let year = today.getFullYear()
+          let quarter = getQuarter()
+          sqlDB.User.create({
+            age: age, ageCategory: ageCategory, gender: user.gender,
+            qualification: user.qualification, address: user.address, pinCode: user.pinCode,
+            city: user.city, state: user.state, country: user.country,
+            status: 'download', bookCategory: music.category, bookLanguage: music.language,
+            bookAuthor: music.author, month: month, year: year, quarter: quarter
+          }).then(sqlRow => {
+
+            files.forEach(file => {
+              dummy.push(new Promise((resolve, reject) => {
+                let readstream = gfs.createReadStream({
+                  filename: file.filename,
+                  root: 'uploads'
+                })
+                res.set('Content-Type', file.contentType)
+                res.set('Content-Disposition', 'attachment; filename="' + file.contentType + '"')
+                archive.append(readstream, { name: file.filename })
+                resolve(readstream)
+              }).catch(err => {
+                console.log({ err: 'New error has occurred' })
+              }))
             })
-            res.set('Content-Type', file.contentType)
-            res.set('Content-Disposition', 'attachment; filename="' + file.contentType + '"')
-            archive.append(readstream, { name: file.filename })
-            resolve(readstream)
-          }).catch(err => {
-            console.log({ err: 'New error has occurred' })
-          }))
-        })
+          })
 
-        await Promise.all([archive.finalize()]).then(res => {
-        }).catch(err => {
-          console.log('error: ' + err)
+          await Promise.all([archive.finalize()]).then(res => {
+          }).catch(err => {
+            console.log('error: ' + err)
+          })
         })
-      })
+    })
   })
 })
 router.get('/viewBook/:id', passport.authenticate('world', { session: false }), (req, res) => {

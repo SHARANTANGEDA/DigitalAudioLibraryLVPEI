@@ -1,6 +1,6 @@
 import {
-  CLEAR_ERRORS,
-  GET_ERRORS,
+  CLEAR_ERRORS, ENTER_OTP, ENTER_PASSWORD,
+  GET_ERRORS, GET_LANDING_CATALOGUE,
   GET_LANDING_HOME,
   HOME_LOADING,
   NO_FILES,
@@ -79,14 +79,72 @@ export const getAllBooks = () => dispatch => {
   })
 }
 
+export const getCatalogue = () => dispatch => {
+  dispatch(setAuthLoading())
+  axios.get('/api/users/catalogue').then(res => {
+    dispatch({
+      type: GET_LANDING_CATALOGUE,
+      payload: res.data
+    })
+  }).catch(err => {
+    dispatch({
+      type: NO_FILES,
+      payload: err.data
+    })
+  })
+}
+
 export const confirmEmail = (userData) => dispatch => {
-  console.log('test')
   axios.post('/api/users/verifyEmail', userData).then(res => {
     const {token} = res.data;
     localStorage.setItem('jwtToken',token);
     setAuthToken(token);
     const decoded = jwt_decode(token);
     dispatch(setCurrentUser(decoded));
+    window.location.href='/dashboard'
+  }).catch(err => {
+    dispatch({
+      type: GET_ERRORS,
+      payload: err.response.data
+    })
+  })
+}
+
+export const sendOTPEmail = (userData) => dispatch => {
+  axios.post('/api/users/resetPasswordSend', userData).then(res => {
+    if(res.data.sent) {
+      dispatch({
+        type: ENTER_OTP
+      })
+    }
+
+  }).catch(err => {
+    dispatch({
+      type: GET_ERRORS,
+      payload: err.response.data
+    })
+  })
+}
+
+export const enterOTPEmail = (userData) => dispatch => {
+  axios.post('/api/users/resetPasswordReceive', userData).then(res => {
+    const {token} = res.data;
+    localStorage.setItem('jwtToken',token);
+    setAuthToken(token);
+    const decoded = jwt_decode(token);
+    dispatch(setCurrentUser(decoded));
+    dispatch({ type:ENTER_PASSWORD })
+    // window.location.href='/dashboard'
+  }).catch(err => {
+    dispatch({
+      type: GET_ERRORS,
+      payload: err.response.data
+    })
+  })
+}
+
+export const resetPassword = (userData) => dispatch => {
+  axios.post('/api/users/resetPasswordEnter', userData).then(res => {
     window.location.href='/dashboard'
   }).catch(err => {
     dispatch({

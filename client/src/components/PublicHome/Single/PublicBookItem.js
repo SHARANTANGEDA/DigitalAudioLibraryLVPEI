@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import { PropTypes } from 'prop-types'
 import { connect } from 'react-redux'
 // import '../allFolders.css'
-import { downloadFile, favourite, getPlays, unFavourite } from '../../../actions/homeActions'
-import downloading from '../../common/downloading.gif'
+import { downloadFile, favourite, unFavourite } from '../../../actions/homeActions'
 import Modal from 'react-modal'
 import ModalLogin from '../../layout/ModalLogin'
 import {
@@ -15,9 +14,7 @@ import {
   WhatsappShareButton
 } from 'react-share'
 import URL from '../../../utils/URL'
-import { CHECK_BOX_EVENT, GET_BOOK_DETAILS, NO_FILES } from '../../../actions/types'
 import axios from 'axios'
-import { Public } from '@material-ui/icons'
 
 
 const customStyles = {
@@ -77,8 +74,8 @@ class PublicBookItem extends Component {
     this.setState({file: true})
   }
   onPlay (e) {
-    this.setState({ file2: true })
-    this.props.getPlays(this.props.folder._id)
+    // this.setState({ file2: true })
+    this.setState({modalIsOpen: true})
 
   }
   myUploadProgress = () => (progress) => {
@@ -173,6 +170,7 @@ class PublicBookItem extends Component {
       size=Math.round((music.length/(1024*1024*1024*1024)))*100 / 100
       unit='TB'
     }
+    //src={`/api/upload/audio/${this.props.bookId}/${music.filename}`}
 
     // let downloadTimes
     // let index =this.props.user.downloads.findIndex((item, i) => {
@@ -194,8 +192,10 @@ class PublicBookItem extends Component {
             {size}{' '}{unit}</span>
         </td>
         <td >
-          <audio controls onClick={this.onPlay.bind(this)}
-                 src={`/api/upload/audio/${this.props.bookId}/${music.filename}`} style={{width:'400px'}}/>
+          <button className='btn btn-sm' onClick={this.openModal} style={{color:'white',background:'blue' }}>
+            <i className="fas fa-play-circle"/>Play
+          </button>
+
         </td>
         <td>{icon}</td>
 
@@ -243,7 +243,6 @@ PublicBookItem.propTypes = {
   bookId: PropTypes.string.isRequired,
   favourite: PropTypes.func.isRequired,
   unFavourite: PropTypes.func.isRequired,
-  getPlays: PropTypes.func.isRequired,
   checkbox: PropTypes.object.isRequired,
 };
 const mapStateToProps = state => ({
@@ -252,4 +251,4 @@ const mapStateToProps = state => ({
   checkbox: state.checkbox
 });
 
-export default connect(mapStateToProps, { downloadFile, favourite, unFavourite, getPlays })(PublicBookItem);
+export default connect(mapStateToProps, { downloadFile, favourite, unFavourite })(PublicBookItem);

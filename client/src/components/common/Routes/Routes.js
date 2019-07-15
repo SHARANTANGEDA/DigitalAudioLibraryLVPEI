@@ -14,6 +14,9 @@ import GetFavourites from '../../dashboard/GetFavourites'
 import ManageLVPEIUsers from '../../SuperAdmin/ManageLVPEIUsers'
 import ReAssignLVPUsers from '../../SuperAdmin/ReAssignLVPUsers'
 import BooksMaster from '../../LVPAdmin/BooksMaster'
+import ForgotPassword from '../../layout/ForgotPassword'
+import PublicCatalogue from '../../PublicHome/PublicCatalogue'
+import AllRecords from '../../dashboard/AllRecords'
 
 const Routes = () => {
   return (
@@ -34,6 +37,7 @@ const Routes = () => {
         <PrivateRoute exact path='/deAssignedLVP' component={ReAssignLVPUsers}/>
         <PrivateRoute exact path='/favourites' component={GetFavourites}/>
         <PrivateRoute exact path='/lvpBooks' component={BooksMaster}/>
+        <PrivateRoute exact path='/dashboard/:id' component={AllRecords}/>
         <Route path="*" component={NotFound} />
       </Switch>
     </div>
