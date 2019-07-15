@@ -108,7 +108,7 @@ class Dashboard extends Component {
       if (loading || home === null) {
         showContent = <Spinner/>
       } else {
-        console.log({home: home})
+        // console.log({home: home})
         let { lvpei, world, school1, inter,
           school2,ug, law,psy,pg, ce, eg, cs, reg, ot, all} = home
         showContent = (
@@ -391,7 +391,6 @@ class Dashboard extends Component {
       if (loading2 || cat === null) {
         showContent = <Spinner/>
       } else {
-        console.log({home: cat})
         let {school1, inter,
           school2,ug, law,psy,pg, ce, eg, cs, reg, ot, all} = cat
         showContent = (

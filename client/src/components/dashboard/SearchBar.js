@@ -23,13 +23,13 @@ class SearchBar extends Component {
       category: this.state.category.value,
       search: this.state.search,
     }
-    console.log({search:newSearch})
+    // console.log({search:newSearch})
     window.location.href=`/search/${newSearch.category}/${newSearch.search}`
   }
 
   onChange (e) {
     this.setState({ [e.target.name]: e.target.value })
-    console.log({ [e.target.name]: e.target.value })
+    // console.log({ [e.target.name]: e.target.value })
 
   }
 

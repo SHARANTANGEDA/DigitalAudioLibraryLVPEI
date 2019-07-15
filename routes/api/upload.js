@@ -183,12 +183,10 @@ router.get('/changeRating/:id/:rating', passport.authenticate('world', { session
     let index = music.rating.findIndex((item, i) => {
       return item.id === req.user.id
     })
-    console.log(index, music.rating[index])
+    // console.log(index, music.rating[index])
     music.rating.splice(index, 1)
     music.rating.unshift({ id: req.user.id, rate: req.params.rating })
-    console.log(music.rating)
     music.save().then(user => {
-      console.log(music)
       res.json({ success: true })
     })
   }).catch(err => {
@@ -197,9 +195,7 @@ router.get('/changeRating/:id/:rating', passport.authenticate('world', { session
 })
 
 router.get('/displayImage/:id', (req, res) => {
-  console.log(req.params.id)
   dfs.files.findOne({ 'metadata.bookId': req.params.id }, (err, file) => {
-    console.log({ file: file })
     if (!file || file.length === 0) {
       return res.status(404).json({
         err: 'No file exists'
@@ -210,9 +206,7 @@ router.get('/displayImage/:id', (req, res) => {
   })
 })
 router.get('/audio/:id/:filename', (req, res) => {
-  console.log({ _id: req.params.id })
   gfs.files.findOne({ 'metadata.bookId': req.params.id, filename: req.params.filename }, (err, files) => {
-    console.log(files)
     if (!files || files.length === 0) {
       return res.status(404).json({
         err: 'No file exists'
@@ -225,14 +219,11 @@ router.get('/audio/:id/:filename', (req, res) => {
 })
 //Fill Upload form
 router.post('/uploadForm', passport.authenticate('lvpei', { session: false }), (req, res) => {
-  console.log(req.user.id)
   User.findById(req.user.id).then(user => {
-    console.log(user)
     const { errors, isValid } = validateBookInput(req.body)
     if (!isValid) {
       return res.status(400).json(errors)
     }
-    console.log(user)
     const newUpload = new Music({
       category: req.body.category,
       title: req.body.title,
@@ -277,7 +268,6 @@ router.get('/folders/:id', (req, res) => {
 
 router.get('/secureFolders/:id',passport.authenticate('all', { session: false }), (req, res) => {
   Music.findById(req.params.id).then(patient => {
-    console.log(req.user)
     User.findById(req.user.id).then(user => {
       gfs.files.find({ 'metadata.bookId': req.params.id }).toArray((err, files) => {
         if (!files || files.length === 0) {

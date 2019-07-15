@@ -111,7 +111,7 @@ class Landing extends Component {
         heading=null
       }else {
         // allFoldersContent = (
-        console.log(land.all)
+        // console.log(land.all)
         heading=null
         if(this.state.category===null || this.state.category.value==='all') {
           let newFolders
@@ -216,8 +216,6 @@ class Landing extends Component {
                   isOutsideRange={this.isOutsideRange}
                   endDateId="endDate" // PropTypes.string.isRequired,
                   onDatesChange={({ startDate, endDate }) => {
-                    console.log({ startDate:this.state.startDate,endDate: this.state.endDate,
-                      fIn: this.state.focusedInput})
                     this.setState({ startDate, endDate })
                   }} // PropTypes.func.isRequired,
                   focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,

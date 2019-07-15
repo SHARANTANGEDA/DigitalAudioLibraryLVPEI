@@ -21,7 +21,7 @@ class SearchResults extends Component {
   }
 
   componentDidMount () {
-    console.log({ category: this.props.match.params.category, search: this.props.match.params.search })
+    // console.log({ category: this.props.match.params.category, search: this.props.match.params.search })
     this.props.getSearchResults({ category: this.props.match.params.category, search: this.props.match.params.search })
   }
   handleClick(event) {
@@ -61,10 +61,10 @@ class SearchResults extends Component {
       spinner=(<Spinner/>)
     } else {
       if (!results.success || results.results.length === 0) {
-        console.log({res:results})
+        // console.log({res:results})
         // window.location.href = '/detailsNotFound'
       } else {
-        console.log({res:results})
+        // console.log({res:results})
 
         const { currentPage, todosPerPage } = this.state
         const indexOfLastTodo = currentPage * todosPerPage
@@ -111,7 +111,7 @@ class SearchResults extends Component {
           //   // (x < y) ? -1 : ((x > y) ? 1 : 0)
           //   return (x<y);
           // })
-          console.log(currentFolder)
+          // console.log(currentFolder)
           currentFolder = sort_by_key(currentFolder, 'title')
           const render = (currentFolder.map(folder => (
             <TableItem folder={folder} key={folder._id}/>

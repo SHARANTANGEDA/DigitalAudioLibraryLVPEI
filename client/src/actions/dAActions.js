@@ -50,7 +50,6 @@ export const getUploadModal=(data) => dispatch => {
 export const continueToUpload=(data) => dispatch => {
   axios.post('/api/upload/upload', data)
     .then(res => {
-      console.log('created User')
       dispatch({
         type: GET_MR,
         payload: res.data

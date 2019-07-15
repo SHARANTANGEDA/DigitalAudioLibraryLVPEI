@@ -35,7 +35,6 @@ class TableRowLVPEI extends Component {
   }
 
   onRemoveAccess(e) {
-    console.log(this.props.data.emailId)
     this.props.removeUserAccess({emailId: this.props.data.emailId})
     this.setState({removeClick: true})
   }

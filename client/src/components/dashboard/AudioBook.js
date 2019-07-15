@@ -37,7 +37,7 @@ class AudioBook extends Component {
   }
 
   selectDownload (e) {
-    console.log({ param: this.props.match.params.id })
+    // console.log({ param: this.props.match.params.id })
     this.props.downloadSelected(this.props.match.params.id, { data: this.props.checkbox.selected })
   }
 
@@ -118,7 +118,7 @@ class AudioBook extends Component {
         </div>
       )
       if(this.props.auth.isAuthenticated) {
-        console.log({user:this.props.folder.folders.user})
+        // console.log({user:this.props.folder.folders.user})
         content = (folders.files.map(folder => (
             <BookItem music={folder} user={this.props.folder.folders.user} bookId={folders.music._id} key={folder._id}/>
           ))

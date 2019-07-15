@@ -50,7 +50,6 @@ export const getSADetails = () => dispatch => {
 }
 export const deleteFile = (id) => dispatch => {
   axios.get(`/api/upload/deleteFile/${id}`).then(res => {
-    console.log(res)
     window.location.reload()
   }).catch(err =>
     dispatch({
@@ -62,7 +61,6 @@ export const deleteFile = (id) => dispatch => {
 
 export const deleteFolder = (id) => dispatch => {
   axios.get(`/api/upload/deleteFolder/${id}`).then(res => {
-    console.log(res)
     window.location.reload()
   }).catch(err =>
     dispatch({
@@ -74,7 +72,6 @@ export const deleteFolder = (id) => dispatch => {
 
 export const deletePatient = (id) => dispatch => {
   axios.get(`/api/upload/deletePatient/${id}`).then(res => {
-    console.log(res)
     window.location.reload()
   }).catch(err =>
     dispatch({
@@ -88,7 +85,6 @@ export const downloadFile = (id) => dispatch => {
   axios.get(`/api/upload/downloadFile/${id}`, { responseType: 'blob' }).then(res => {
     const url = window.URL.createObjectURL(new Blob([res.data], { type: 'octet/stream' }))
     const link = document.createElement('a')
-    console.log(url)
     link.href = url
     link.setAttribute('download', id.substr(id.lastIndexOf(';') + 1, id.length))
     document.body.appendChild(link)
@@ -102,11 +98,9 @@ export const downloadFile = (id) => dispatch => {
 }
 
 export const downloadSelected = (id,data) => dispatch => {
-  console.log({'In download folder':id})
   axios.post(`/api/upload/downloadSelected/${id}`,data, { responseType: 'blob' }).then(res => {
     const url = window.URL.createObjectURL(new Blob([res.data]))
     const link = document.createElement('a')
-    console.log(url)
     link.href = url
     link.setAttribute('download',  id+ '.zip')
     document.body.appendChild(link)
@@ -121,11 +115,9 @@ export const downloadSelected = (id,data) => dispatch => {
 }
 
 export const downloadFolder = (id) => dispatch => {
-  console.log('In download folder')
   axios.get(`/api/upload/downloadFolder/${id}`, { responseType: 'blob' }).then(res => {
     const url = window.URL.createObjectURL(new Blob([res.data]))
     const link = document.createElement('a')
-    console.log(url)
     link.href = url
     link.setAttribute('download', id + '.zip')
     document.body.appendChild(link)
@@ -216,7 +208,6 @@ export const getAuthPlays = (id) => dispatch => {
 
 
 export const getFavBooks = () => dispatch => {
-  console.log('here')
   axios.get(`/api/users/getFavBooks`)
     .then(res => {
       dispatch({
@@ -237,7 +228,6 @@ export const getReports = () => dispatch => {
       const url = window.URL.createObjectURL(new Blob([res.data],
         { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }))
       const link = document.createElement('a')
-      console.log(url)
       link.href = url
       link.setAttribute('download', 'UsageReports.xlsx')
       document.body.appendChild(link)
@@ -279,7 +269,6 @@ export const getNameResults = (data) => dispatch => {
   dispatch(setSearchLoading())
   dispatch(homeLoading())
   axios.get(`/api/users/searchName/${data}`).then(res => {
-    console.log({result: res})
     dispatch({
       type: GET_NAME_RESULTS,
       payload: res.data
@@ -297,10 +286,8 @@ export const getNameResults = (data) => dispatch => {
 export const downloadSelectedFiles = (id) => dispatch => {
   console.log('In download folder')
   axios.get(`/api/upload/downloadSelected/${id}`, { responseType: 'blob' }).then(res => {
-    console.log(res)
     const url = window.URL.createObjectURL(new Blob([res.data]))
     const link = document.createElement('a')
-    console.log(url)
     link.href = url
     link.setAttribute('download',
       id + '.zip')
@@ -319,7 +306,6 @@ export const displayDicom = (id) => dispatch => {
   dispatch(viewLoading())
 
   axios.post('/api/upload/displayDicom', id, {responseType: 'arraybuffer'}).then(res => {
-    console.log(res)
     dispatch({
       type: GET_ACTIVE,
       payload: res

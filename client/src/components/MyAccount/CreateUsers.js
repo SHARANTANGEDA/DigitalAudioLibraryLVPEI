@@ -47,7 +47,7 @@ class CreateUsers extends Component {
       password: this.state.password,
       repassword: this.state.repassword
     }
-    console.log(newUser)
+    // console.log(newUser)
     if(this.props.auth.user.role==='super_admin') {
       this.props.registerUser(newUser)
     } else if(this.props.auth.user.role==='diag_admin') {

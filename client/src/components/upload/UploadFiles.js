@@ -24,7 +24,6 @@ class UploadFiles extends Component {
   }
   myUploadProgress = () => (progress) => {
     let percentage = Math.floor((progress.loaded * 100) / progress.total)
-    console.log(percentage)
     this.setState({progress:percentage})
   }
   uploadFile(event) {
@@ -46,7 +45,6 @@ class UploadFiles extends Component {
         this.setState({spinner: false})
         if (res.data.success) {
           window.location.href='/lvpBooks'
-          console.log('success')
           // this.setState({picModal: true})
           // this.loadFiles();
         } else {

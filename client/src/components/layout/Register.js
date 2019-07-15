@@ -93,7 +93,7 @@ class Register extends Component {
   componentWillReceiveProps (nextProps, nextContext) {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors })
-      console.log(nextProps.errors)
+      // console.log(nextProps.errors)
     }
   }
 
@@ -135,7 +135,7 @@ class Register extends Component {
       gender: this.state.gender,
       qualification: this.state.qualification
     }
-    console.log(newUser)
+    // console.log(newUser)
     this.props.registerWorld(newUser)
     if (newUser.country !== null && !isEmpty(newUser.firstName) && !isEmpty(newUser.lastName) && !isEmpty(newUser.country)
       && !isEmpty(newUser.state) && !isEmpty(newUser.city) && !isEmpty(newUser.password) && !isEmpty(newUser.repassword)

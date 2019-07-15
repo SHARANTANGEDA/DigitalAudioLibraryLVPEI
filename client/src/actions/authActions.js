@@ -19,7 +19,6 @@ export const registerUser = (userData) => dispatch => {
   dispatch(clearErrors())
   axios.post('/api/superAdmin/register', userData)
     .then(res => {
-      console.log(res)
       window.location='/dashboard'
     })
     .catch(err =>

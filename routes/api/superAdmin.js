@@ -64,7 +64,7 @@ router.post('/register', passport.authenticate('super_admin',{session: false}),(
           newUser.save().then(user => {
             res.json({success: true})
           }).catch(err => {
-            console.log(err)
+            // console.log(err)
             res.json({error: 'creating the user'})
           })
         })
@@ -95,7 +95,7 @@ router.get('/home', passport.authenticate('all_lvpei', { session: false }), (req
               school1.push(record)
             }else if(record.category==='School (VI – X)') {
               school2.push(record)
-              console.log(school2.length)
+              // console.log(school2.length)
             }else if(record.category==="Intermediate (XI & XII)") {
               inter.push(record)
             }else if(record.category==='Undergraduate') {
@@ -136,7 +136,6 @@ router.get('/home', passport.authenticate('all_lvpei', { session: false }), (req
 
 router.get('/lvpeiUsers', passport.authenticate('super_admin', { session: false }), (req, res) => {
   User.find({role: 'lvpei',access: true}).then(users => {
-    console.log(users)
     res.json(users)
   })
 });
@@ -204,7 +203,6 @@ router.get('/downloadExcel',
 
 router.get('/deAssignedUsers', passport.authenticate('super_admin', { session: false }), (req, res) => {
   User.find({role: 'lvpei',access: false}).then(users => {
-    console.log(users)
     res.json(users)
   })
 });
@@ -239,7 +237,6 @@ router.post('/resetPassword',passport.authenticate('super_admin', {session: fals
         if (err) throw err
         user.password = hash
         user.save().then(user => {
-          console.log(user)
           res.json({ success: true })
         }).catch(err => {
           console.log(err)

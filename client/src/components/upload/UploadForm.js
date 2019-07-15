@@ -159,7 +159,6 @@ class UploadForm extends Component {
       if (loading2 || patientData === null) {
         showModal = <Spinner/>
       } else {
-        console.log({form:this.props.home.patientData.mid})
           showModal = (
             <div >
                 <div className='row text-center'>
@@ -173,7 +172,6 @@ class UploadForm extends Component {
         }
     }
     if(this.state.discard && !this.state.modalIsOpen){
-      console.log(this.props.home.patientData)
       if(this.props.home.patientData.mid===null) {
         showModal=<Spinner/>
       }else {

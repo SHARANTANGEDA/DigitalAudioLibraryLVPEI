@@ -144,7 +144,6 @@ export const activeCentres = () => dispatch => {
 }
 
 export const removedCentres = () => dispatch => {
-  console.log('In inactive')
   dispatch(setLoading())
   axios.get('/api/superAdmin/inactiveDiags')
     .then(res => {

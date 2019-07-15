@@ -11,7 +11,6 @@ export default function(state = initialState, action) {
   // console.log({'File Reducer':action.payload});
   switch (action.type) {
     case ACCOUNT_LOADING:
-      console.log("IN Account Reducer loading")
       return {
         ...state,
         loading: true,

@@ -27,7 +27,6 @@ class Navbar extends Component {
       category: this.state.category.value,
       search: this.state.search,
     }
-    console.log({search:newSearch})
     if(this.state.category.value==='mr.No') {
       this.props.getSearchResults(newSearch)
     }else if(this.state.category.value==='name') {
@@ -48,7 +47,6 @@ class Navbar extends Component {
 
   onChange (e) {
     this.setState({ [e.target.name]: e.target.value })
-    console.log({ [e.target.name]: e.target.value })
   }
 
   componentWillReceiveProps (nextProps, nextContext) {
@@ -58,7 +56,6 @@ class Navbar extends Component {
   }
 
   onCatChange (e) {
-    console.log({ category: e })
     this.setState({ category: e })
   }
 
