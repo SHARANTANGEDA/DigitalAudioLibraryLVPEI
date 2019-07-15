@@ -91,6 +91,7 @@ router.get('/home', passport.authenticate('all_lvpei', { session: false }), (req
           records.map(async record => {
             dummy.push(new Promise((resolve, reject) => {
             all.push(record)
+              console.log(record)
             if(record.category==='School (I – V)') {
               school1.push(record)
             }else if(record.category==='School (VI – X)') {

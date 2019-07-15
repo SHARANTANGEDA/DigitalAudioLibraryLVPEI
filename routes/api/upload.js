@@ -32,7 +32,6 @@ const storage = new GridFsStorage({
   file: (req, file) => {
 
     return new Promise((resolve, reject) => {
-
       if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/jpg') {
         Music.findOneAndUpdate({ picTransit: true, uploadedBy: req.user.emailId, transit: false },
           { picture: true, picTransit: false }, { new: true }).then(music => {
@@ -122,9 +121,7 @@ router.post('/upload/:id', passport.authenticate('lvpei', { session: false }),
   upload.array('file'), (req, res) => {
     Music.findOneAndUpdate({ transit: true, uploadedBy: req.user.emailId },
       { transit: false, picTransit: true }).then(patient => {
-      return res.json({
-        success: true
-      })
+        return res.json({ success: true })
     })
   })
 
@@ -251,6 +248,7 @@ router.post('/onDiscard', passport.authenticate('lvpei', { session: false }), (r
 
 router.get('/folders/:id', (req, res) => {
   Music.findById(req.params.id).then(patient => {
+    if(patient.access) {
       gfs.files.find({ 'metadata.bookId': req.params.id }).toArray((err, files) => {
         if (!files || files.length === 0) {
           return res.status(404).json({
@@ -260,6 +258,9 @@ router.get('/folders/:id', (req, res) => {
           return res.json({ music: patient, files: files })
         }
       })
+    }else {
+      res.json({success: false})
+    }
   }).catch(err => {
     console.log(err)
   })
@@ -362,13 +363,6 @@ router.post('/downloadSelected/:id', passport.authenticate('world', { session: f
     User.findById(req.user.id).then(user => {
       Music.findByIdAndUpdate(files[0].metadata.bookId, { $inc: { downloads: files.length } })
         .then(async music => {
-
-          let archive = archiver('zip')
-          let dummy = []
-          // archive.on('error', function (err) {
-          //   throw err
-          // })
-          archive.pipe(res)
           let age=getAge(user.dob)
           let ageCategory = categorizeAge(age)
           let today = new Date();
@@ -379,7 +373,13 @@ router.post('/downloadSelected/:id', passport.authenticate('world', { session: f
             qualification: user.qualification, address: user.address, pinCode: user.pinCode,
             city: user.city, state: user.state, country: user.country,
             status:'download',bookCategory: music.category, bookLanguage: music.language,
-            bookAuthor: music.author, month:month, year: year, quarter: quarter}).then(sqlRow => {
+            bookAuthor: music.author, month:month, year: year, quarter: quarter}).then(async sqlRow => {
+          let archive = archiver('zip')
+          let dummy = []
+          // archive.on('error', function (err) {
+          //   throw err
+          // })
+          archive.pipe(res)
             files.forEach(file => {
               dummy.push(new Promise((resolve, reject) => {
                 if (arr.includes(file._id.toString())) {
@@ -396,11 +396,10 @@ router.post('/downloadSelected/:id', passport.authenticate('world', { session: f
                 console.log({ err: 'New error has occurred' })
               }))
             })
-          })
-
-          await Promise.all([archive.finalize()]).then(res => {
-          }).catch(err => {
-            console.log('error: ' + err)
+            await Promise.all([archive.finalize()]).then(res => {
+            }).catch(err => {
+              console.log('error: ' + err)
+            })
           })
         })
     })
@@ -421,13 +420,6 @@ router.get('/downloadFolder/:id', passport.authenticate('world', { session: fals
 
       Music.findByIdAndUpdate(files[0].metadata.bookId, { $inc: { downloads: files.length } })
         .then(async music => {
-
-          let archive = archiver('zip')
-          let dummy = []
-          // archive.on('error', function (err) {
-          //   throw err
-          // })
-          archive.pipe(res)
           let age = getAge(user.dob)
           let ageCategory = categorizeAge(age)
           let today = new Date();
@@ -440,8 +432,14 @@ router.get('/downloadFolder/:id', passport.authenticate('world', { session: fals
             city: user.city, state: user.state, country: user.country,
             status: 'download', bookCategory: music.category, bookLanguage: music.language,
             bookAuthor: music.author, month: month, year: year, quarter: quarter
-          }).then(sqlRow => {
+          }).then(async sqlRow => {
 
+            let archive = archiver('zip')
+            let dummy = []
+            // archive.on('error', function (err) {
+            //   throw err
+            // })
+            archive.pipe(res)
             files.forEach(file => {
               dummy.push(new Promise((resolve, reject) => {
                 let readstream = gfs.createReadStream({
@@ -453,14 +451,14 @@ router.get('/downloadFolder/:id', passport.authenticate('world', { session: fals
                 archive.append(readstream, { name: file.filename })
                 resolve(readstream)
               }).catch(err => {
+                console.log(err)
                 console.log({ err: 'New error has occurred' })
               }))
             })
-          })
-
-          await Promise.all([archive.finalize()]).then(res => {
-          }).catch(err => {
-            console.log('error: ' + err)
+            await Promise.all([archive.finalize()]).then(res => {
+            }).catch(err => {
+              console.log('error: ' + err)
+            })
           })
         })
     })
@@ -469,6 +467,26 @@ router.get('/downloadFolder/:id', passport.authenticate('world', { session: fals
 router.get('/viewBook/:id', passport.authenticate('world', { session: false }), (req, res) => {
   Music.findById(req.params.id).then(patients => {
     res.json({ mrNo: req.params.id, contents: patients })
+  })
+})
+
+router.get('/removeAccess/:id', passport.authenticate('lvpei',{session: false}), (req, res) => {
+  console.log(req.params.id)
+  Music.findByIdAndUpdate(req.params.id,{access: false},{new:true}).then(music=> {
+    console.log({here:music})
+    res.json({success: true})
+  }).catch(err=> {
+    console.log(err)
+    res.json({success: false})
+  })
+})
+router.get('/grantAccess/:id', passport.authenticate('lvpei',{session: false}), (req, res) => {
+  Music.findByIdAndUpdate(req.params.id,{access: true},{new:true}).then(music=> {
+    console.log(music)
+    res.json({success: true})
+  }).catch(err=> {
+    console.log(err)
+    res.json({success: false})
   })
 })
 

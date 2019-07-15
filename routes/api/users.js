@@ -469,7 +469,12 @@ router.post('/changePassword', passport.authenticate('all', { session: false }),
 })
 
 router.get('/home',(req, res) => {
-  Music.find().sort({uploadAt: -1}).then( records => {
+  Music.find({access:true}).sort({uploadAt: -1}).then( records => {
+    res.json({ all: records })
+  })
+});
+router.get('/removedBooks', passport.authenticate('lvpei', { session: false }), (req, res) => {
+  Music.find({access:false}).sort({uploadAt: -1}).then( records => {
     res.json({ all: records })
   })
 });
@@ -484,7 +489,7 @@ router.get('/getFavBooks', passport.authenticate('world', { session: false }), (
         let rateIndex = record.fav.findIndex((item, i) => {
           return item.id === req.user.id
         })
-        if (rateIndex !== -1) {
+        if ((rateIndex !== -1) && (record.access)) {
           console.log( rateIndex)
           arr.push(record)
         }
@@ -514,7 +519,7 @@ router.get('/catalogue', (req, res) => {
     let  dummy = [], school1 =[], all=[]
     let inter=[],school2=[],ug=[], law=[],psy=[],pg=[], ce=[], eg=[], cs=[], reg=[], ot=[]
 
-    Music.find().then(async records => {
+    Music.find({success:true}).then(async records => {
 
       records.map(async record => {
         dummy.push(new Promise((resolve, reject) => {

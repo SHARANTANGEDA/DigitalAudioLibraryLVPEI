@@ -56,6 +56,7 @@ class BookItem extends Component {
       getSelected.push(this.props.music._id)
     console.log({selected: getSelected})
     this.props.checkbox.selected = getSelected
+    this.props.checkbox.size=this.props.checkbox.size+this.props.music.length
     console.log({afterSelect: this.props.checkbox.selected})
   }
 
@@ -68,6 +69,7 @@ class BookItem extends Component {
     }
     console.log({selected: unSelect})
     this.props.checkbox.selected = unSelect
+    this.props.checkbox.size=this.props.checkbox.size-this.props.music.length
     console.log({selected: this.props.checkbox.selected})
   }
 
@@ -82,7 +84,6 @@ class BookItem extends Component {
   myUploadProgress = () => (progress) => {
     console.log(progress.loaded)
     let percentage = Math.floor((progress.loaded * 100) / this.props.music.length)
-    console.log(percentage)
     this.setState({progress:percentage})
   }
   onDownload(e) {
@@ -185,7 +186,7 @@ class BookItem extends Component {
       //onTouchStart="this.classList.toggle('hover');
 
     <tr>
-      {this.props.auth.user.role==='world' && {checkbox}}
+      {this.props.auth.user.role==='world' && checkbox}
       <td><span style={{ fontFamily: 'Arial', fontSize: '14px', overflow: 'hidden',width:'200px',
           OTextOverflow: 'ellipsis', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{music.filename}</span></td>
         <td>

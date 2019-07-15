@@ -68,7 +68,15 @@ const MusicSchema = new Schema({
     rate: {
       type: Number
     }
-  }]
+  }],
+  fileLength: {
+    type: Number,
+    default: 0
+  },
+  access: {
+    type: Boolean,
+    default: true
+  }
 });
 
 module.exports = Music = mongoose.model('music',MusicSchema);

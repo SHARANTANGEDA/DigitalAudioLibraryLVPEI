@@ -81,6 +81,21 @@ export const getAllBooks = () => dispatch => {
   })
 }
 
+export const getRemovedBooks = () => dispatch => {
+  dispatch(setAuthLoading())
+  axios.get('/api/users/removedBooks').then(res => {
+    dispatch({
+      type: GET_LANDING_HOME,
+      payload: res.data
+    })
+  }).catch(err => {
+    dispatch({
+      type: NO_FILES,
+      payload: err.data
+    })
+  })
+}
+
 export const getCatalogue = () => dispatch => {
   dispatch(setAuthLoading())
   axios.get('/api/users/catalogue').then(res => {

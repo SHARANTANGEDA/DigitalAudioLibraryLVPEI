@@ -60,7 +60,7 @@ export const deleteFile = (id) => dispatch => {
 }
 
 export const deleteFolder = (id) => dispatch => {
-  axios.get(`/api/upload/deleteFolder/${id}`).then(res => {
+  axios.get(`/api/upload/removeAccess/${id}`).then(res => {
     window.location.reload()
   }).catch(err =>
     dispatch({
@@ -70,8 +70,8 @@ export const deleteFolder = (id) => dispatch => {
   )
 }
 
-export const deletePatient = (id) => dispatch => {
-  axios.get(`/api/upload/deletePatient/${id}`).then(res => {
+export const grantFolder = (id) => dispatch => {
+  axios.get(`/api/upload/grantAccess/${id}`).then(res => {
     window.location.reload()
   }).catch(err =>
     dispatch({
@@ -115,7 +115,7 @@ export const downloadSelected = (id,data) => dispatch => {
 }
 
 export const downloadFolder = (id) => dispatch => {
-  axios.get(`/api/upload/downloadFolder/${id}`, { responseType: 'blob' }).then(res => {
+  axios.get(`/api/upload/downloadFolder/${id}`, { responseType: 'blob'}).then(res => {
     const url = window.URL.createObjectURL(new Blob([res.data]))
     const link = document.createElement('a')
     link.href = url

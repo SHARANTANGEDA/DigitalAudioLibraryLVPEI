@@ -4,16 +4,16 @@ import { connect } from 'react-redux'
 import { getSADetails } from '../../actions/homeActions'
 import Spinner from '../common/Spinner'
 import Select from 'react-select'
-import { getAllBooks } from '../../actions/authActions'
-import MasterItem from './MasterItem'
+import { getRemovedBooks } from '../../actions/authActions'
 import NotFound from '../layout/NotFound'
 import SearchBar from '../dashboard/SearchBar'
 
 import { DateRangePicker } from 'react-dates'
 import 'react-dates/lib/css/_datepicker.css'
 import moment from 'moment'
+import RemovedBookItem from './RemovedBookItem'
 
-class BooksMaster extends Component {
+class GrantBooksMaster extends Component {
   constructor () {
     super()
     this.state = {
@@ -45,7 +45,7 @@ class BooksMaster extends Component {
   }
 
   componentDidMount () {
-      this.props.getAllBooks(this.props.match.params.id)
+    this.props.getRemovedBooks(this.props.match.params.id)
   }
 
   openModal () {
@@ -110,102 +110,67 @@ class BooksMaster extends Component {
         return ((x < y) ? -1 : ((x > y) ? 1 : 0));
       });
     }
-      let categoryArray=[{value:'all', label: 'all'},{value: 'School (I – V)', label: 'School (I – V)'},
-        {value: 'School (VI – X)', label: 'School (VI – X)'},
-        {value: 'Intermediate (XI & XII)', label: 'Intermediate (XI & XII)'},
-        {value: 'Undergraduate', label: 'Undergraduate'},
-        {value: 'Postgraduate', label: 'Postgraduate'},
-        {value: 'Law', label: 'Law'},
-        {value: 'Psychology', label: 'Psychology'},
-        {value: 'Competitive Exam', label: 'Competitive Exam'},
-        {value: 'English Grammar', label: 'English Grammar'},
-        {value: 'Children Stories', label: 'Children Stories'},
-        {value: 'Religious', label: 'Religious'},
-        {value: 'Other', label: 'Other'}]
-      const {loading, land} = this.props.auth
-      const {  currentPage, todosPerPage } = this.state;
-      const indexOfLastTodo = currentPage * todosPerPage;
-      const indexOfFirstTodo = indexOfLastTodo - todosPerPage;
-      const pageNumbers = [];
-      let allFoldersContent, heading, renderpn;
-      if (loading || land===null) {
-        allFoldersContent = (<Spinner/>)
-      } else {
-        if(land.all.length===0) {
-          allFoldersContent = (
-            <h5>Nothing is uploaded yet, please check back later</h5>
-          )
-          heading=null
-        }else {
-          heading = null
-          if(this.state.category===null || this.state.category.value==='all') {
-            let newFolders
-            if(this.state.dateFilter) {
-              land.all.map(folder =>
-                console.log({1:moment(this.state.startDate).isBefore(folder.uploadAt),
-                  2: moment(this.state.endDate).isAfter(folder.uploadAt),3: folder.uploadAt}))
-              newFolders = land.all.filter(folder => moment(this.state.startDate).isBefore(folder.uploadAt) &&
-                moment(this.state.endDate).isAfter(folder.uploadAt))
-            }else {
-              newFolders = land.all
-            }
-            console.log({new:newFolders})
-            newFolders = newFolders.filter(folder => folder.access === true)
-            console.log({current:newFolders})
+    let categoryArray=[{value:'all', label: 'all'},{value: 'School (I – V)', label: 'School (I – V)'},
+      {value: 'School (VI – X)', label: 'School (VI – X)'},
+      {value: 'Intermediate (XI & XII)', label: 'Intermediate (XI & XII)'},
+      {value: 'Undergraduate', label: 'Undergraduate'},
+      {value: 'Postgraduate', label: 'Postgraduate'},
+      {value: 'Law', label: 'Law'},
+      {value: 'Psychology', label: 'Psychology'},
+      {value: 'Competitive Exam', label: 'Competitive Exam'},
+      {value: 'English Grammar', label: 'English Grammar'},
+      {value: 'Children Stories', label: 'Children Stories'},
+      {value: 'Religious', label: 'Religious'},
+      {value: 'Other', label: 'Other'}]
+    const {loading, land} = this.props.auth
+    const {  currentPage, todosPerPage } = this.state;
+    const indexOfLastTodo = currentPage * todosPerPage;
+    const indexOfFirstTodo = indexOfLastTodo - todosPerPage;
+    const pageNumbers = [];
+    let allFoldersContent, heading, renderpn;
+    if (loading || land===null) {
+      allFoldersContent = (<Spinner/>)
+    } else {
+      if(land.all.length===0) {
+        allFoldersContent = (
+          <h5>Nothing is uploaded yet, please check back later</h5>
+        )
+        heading=null
+      }else {
+        heading = null
+        console.log(land.all)
 
-            let currentFolder = newFolders.slice(indexOfFirstTodo, indexOfLastTodo);
-            // const sortByKey = (array, key) => array.sort(function (a, b) {
-            //   let x = a[key];
-            //   let y = b[key];
-            //   // (x < y) ? -1 : ((x > y) ? 1 : 0)
-            //   return (x<y);
-            // })
-            // currentFolder = sortByKey(currentFolder, 'title');
-            const render = (  currentFolder.map(land => (
-              // <ProductCard folder={land} key={land._id}/>
-              <MasterItem folder={land} key={land._id}/>
-            )))
-            for (let i = 1; i <= Math.ceil(land.all.length / todosPerPage); i++) {
-              pageNumbers.push(i);
-            }
-            const renderPageNumbers = (
-              pageNumbers.map(number => {
-                return (
-                  <button className='page-item page-link'
-                          key={number}
-                          id={number}
-                          onClick={this.handleClick}
-                  >
-                    {number}
-                  </button>
-                );
-              }))
-            allFoldersContent=render
-            renderpn = (
-              <nav aria-label="...">
-                <ul className="pagination pagination-sm">
-                  {renderPageNumbers}
-                </ul>
-              </nav>
-            )
-          } else {
-
-            let newFolders = land.all.filter(folder => folder.category === this.state.category.value.toString())
-            if(this.state.dateFilter) {
-              newFolders = newFolders.filter(folder => moment(this.state.startDate).isBefore(folder.uploadAt) &&
-                moment(this.state.endDate).isAfter(folder.uploadAt))
-            }
-            let currentFolder = newFolders.filter(folder => folder.access === true)
-
-            currentFolder = currentFolder.slice(indexOfFirstTodo, indexOfLastTodo);
-            currentFolder = sort_by_key(currentFolder, 'title');
-            const render = (  currentFolder.map(folder => (
-              <MasterItem folder={folder} key={folder._id}/>
-            )))
-            for (let i = 1; i <= Math.ceil(newFolders.length / todosPerPage); i++) {
-              pageNumbers.push(i);
-            }
-            const renderPageNumbers = pageNumbers.map(number => {
+        if(this.state.category===null || this.state.category.value==='all') {
+          let newFolders
+          if(this.state.dateFilter) {
+            land.all.map(folder =>
+              console.log({1:moment(this.state.startDate).isBefore(folder.uploadAt),
+                2: moment(this.state.endDate).isAfter(folder.uploadAt),3: folder.uploadAt}))
+            newFolders = land.all.filter(folder => moment(this.state.startDate).isBefore(folder.uploadAt) &&
+              moment(this.state.endDate).isAfter(folder.uploadAt))
+          }else {
+            newFolders = land.all
+          }
+          console.log({new:newFolders})
+          let currentFolder = newFolders.filter(folder => folder.access === false)
+          console.log({current:currentFolder})
+          currentFolder = currentFolder.slice(indexOfFirstTodo, indexOfLastTodo);
+          // const sortByKey = (array, key) => array.sort(function (a, b) {
+          //   let x = a[key];
+          //   let y = b[key];
+          //   // (x < y) ? -1 : ((x > y) ? 1 : 0)
+          //   return (x<y);
+          // })
+          // currentFolder = sortByKey(currentFolder, 'title');
+          const render = (  currentFolder.map(land => (
+            // <ProductCard folder={land} key={land._id}/>
+            <RemovedBookItem folder={land} key={land._id}/>
+          )))
+          for (let i = 1; i <= Math.ceil(land.all.length / todosPerPage); i++) {
+            pageNumbers.push(i);
+          }
+          const renderPageNumbers = (
+            pageNumbers.map(number => {
               return (
                 <button className='page-item page-link'
                         key={number}
@@ -215,20 +180,57 @@ class BooksMaster extends Component {
                   {number}
                 </button>
               );
-            })
-            allFoldersContent=render
-            renderpn = (
-              <nav aria-label="...">
-                <ul className="pagination pagination-sm">
-                  {renderPageNumbers}
-                </ul>
-              </nav>
+            }))
+          allFoldersContent=render
+          renderpn = (
+            <nav aria-label="...">
+              <ul className="pagination pagination-sm">
+                {renderPageNumbers}
+              </ul>
+            </nav>
+          )
+        } else {
 
-            )
+          let newFolders = land.all.filter(folder => folder.category === this.state.category.value.toString())
+          if(this.state.dateFilter) {
+            newFolders = newFolders.filter(folder => moment(this.state.startDate).isBefore(folder.uploadAt) &&
+              moment(this.state.endDate).isAfter(folder.uploadAt))
           }
+          console.log(newFolders)
+          let currentFolder = newFolders.filter(folder => folder.access === false)
+          console.log(currentFolder)
+          currentFolder = currentFolder.slice(indexOfFirstTodo, indexOfLastTodo);
+          currentFolder = sort_by_key(currentFolder, 'title');
+          const render = (  currentFolder.map(folder => (
+            <RemovedBookItem folder={folder} key={folder._id}/>
+          )))
+          for (let i = 1; i <= Math.ceil(newFolders.length / todosPerPage); i++) {
+            pageNumbers.push(i);
+          }
+          const renderPageNumbers = pageNumbers.map(number => {
+            return (
+              <button className='page-item page-link'
+                      key={number}
+                      id={number}
+                      onClick={this.handleClick}
+              >
+                {number}
+              </button>
+            );
+          })
+          allFoldersContent=render
+          renderpn = (
+            <nav aria-label="...">
+              <ul className="pagination pagination-sm">
+                {renderPageNumbers}
+              </ul>
+            </nav>
+
+          )
         }
       }
-      let content;
+    }
+    let content;
     if(this.props.auth.user.role==='lvpei') {
       content= (
         <div className="displayFolder container-fluid" style={{minWidth:'100%', padding: '0px'}}>
@@ -277,7 +279,7 @@ class BooksMaster extends Component {
                 <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Rating</th>
                 <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Edit Info</th>
                 <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Add Track</th>
-                <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Delete Book</th>
+                <th scope="col" style={{ fontSize: '10pt', background:'#c1c1c1'}}>Grant Book</th>
               </tr>
               </thead>
               <tbody>
@@ -293,24 +295,24 @@ class BooksMaster extends Component {
     }else {
       content=(<NotFound/>)
     }
-      return (
-        <div className='bookMaster'>
-          {content}
-        </div>
-      );
-    }
+    return (
+      <div className='bookMaster'>
+        {content}
+      </div>
+    );
+  }
 }
 
-BooksMaster.propTypes = {
+GrantBooksMaster.propTypes = {
   home: PropTypes.object.isRequired,
   getSADetails: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   folder: PropTypes.object.isRequired,
-  getAllBooks: PropTypes.func.isRequired
+  getRemovedBooks: PropTypes.func.isRequired
 }
 const mapStateToProps = state => ({
   home: state.home,
   auth: state.auth,
   folder: state.folder
 })
-export default connect(mapStateToProps, {getSADetails, getAllBooks})(BooksMaster)
+export default connect(mapStateToProps, {getSADetails, getRemovedBooks})(GrantBooksMaster)

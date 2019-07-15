@@ -12,14 +12,23 @@ import {
 } from '../../actions/homeActions'
 import BookItem from '../PublicHome/Single/BookItem'
 import PublicBookItem from '../PublicHome/Single/PublicBookItem'
+import axios from 'axios'
+import ProgressBar from 'react-bootstrap/ProgressBar'
 
 class AudioBook extends Component {
   constructor () {
     super()
-    this.state = {}
+    this.state = {
+      progress: 0,
+      total: 0,
+      showProgress: false
+    }
     this.eraseSelections = this.eraseSelections.bind(this)
     this.selectAll = this.selectAll.bind(this)
     this.selectDownload = this.selectDownload.bind(this)
+    this.myUploadProgress=this.myUploadProgress.bind(this)
+    this.mySelectedUploadProgress=this.mySelectedUploadProgress.bind(this)
+
   }
 
   componentDidMount () {
@@ -36,18 +45,57 @@ class AudioBook extends Component {
     this.props.clearCheckBox()
   }
 
-  selectDownload (e) {
-    // console.log({ param: this.props.match.params.id })
-    this.props.downloadSelected(this.props.match.params.id, { data: this.props.checkbox.selected })
+  mySelectedUploadProgress = () => (progress) => {
+    let percentage = Math.floor((progress.loaded * 100) / this.props.checkbox.size)
+    console.log(percentage)
+    this.setState({progress:percentage})
+    if(percentage>=99) {
+      this.setState({showProgress: false})
+    }
+  }
+
+  async selectDownload (e) {
+    this.setState({showProgress:true})
+    axios.post(`/api/upload/downloadSelected/${this.props.match.params.id}`,
+      { data: this.props.checkbox.selected }, { responseType: 'blob',
+        onDownloadProgress: this.mySelectedUploadProgress()}).then(res => {
+      const url = window.URL.createObjectURL(new Blob([res.data]))
+      const link = document.createElement('a')
+      link.href = url
+      link.setAttribute('download',  this.props.match.params.id+ '.zip')
+      document.body.appendChild(link)
+      link.click()
+    }).catch(err =>{console.log(err)})
+    // this.props.downloadSelected(this.props.match.params.id, { data: this.props.checkbox.selected })
+  }
+
+  myUploadProgress = () => (progress) => {
+    let percentage = Math.floor((progress.loaded * 100) / this.state.total)
+    console.log(percentage)
+    this.setState({progress:percentage})
+    if(percentage>=99) {
+      this.setState({showProgress: false})
+    }
   }
 
   async selectAll (e) {
-    let selection = []
+    let selection = [], fileSize=0
     this.props.folder.folders.files.map(async folder => {
       selection.push(folder._id)
+      fileSize=fileSize+folder.length
     })
     this.props.checkbox.selected = selection
-    this.props.downloadFolder(this.props.match.params.id)
+    this.setState({total: fileSize, showProgress:true})
+    axios.get(`/api/upload/downloadFolder/${this.props.match.params.id}`, { responseType: 'blob',
+      onDownloadProgress: this.myUploadProgress()}).then(res => {
+      const url = window.URL.createObjectURL(new Blob([res.data]))
+      const link = document.createElement('a')
+      link.href = url
+      link.setAttribute('download', this.props.match.params.id + '.zip')
+      document.body.appendChild(link)
+      link.click()
+    }).catch(err =>{console.log(err)})
+    // this.props.downloadFolder(this.props.match.params.id)
   }
 
   render () {
@@ -59,12 +107,18 @@ class AudioBook extends Component {
       // console.log({patients:folders})
       heading = (
         <div className='App-content row d-flex justify-content-center' style={{margin:'0px', minWidth:'100%'}}>
+          {(this.state.showProgress) ? (<div className='col-md-12'>
+              <ProgressBar striped variant="info" now={this.state.progress} label={`Downloaded${this.state.progress}%`}/>
+            </div>
+          ): null}
           {this.props.auth.user.role==='world' &&
           <nav className='navbar navbar-expand-sm justify-content-between col-md-12'
                style={{ background: '#ffa726', width: '100%', height: '40px' }}>
             <Link to='/dashboard' onClick={this.eraseSelections} className='btn'
                   style={{ background: '#ffa726', color: 'green' }}>
               BACK</Link>
+
+
             <div className='d-flex justify-content-end'>
               <button onClick={this.selectDownload} style={{ background: '#ffa726' }}>
                 Download Selected

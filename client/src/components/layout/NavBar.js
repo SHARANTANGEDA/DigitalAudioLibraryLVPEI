@@ -189,17 +189,33 @@ class Navbar extends Component {
               Home
             </Link>
           </li>
-          <li className='nav-item' style={{color: 'white',background:'#008cff' , borderRadius: '5px'
-            }}>
-            <Link className='nav-link'  to="/uploadForm" style={{color: 'white', borderRadius: '5px' }}>
-              Upload Book
-            </Link>
-          </li>
-          <li className='nav-item' style={{color: 'white',background:'#008cff' , borderRadius: '5px'
+          {/*<li className='nav-item' style={{color: 'white',background:'#008cff' , borderRadius: '5px'*/}
+          {/*  }}>*/}
+          {/*  <Link className='nav-link'  to="/uploadForm" style={{color: 'white', borderRadius: '5px' }}>*/}
+          {/*    Upload Book*/}
+          {/*  </Link>*/}
+          {/*</li>*/}
+          {/*<li className='nav-item' style={{color: 'white',background:'#008cff' , borderRadius: '5px'*/}
+          {/*}}>*/}
+          {/*  <Link className='nav-link'  to="/lvpBooks" style={{color: 'white', borderRadius: '5px' }}>*/}
+          {/*    View All Books*/}
+          {/*  </Link>*/}
+          {/*</li>*/}
+          <li className="nav-item dropdown" style={{color: 'white',background:'#008cff' , borderRadius: '5px'
           }}>
-            <Link className='nav-link'  to="/lvpBooks" style={{color: 'white', borderRadius: '5px' }}>
-              View All Books
+            <Link className="nav-link nav-item d-flex justify-content-around" to="" data-toggle="dropdown"
+                  style={{color: 'white',background:'#008cff' , borderRadius: '5px'
+                    ,minWidth:'150px' }}>
+              Book Master Control<i className="fas fa-caret-down"/>
             </Link>
+            <ul className="dropdown-menu " >
+              <li><Link className='nav-link' to="/uploadForm" style={{color: 'white'}}>
+                Upload Book</Link></li>
+              <li><Link className='nav-link' to="/lvpBooks" style={{color: 'white'}}>
+                View Current Books</Link></li>
+              <li><Link className='nav-link' to="/grantBookAccess" style={{color: 'white'}}>
+                De-assigned Books</Link></li>
+            </ul>
           </li>
           <li className="nav-item dropdown " style={{color: 'white',background:'#008cff' , borderRadius: '5px'
             ,minWidth:'150px' }}>

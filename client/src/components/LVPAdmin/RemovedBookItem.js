@@ -5,7 +5,7 @@ import { addRating, changeRating, downloadFolder, favourite, unFavourite } from 
 import Modal from 'react-modal'
 import EditBook from './EditBook'
 import UploadFiles from '../upload/UploadFiles'
-import DeleteBook from './DeleteBook'
+import GrantBook from './GrantBook'
 
 const customStyles = {
   content: {
@@ -18,7 +18,7 @@ const customStyles = {
   }
 }
 
-class MasterItem extends Component {
+class RemovedBookItem extends Component {
   constructor () {
     super();
     this.state = {
@@ -131,7 +131,7 @@ class MasterItem extends Component {
       modalContent=(<UploadFiles bookId={folder._id}/>)
     }else if(this.state.modalIsOpen && !this.state.uploadModal) {
       if(this.state.deleteModal) {
-        modalContent=( <DeleteBook bookId={folder._id}/>)
+       modalContent=( <GrantBook bookId={folder._id}/>)
       }else {
         modalContent = (
           <EditBook bookId={folder._id}/>)
@@ -149,7 +149,7 @@ class MasterItem extends Component {
         <td><button className='btn-sm btn' style={{background: 'green', color: 'white',marginRight: '10px'}}
                     onClick={this.onPlay.bind(this)}>View</button></td>
         <td>{<div ><i style={{color:'gold'}} className="fas fa-star fa-2x"/>{this.state.percent}/5</div>}</td>
-          {/*<span>({this.state.noRatings})</span>*/}
+        {/*<span>({this.state.noRatings})</span>*/}
         <td>
           <button onClick={this.openEditModal} style={{color:'blue'}} className='btn btn-sm'>
             <i className="fas fa-edit fa-2x"/></button>
@@ -160,9 +160,8 @@ class MasterItem extends Component {
 
         </td>
         <td>
-          <button onClick={this.openDeleteModal} style={{color:'white', background:'red'}} className='btn btn-sm'>
-            RemovePublicAccess</button>
-
+          <button onClick={this.openDeleteModal} style={{color:'white', background: 'green'}} className='btn btn-sm'>
+            GrantPublicAccess</button>
         </td>
         <Modal
           isOpen={this.state.modalIsOpen}
@@ -186,7 +185,7 @@ class MasterItem extends Component {
   }
 }
 
-MasterItem.propTypes = {
+RemovedBookItem.propTypes = {
   folder: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
   favourite: PropTypes.func.isRequired,
@@ -197,4 +196,4 @@ MasterItem.propTypes = {
 const mapStateToProps = state => ({
   auth: state.auth
 });
-export default connect(mapStateToProps, {downloadFolder, favourite, unFavourite, addRating, changeRating})(MasterItem);
+export default connect(mapStateToProps, {downloadFolder, favourite, unFavourite, addRating, changeRating})(RemovedBookItem);
