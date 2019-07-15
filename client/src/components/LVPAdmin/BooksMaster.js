@@ -9,10 +9,9 @@ import MasterItem from './MasterItem'
 import NotFound from '../layout/NotFound'
 import SearchBar from '../dashboard/SearchBar'
 
-import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
-import 'react-dates/lib/css/_datepicker.css';
+import { DateRangePicker } from 'react-dates'
+import 'react-dates/lib/css/_datepicker.css'
 import moment from 'moment'
-
 
 class BooksMaster extends Component {
   constructor () {

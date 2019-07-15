@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import TextFieldGroup from '../common/TextFieldGroup'
 import { getAllBooks, loginUser } from '../../actions/authActions'
 import Modal from 'react-modal'
+
 const customStyles = {
   content: {
     top: '50%',

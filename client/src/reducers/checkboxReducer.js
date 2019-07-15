@@ -1,14 +1,4 @@
-import {
-  CHECK_BOX_EVENT,
-  CHECK_BOX_LOADING,
-  GET_DA_HOME,
-  GET_DIAG_USER_HOME,
-  GET_INVALID_MR,
-  GET_MR,
-  GET_PATIENT_DETAILS,
-  GET_SA_HOME,
-  HOME_LOADING
-} from '../actions/types'
+import { CHECK_BOX_EVENT, CHECK_BOX_LOADING } from '../actions/types'
 
 const initialState = {
   selected: [],

@@ -6,10 +6,8 @@ import Spinner from '../common/Spinner'
 import Card from '@material-ui/core/Card'
 import { getAllBooks, getCatalogue } from '../../actions/authActions'
 import { Link } from 'react-router-dom'
-import 'react-dates/initialize';
-import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
-import 'react-dates/lib/css/_datepicker.css';
-import moment from 'moment'
+import 'react-dates/initialize'
+import 'react-dates/lib/css/_datepicker.css'
 
 class Dashboard extends Component {
   constructor () {

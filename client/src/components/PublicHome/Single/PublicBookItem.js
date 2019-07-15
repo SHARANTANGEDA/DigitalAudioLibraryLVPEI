@@ -7,7 +7,9 @@ import Modal from 'react-modal'
 import ModalLogin from '../../layout/ModalLogin'
 import {
   FacebookIcon,
-  FacebookShareButton, LinkedinIcon, LinkedinShareButton,
+  FacebookShareButton,
+  LinkedinIcon,
+  LinkedinShareButton,
   TwitterIcon,
   TwitterShareButton,
   WhatsappIcon,
@@ -15,7 +17,6 @@ import {
 } from 'react-share'
 import URL from '../../../utils/URL'
 import axios from 'axios'
-
 
 const customStyles = {
   content: {

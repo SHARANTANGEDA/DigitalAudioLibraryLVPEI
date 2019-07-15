@@ -3,9 +3,10 @@ import { Link } from 'react-router-dom'
 import { PropTypes } from 'prop-types'
 import { connect } from 'react-redux'
 import TextFieldGroup from '../common/TextFieldGroup'
-import { enterOTPEmail,  resetPassword, sendOTPEmail } from '../../actions/authActions'
+import { enterOTPEmail, resetPassword, sendOTPEmail } from '../../actions/authActions'
 import classnames from 'classnames'
 import downloading from '../common/downloading.gif'
+
 class ForgotPassword extends Component {
   constructor () {
     super();

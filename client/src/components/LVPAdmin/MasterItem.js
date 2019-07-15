@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { PropTypes } from 'prop-types'
 import { connect } from 'react-redux'
-import { addRating, changeRating, downloadFolder, favourite,  unFavourite } from '../../actions/homeActions'
+import { addRating, changeRating, downloadFolder, favourite, unFavourite } from '../../actions/homeActions'
 import Modal from 'react-modal'
 import EditBook from './EditBook'
 import UploadFiles from '../upload/UploadFiles'

@@ -7,16 +7,16 @@ import Modal from 'react-modal'
 import ModalLogin from '../../layout/ModalLogin'
 import {
   FacebookIcon,
-  FacebookShareButton, LinkedinIcon, LinkedinShareButton,
+  FacebookShareButton,
+  LinkedinIcon,
+  LinkedinShareButton,
   TwitterIcon,
   TwitterShareButton,
   WhatsappIcon,
   WhatsappShareButton
 } from 'react-share'
 import URL from '../../../utils/URL'
-import { CHECK_BOX_EVENT, GET_BOOK_DETAILS, NO_FILES } from '../../../actions/types'
 import axios from 'axios'
-
 
 const customStyles = {
   content: {

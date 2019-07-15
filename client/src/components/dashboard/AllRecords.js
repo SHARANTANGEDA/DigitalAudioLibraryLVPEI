@@ -8,9 +8,9 @@ import Select from 'react-select'
 import { getAllBooks } from '../../actions/authActions'
 import Warning from '../layout/Warning'
 import SearchBar from './SearchBar'
-import 'react-dates/initialize';
-import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
-import 'react-dates/lib/css/_datepicker.css';
+import 'react-dates/initialize'
+import { DateRangePicker } from 'react-dates'
+import 'react-dates/lib/css/_datepicker.css'
 import moment from 'moment'
 
 class AllRecords extends Component {

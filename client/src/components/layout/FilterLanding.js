@@ -6,8 +6,8 @@ import Spinner from '../common/Spinner'
 import Select from 'react-select'
 import TableItem from '../PublicHome/Single/TableItem'
 import SearchBar from '../dashboard/SearchBar'
-import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
-import 'react-dates/lib/css/_datepicker.css';
+import { DateRangePicker } from 'react-dates'
+import 'react-dates/lib/css/_datepicker.css'
 import moment from 'moment'
 
 class FilterLanding extends Component {

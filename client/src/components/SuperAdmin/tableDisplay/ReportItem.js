@@ -3,9 +3,6 @@ import { PropTypes } from 'prop-types'
 import { connect } from 'react-redux'
 
 import { addRating, changeRating, downloadFolder, favourite, unFavourite } from '../../../actions/homeActions'
-import downloading from '../../common/downloading.gif'
-
-
 
 class TableItem extends Component {
   constructor () {

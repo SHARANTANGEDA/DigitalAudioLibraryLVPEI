@@ -7,7 +7,6 @@ import TableItem from '../PublicHome/Single/TableItem'
 import Select from 'react-select'
 import Warning from '../layout/Warning'
 
-
 class GetFavourites extends Component {
   constructor () {
     super()

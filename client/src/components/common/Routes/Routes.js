@@ -14,8 +14,6 @@ import GetFavourites from '../../dashboard/GetFavourites'
 import ManageLVPEIUsers from '../../SuperAdmin/ManageLVPEIUsers'
 import ReAssignLVPUsers from '../../SuperAdmin/ReAssignLVPUsers'
 import BooksMaster from '../../LVPAdmin/BooksMaster'
-import ForgotPassword from '../../layout/ForgotPassword'
-import PublicCatalogue from '../../PublicHome/PublicCatalogue'
 import AllRecords from '../../dashboard/AllRecords'
 
 const Routes = () => {
