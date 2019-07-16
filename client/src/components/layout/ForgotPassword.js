@@ -197,9 +197,7 @@ class ForgotPassword extends Component {
               <div className="col-md-6 text-center">
                 {content}
                 <hr/>
-                <p style={{color:'white'}}>Don't have an account yet?,
-                  <Link  to={"/register"} className={"btn btn-sm text-primary"}>Sign Up </Link> to register</p>
-              </div>
+                    </div>
             </div>
           </div>
         </div>

@@ -30,7 +30,7 @@ export const registerUser = (userData) => dispatch => {
 
 export const registerWorld = (userData) => dispatch => {
   dispatch(clearErrors())
-  axios.post('/api/users/register', userData)
+  axios.post('/api/users/dal_register', userData)
     .then(res => {
       const {token} = res.data;
       localStorage.setItem('jwtToken',token);

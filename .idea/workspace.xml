@@ -6,13 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="5a967d78-a97f-45cb-83a3-e92f0b827e72" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/PublicHome/Single/BookItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/PublicHome/Single/BookItem.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/PublicHome/Single/PublicBookItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/PublicHome/Single/PublicBookItem.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/layout/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/layout/Login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/layout/ModalLogin.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/layout/ModalLogin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/layout/NavBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/layout/NavBar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/User.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/pbi_dal_overview.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api/upload.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api/upload.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/actions/authActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/actions/authActions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/layout/ForgotPassword.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/layout/ForgotPassword.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/api/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api/users.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -49,6 +46,37 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/src/utils/URL.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="26">
+              <caret line="1" column="32" selection-start-line="1" selection-start-column="32" selection-end-line="1" selection-end-column="32" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/src/components/common/Routes/Routes.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="312">
+              <caret line="39" column="69" selection-start-line="39" selection-start-column="69" selection-end-line="39" selection-end-column="69" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/client/src/App.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="46" column="34" selection-start-line="46" selection-start-column="34" selection-end-line="46" selection-end-column="34" />
+              <folding>
+                <element signature="e#0#40#0" expanded="true" />
+                <element signature="e#710#773#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mongoModels/User.js">
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
@@ -58,18 +86,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="26">
               <caret line="1" column="47" lean-forward="true" selection-start-line="1" selection-start-column="47" selection-end-line="1" selection-end-column="47" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/routes/api/users.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-4581">
-              <caret line="472" selection-start-line="472" selection-end-line="472" />
-              <folding>
-                <element signature="e#1902#1951#0" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -93,15 +109,6 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/src/components/LVPAdmin/MediateLogin.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="359">
-              <caret line="23" column="63" lean-forward="true" selection-start-line="23" selection-start-column="63" selection-end-line="23" selection-end-column="63" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/src/components/PublicHome/Single/PublicBookItem.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-161">
@@ -113,7 +120,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/src/components/PublicHome/Single/BookItem.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="385">
@@ -121,18 +128,6 @@
               <folding>
                 <element signature="e#0#40#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/README.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor>
-                <caret column="29" lean-forward="true" selection-start-column="29" selection-end-column="29" />
-              </first_editor>
-              <second_editor />
             </state>
           </provider>
         </entry>
@@ -150,9 +145,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>ForgotPassword</find>
-      <find>errors</find>
-      <find>esetPassword</find>
       <find>getPlays</find>
       <find>addPlay</find>
       <find>cat</find>
@@ -180,6 +172,9 @@
       <find>process.env</find>
       <find>/register</find>
       <find>TwitterShareButton</find>
+      <find>registe</find>
+      <find>dal_re</find>
+      <find>register</find>
     </findStrings>
     <replaceStrings>
       <replace>newPassword</replace>
@@ -196,15 +191,12 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/client/src/components/SuperAdmin/Report.js" />
-        <option value="$PROJECT_DIR$/client/src/components/MyAccount/ResetPassword.js" />
         <option value="$PROJECT_DIR$/mongoModels/User.js" />
         <option value="$PROJECT_DIR$/client/src/App.css" />
         <option value="$PROJECT_DIR$/client/src/components/dashboard/AllRecords.js" />
         <option value="$PROJECT_DIR$/client/src/components/layout/FilterLanding.js" />
         <option value="$PROJECT_DIR$/client/src/components/LVPAdmin/EditBook.js" />
         <option value="$PROJECT_DIR$/client/src/utils/setAuthToken.js" />
-        <option value="$PROJECT_DIR$/client/src/App.js" />
         <option value="$PROJECT_DIR$/client/public/index.html" />
         <option value="$PROJECT_DIR$/client/public/manifest.json" />
         <option value="$PROJECT_DIR$/client/src/components/layout/Register.js" />
@@ -231,12 +223,10 @@
         <option value="$PROJECT_DIR$/client/src/components/LVPAdmin/MasterItem.js" />
         <option value="$PROJECT_DIR$/client/src/components/LVPAdmin/RemovedBookItem.js" />
         <option value="$PROJECT_DIR$/client/src/components/LVPAdmin/BooksMaster.js" />
-        <option value="$PROJECT_DIR$/client/src/actions/authActions.js" />
         <option value="$PROJECT_DIR$/client/src/components/LVPAdmin/GrantBookMaster.js" />
         <option value="$PROJECT_DIR$/routes/api/superAdmin.js" />
         <option value="$PROJECT_DIR$/models/User.js" />
         <option value="$PROJECT_DIR$/client/src/components/PublicHome/Single/TableItem.js" />
-        <option value="$PROJECT_DIR$/routes/api/users.js" />
         <option value="$PROJECT_DIR$/client/src/components/LVPAdmin/MediateLogin.js" />
         <option value="$PROJECT_DIR$/client/src/components/SuperAdmin/PBIAnalysis.js" />
         <option value="$PROJECT_DIR$/README.md" />
@@ -247,6 +237,11 @@
         <option value="$PROJECT_DIR$/client/src/components/layout/ModalLogin.js" />
         <option value="$PROJECT_DIR$/client/src/components/PublicHome/Single/PublicBookItem.js" />
         <option value="$PROJECT_DIR$/client/src/components/PublicHome/Single/BookItem.js" />
+        <option value="$PROJECT_DIR$/client/src/utils/URL.js" />
+        <option value="$PROJECT_DIR$/routes/api/users.js" />
+        <option value="$PROJECT_DIR$/client/src/components/layout/ForgotPassword.js" />
+        <option value="$PROJECT_DIR$/client/src/actions/authActions.js" />
+        <option value="$PROJECT_DIR$/client/src/App.js" />
       </list>
     </option>
   </component>
@@ -312,6 +307,23 @@
               <item name="client" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="common" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SoundCloud" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SoundCloud" type="462c0819:PsiDirectoryNode" />
+              <item name="client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="common" type="462c0819:PsiDirectoryNode" />
+              <item name="Routes" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SoundCloud" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SoundCloud" type="462c0819:PsiDirectoryNode" />
+              <item name="client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
               <item name="PublicHome" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -330,20 +342,6 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="components" type="462c0819:PsiDirectoryNode" />
               <item name="SuperAdmin" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SoundCloud" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SoundCloud" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="img" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SoundCloud" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SoundCloud" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="reducers" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="SoundCloud" type="b2602c69:ProjectViewProjectNode" />
@@ -506,7 +504,7 @@
       <workItem from="1563086806346" duration="29477000" />
       <workItem from="1563128523720" duration="2000" />
       <workItem from="1563154509763" duration="44054000" />
-      <workItem from="1563247596599" duration="11273000" />
+      <workItem from="1563247596599" duration="11751000" />
     </task>
     <task id="LOCAL-00001" summary="#Added All the required funtionality&#10;#Fixed few bugs&#10;#optimized some react components">
       <created>1562347799331</created>
@@ -648,11 +646,25 @@
       <option name="project" value="LOCAL" />
       <updated>1563256391919</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="# Release Version&#10;# Made few bug fixes">
+      <created>1563277050791</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1563277050791</updated>
+    </task>
+    <task id="LOCAL-00022" summary="# Release Version&#10;# Made few bug fixes">
+      <created>1563277123595</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1563277123595</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="300176000" />
+    <option name="totallyTimeSpent" value="300654000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -743,7 +755,8 @@
     <MESSAGE value="# Release Version&#10;# Fixed Minor Bugs" />
     <MESSAGE value="# Release Version" />
     <MESSAGE value="# Release Version&#10;# Added PBI div container" />
-    <option name="LAST_COMMIT_MESSAGE" value="# Release Version&#10;# Added PBI div container" />
+    <MESSAGE value="# Release Version&#10;# Made few bug fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="# Release Version&#10;# Made few bug fixes" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/client/src/components/dashboard/SearchResults.js">
@@ -805,17 +818,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="234">
           <caret line="9" selection-start-line="9" selection-start-column="2" selection-end-line="16" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/App.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-515">
-          <caret line="16" column="11" selection-start-line="16" selection-end-line="17" />
-          <folding>
-            <element signature="e#0#40#0" expanded="true" />
-            <element signature="e#710#773#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -941,13 +943,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/components/common/Routes/Routes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="309">
-          <caret line="39" column="69" selection-start-line="39" selection-start-column="69" selection-end-line="39" selection-end-column="69" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/src/components/LVPAdmin/GrantBookMaster.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1300">
@@ -1022,13 +1017,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/utils/URL.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="6" selection-start-column="6" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/keys_dev.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="156">
@@ -1066,13 +1054,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="12" column="22" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/src/components/LVPAdmin/MediateLogin.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="359">
@@ -1097,20 +1078,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mongoModels/User.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/routes/api/upload.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="312">
           <caret line="12" column="18" selection-start-line="12" selection-start-column="18" selection-end-line="12" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/pbi_dal_overview.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="26">
-          <caret line="1" column="47" lean-forward="true" selection-start-line="1" selection-start-column="47" selection-end-line="1" selection-end-column="47" />
         </state>
       </provider>
     </entry>
@@ -1130,6 +1101,48 @@
           <caret line="150" column="45" lean-forward="true" selection-start-line="150" selection-start-column="45" selection-end-line="150" selection-end-column="45" />
           <folding>
             <element signature="e#0#40#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/pbi_dal_overview.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="26">
+          <caret line="1" column="47" lean-forward="true" selection-start-line="1" selection-start-column="47" selection-end-line="1" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mongoModels/User.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="312">
+          <caret line="12" column="22" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/utils/URL.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="26">
+          <caret line="1" column="32" selection-start-line="1" selection-start-column="32" selection-end-line="1" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/components/common/Routes/Routes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="312">
+          <caret line="39" column="69" selection-start-line="39" selection-start-column="69" selection-end-line="39" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/App.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="46" column="34" selection-start-line="46" selection-start-column="34" selection-end-line="46" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#40#0" expanded="true" />
+            <element signature="e#710#773#0" expanded="true" />
           </folding>
         </state>
       </provider>

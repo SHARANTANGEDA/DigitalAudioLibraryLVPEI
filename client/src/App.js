@@ -44,7 +44,7 @@ class App extends Component {
         <Route exact path="/home" component={Landing}/>
           <Route exact path='/' component={Login}/>
           <Route exact path='/forgotPassword' component={ForgotPassword}/>
-          <Route exact path='/register' component={Register}/>
+          <Route exact path='/dal_register' component={Register}/>
           <Route exact path='/contactUs' component={ContactUs}/>
           <Route exact path='/browse' component={PublicCatalogue}/>
           <Route exact path="/home/:id" component={FilterLanding}/>

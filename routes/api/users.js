@@ -27,7 +27,7 @@ const senderEmail = require('../../config/keys').senderEmail
 const senderPassword = require('../../config/keys').senderPassword
 
 //@Register
-router.post('/register', (req, res) => {
+router.post('/dal_register', (req, res) => {
   const { errors, isValid } = validateWorldRegisterInput(req.body)
   if (!isValid) {
     return res.status(400).json(errors)
