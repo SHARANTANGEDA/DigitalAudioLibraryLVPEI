@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  return sequelize.define("User", {
+  return sequelize.define("pbi_dal_overview", {
     id: {
       type: DataTypes.INTEGER,
       allowNull: false,

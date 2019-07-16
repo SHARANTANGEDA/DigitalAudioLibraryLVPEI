@@ -519,7 +519,7 @@ router.get('/catalogue', (req, res) => {
     let  dummy = [], school1 =[], all=[]
     let inter=[],school2=[],ug=[], law=[],psy=[],pg=[], ce=[], eg=[], cs=[], reg=[], ot=[]
 
-    Music.find({success:true}).then(async records => {
+    Music.find({access:true}).then(async records => {
 
       records.map(async record => {
         dummy.push(new Promise((resolve, reject) => {

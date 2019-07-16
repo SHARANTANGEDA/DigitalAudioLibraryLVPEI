@@ -17,6 +17,8 @@ import {
 } from 'react-share'
 import URL from '../../../utils/URL'
 import axios from 'axios'
+import MediateLogin from '../../LVPAdmin/MediateLogin'
+import { Link } from 'react-router-dom'
 
 const customStyles = {
   content: {
@@ -37,6 +39,7 @@ class PublicBookItem extends Component {
       file2: false,
       modalIsOpen: false,
       uploadModal: false,
+      loginModal:false,
       selected: false,
       progress: 0,
     };
@@ -49,6 +52,7 @@ class PublicBookItem extends Component {
     this.onSelect = this.onSelect.bind(this)
     this.onUnSelect = this.onUnSelect.bind(this)
     this.myUploadProgress = this.myUploadProgress.bind(this)
+    this.openLoginModal = this.openLoginModal.bind(this)
   }
   onSelect (e) {
     this.setState({selected: true})
@@ -110,7 +114,7 @@ class PublicBookItem extends Component {
   }
 
   closeModal () {
-    this.setState({ modalIsOpen: false })
+    this.setState({ modalIsOpen: false, loginModal:false })
   }
 
   openModal () {
@@ -121,8 +125,31 @@ class PublicBookItem extends Component {
 
   }
 
+  openLoginModal () {
+    this.setState({loginModal: true})
+  }
 
   render () {
+    let modalContent
+    if(this.state.modalIsOpen && !this.state.loginModal) {
+      modalContent=(
+        <div>
+          <MediateLogin/>
+          <div className='row d-flex justify-content-between' style={{margin:'20px'}}>
+            <Link className='btn btn-info' to='/register'>Register</Link>
+            <button style={{color:'white', background:'green', marginRight:'10px'}} className='btn btn-sm' onClick={this.openLoginModal}>Continue to Login</button>
+            <button style={{color:'white', background:'red', marginRight:'10px'}} className='btn btn-sm' onClick={this.closeModal}>Close</button>
+          </div>
+        </div>
+      )
+    }else if(this.state.modalIsOpen && this.state.loginModal) {
+      modalContent=(
+        <div>
+          <ModalLogin/>
+          <button style={{color:'white', background:'red'}} className='btn btn-sm' onClick={this.closeModal}>Close</button>
+        </div>
+      )
+    }
     const {music} = this.props;
     let icon,icon2;
     console.log({item:music})
@@ -203,16 +230,16 @@ class PublicBookItem extends Component {
         {/*<td>{downloadTimes}</td>*/}
         <td><div className='row' style={{margin:'1px'}}>
           <button style={{borderStyle:'none', background:'white'}}>
-            <TwitterShareButton title={'Hey!!, checkout this great audio book '+this.props.folder.title+' by LVPEI'}
+            <TwitterShareButton title={'Hey! Checkout this great Audio Library Book from L V Prasad Eye Institute'}
                                 hastags={['SupportVisionImpaired','L V Prasad Eye Institute']}
                                 url={URL()+`audioBook/${this.props.folder._id}`}><TwitterIcon size={25} round={true} />
             </TwitterShareButton></button>
           <button style={{borderStyle:'none', background:'white'}}>
-            <WhatsappShareButton title={'Hey!!, checkout this great audio book '+this.props.folder.title+' by LVPEI'}
+            <WhatsappShareButton title={'Hey! Checkout this great Audio Library Book from L V Prasad Eye Institute'}
                                  url={URL()+`audioBook/${this.props.folder._id}`}><WhatsappIcon size={25} round={true} />
             </WhatsappShareButton></button>
           <button style={{borderStyle:'none', background:'white'}}>
-            <FacebookShareButton quote={'Hey!!, checkout this great audio book '+this.props.folder.title+' by LVPEI'}
+            <FacebookShareButton quote={'Hey! Checkout this great Audio Library Book from L V Prasad Eye Institute'}
                                  hastag={'#SupportVisionImpaired #LVPEI'}
                                  url={URL()+`audioBook/${this.props.folder._id}`}><FacebookIcon size={25} round={true} />
             </FacebookShareButton></button>
@@ -229,7 +256,7 @@ class PublicBookItem extends Component {
           style={customStyles}
           contentLabel="Patient Data"
           ariaHideApp={false}
-        >{<ModalLogin/>}</Modal>
+        >{modalContent}</Modal>
       </tr>
 
     )

@@ -201,16 +201,16 @@ class BookItem extends Component {
         {this.props.auth.user.role==='world' && <td>{downloadTimes}</td>}
         <td><div className='row' style={{margin:'1px'}}>
           <button style={{borderStyle:'none', background:'white'}}>
-            <TwitterShareButton title={'Hey!!, checkout this great audio book '+this.props.folder.title+' by LVPEI'}
+            <TwitterShareButton title={'Hey! Checkout this great Audio Library Book from L V Prasad Eye Institute'}
                                 hastags={['SupportVisionImpaired','L V Prasad Eye Institute']}
                                 url={URL()+`audioBook/${this.props.folder._id}`}><TwitterIcon size={25} round={true} />
             </TwitterShareButton></button>
           <button style={{borderStyle:'none', background:'white'}}>
-            <WhatsappShareButton title={'Hey!!, checkout this great audio book '+this.props.folder.title+' by LVPEI'}
+            <WhatsappShareButton title={'Hey! Checkout this great Audio Library Book from L V Prasad Eye Institute'}
                                  url={URL()+`audioBook/${this.props.folder._id}`}><WhatsappIcon size={25} round={true} />
             </WhatsappShareButton></button>
           <button style={{borderStyle:'none', background:'white'}}>
-            <FacebookShareButton quote={'Hey!!, checkout this great audio book '+this.props.folder.title+' by LVPEI'}
+            <FacebookShareButton quote={'Hey! Checkout this great Audio Library Book from L V Prasad Eye Institute'}
                                  hastag={'#SupportVisionImpaired #LVPEI'}
                                  url={URL()+`audioBook/${this.props.folder._id}`}><FacebookIcon size={25} round={true} />
             </FacebookShareButton></button>

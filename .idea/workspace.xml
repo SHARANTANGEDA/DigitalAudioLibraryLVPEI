@@ -5,24 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5a967d78-a97f-45cb-83a3-e92f0b827e72" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/client/src/components/LVPAdmin/DeleteBook.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/components/LVPAdmin/GrantBook.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/components/LVPAdmin/GrantBookMaster.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/components/LVPAdmin/RemovedBookItem.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/LVPAdmin/MediateLogin.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/actions/authActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/actions/authActions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/actions/homeActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/actions/homeActions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/LVPAdmin/BooksMaster.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/LVPAdmin/BooksMaster.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/LVPAdmin/MasterItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/LVPAdmin/MasterItem.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/PublicHome/Single/BookItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/PublicHome/Single/BookItem.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/common/Routes/Routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/common/Routes/Routes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/dashboard/AudioBook.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/dashboard/AudioBook.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/layout/NavBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/layout/NavBar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/reducers/checkboxReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/reducers/checkboxReducer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/config/config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mongoModels/Music.js" beforeDir="false" afterPath="$PROJECT_DIR$/mongoModels/Music.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api/superAdmin.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api/superAdmin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api/upload.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api/upload.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/PublicHome/Single/PublicBookItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/PublicHome/Single/PublicBookItem.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/PublicHome/Single/TableItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/PublicHome/Single/TableItem.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/User.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/User.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/api/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api/users.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -49,166 +37,113 @@
     <select />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.786867">
-      <split-first>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/client/src/components/LVPAdmin/BooksMaster.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="345">
-                  <caret line="315" column="60" selection-start-line="315" selection-start-column="60" selection-end-line="315" selection-end-column="60" />
-                  <folding>
-                    <element signature="e#0#40#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/routes/api/users.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="130">
-                  <caret line="475" column="25" selection-start-line="475" selection-start-column="13" selection-end-line="475" selection-end-column="25" />
-                  <folding>
-                    <element signature="e#1902#1951#0" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/client/src/actions/authActions.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="177">
-                  <caret line="83" column="28" selection-start-line="83" selection-start-column="13" selection-end-line="83" selection-end-column="28" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/routes/api/superAdmin.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="328">
-                  <caret line="93" column="32" selection-start-line="93" selection-start-column="32" selection-end-line="93" selection-end-column="32" />
-                  <folding>
-                    <element signature="e#412#456#0" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/client/src/components/LVPAdmin/GrantBookMaster.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="307">
-                  <caret line="318" column="55" selection-start-line="318" selection-start-column="55" selection-end-line="318" selection-end-column="55" />
-                  <folding>
-                    <element signature="e#0#40#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/client/src/components/common/Routes/Routes.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="309">
-                  <caret line="39" column="69" selection-start-line="39" selection-start-column="69" selection-end-line="39" selection-end-column="69" />
-                  <folding>
-                    <element signature="e#0#25#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/client/src/components/LVPAdmin/RemovedBookItem.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="343">
-                  <caret line="134" column="28" selection-start-line="134" selection-start-column="28" selection-end-line="134" selection-end-column="28" />
-                  <folding>
-                    <element signature="e#0#40#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/client/src/components/LVPAdmin/DeleteBook.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-629">
-                  <caret line="2" column="34" selection-start-line="2" selection-start-column="34" selection-end-line="2" selection-end-column="34" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/routes/api/upload.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="151">
-                  <caret line="476" column="29" lean-forward="true" selection-start-line="476" selection-start-column="29" selection-end-line="476" selection-end-column="29" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/client/src/actions/homeActions.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="163">
-                  <caret line="72" column="13" selection-start-line="72" selection-start-column="13" selection-end-line="72" selection-end-column="13" />
-                  <folding>
-                    <element signature="e#0#25#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/config/config.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="26">
-                  <caret line="1" column="18" selection-start-line="1" selection-start-column="18" selection-end-line="1" selection-end-column="18" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/mongoModels/Music.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="481">
-                  <caret line="77" column="17" selection-start-line="77" selection-start-column="17" selection-end-line="77" selection-end-column="17" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/client/src/components/dashboard/AllRecords.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="7982">
-                  <caret line="307" column="29" selection-start-line="307" selection-start-column="29" selection-end-line="307" selection-end-column="29" />
-                  <folding>
-                    <element signature="e#0#40#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/models/User.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1924">
-                  <caret line="77" selection-start-line="77" selection-end-line="77" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config/config.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="312">
+              <caret line="12" column="22" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/src/components/LVPAdmin/BooksMaster.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="437">
+              <caret line="315" column="60" selection-start-line="315" selection-start-column="60" selection-end-line="315" selection-end-column="60" />
+              <folding>
+                <element signature="e#0#40#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/routes/api/users.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="208">
+              <caret line="472" selection-start-line="472" selection-end-line="472" />
+              <folding>
+                <element signature="e#1902#1951#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/routes/api/superAdmin.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="26">
+              <caret line="74" lean-forward="true" selection-start-line="74" selection-end-line="74" />
+              <folding>
+                <element signature="e#412#456#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/src/components/LVPAdmin/MediateLogin.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="234">
+              <caret line="25" selection-start-line="25" selection-end-line="25" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/src/components/PublicHome/Single/BookItem.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="283">
+              <caret line="198" column="13" lean-forward="true" selection-start-line="198" selection-start-column="13" selection-end-line="198" selection-end-column="13" />
+              <folding>
+                <element signature="e#0#40#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/client/src/components/PublicHome/Single/PublicBookItem.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="182">
+              <caret line="116" column="56" selection-start-line="116" selection-start-column="56" selection-end-line="116" selection-end-column="56" />
+              <folding>
+                <element signature="e#0#40#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/src/utils/URL.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="6" selection-start-column="6" selection-end-column="6" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/models/User.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="104">
+              <caret line="4" column="23" lean-forward="true" selection-start-line="4" selection-start-column="23" selection-end-line="4" selection-end-column="23" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/src/components/LVPAdmin/GrantBook.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="160">
+              <caret line="23" selection-start-line="23" selection-end-line="24" selection-end-column="87" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -221,7 +156,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>repassword</find>
       <find>email</find>
       <find>axios.post</find>
       <find>ForgotPassword</find>
@@ -251,6 +185,7 @@
       <find>removeAccess</find>
       <find>grantAccess</find>
       <find>home</find>
+      <find>process.env</find>
     </findStrings>
     <replaceStrings>
       <replace>newPassword</replace>
@@ -267,15 +202,11 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/validations/ageValidation/categorizeAge.js" />
-        <option value="$PROJECT_DIR$/validations/ageValidation/getQuarter.js" />
         <option value="$PROJECT_DIR$/client/src/actions/types.js" />
         <option value="$PROJECT_DIR$/client/src/reducers/authReducer.js" />
         <option value="$PROJECT_DIR$/client/src/components/PublicHome/PublicCatalogue.js" />
-        <option value="$PROJECT_DIR$/client/src/components/PublicHome/Single/PublicBookItem.js" />
         <option value="$PROJECT_DIR$/validations/worldRegister.js" />
         <option value="$PROJECT_DIR$/client/src/components/SuperAdmin/Report.js" />
-        <option value="$PROJECT_DIR$/client/src/components/PublicHome/Single/TableItem.js" />
         <option value="$PROJECT_DIR$/client/src/components/MyAccount/ResetPassword.js" />
         <option value="$PROJECT_DIR$/mongoModels/User.js" />
         <option value="$PROJECT_DIR$/client/src/App.css" />
@@ -300,7 +231,6 @@
         <option value="$PROJECT_DIR$/client/src/components/SuperAdmin/tableDisplay/TableRowLVPEI.js" />
         <option value="$PROJECT_DIR$/config/config.js" />
         <option value="$PROJECT_DIR$/client/src/reducers/checkboxReducer.js" />
-        <option value="$PROJECT_DIR$/client/src/components/PublicHome/Single/BookItem.js" />
         <option value="$PROJECT_DIR$/client/src/components/dashboard/AudioBook.js" />
         <option value="$PROJECT_DIR$/mongoModels/Music.js" />
         <option value="$PROJECT_DIR$/client/src/components/PublicHome/Single/RemovedBooks.js" />
@@ -313,11 +243,16 @@
         <option value="$PROJECT_DIR$/client/src/components/LVPAdmin/MasterItem.js" />
         <option value="$PROJECT_DIR$/client/src/components/LVPAdmin/RemovedBookItem.js" />
         <option value="$PROJECT_DIR$/client/src/components/LVPAdmin/BooksMaster.js" />
-        <option value="$PROJECT_DIR$/routes/api/superAdmin.js" />
         <option value="$PROJECT_DIR$/routes/api/upload.js" />
-        <option value="$PROJECT_DIR$/routes/api/users.js" />
         <option value="$PROJECT_DIR$/client/src/actions/authActions.js" />
         <option value="$PROJECT_DIR$/client/src/components/LVPAdmin/GrantBookMaster.js" />
+        <option value="$PROJECT_DIR$/routes/api/superAdmin.js" />
+        <option value="$PROJECT_DIR$/models/User.js" />
+        <option value="$PROJECT_DIR$/client/src/components/PublicHome/Single/BookItem.js" />
+        <option value="$PROJECT_DIR$/client/src/components/PublicHome/Single/TableItem.js" />
+        <option value="$PROJECT_DIR$/routes/api/users.js" />
+        <option value="$PROJECT_DIR$/client/src/components/LVPAdmin/MediateLogin.js" />
+        <option value="$PROJECT_DIR$/client/src/components/PublicHome/Single/PublicBookItem.js" />
       </list>
     </option>
   </component>
@@ -328,10 +263,10 @@
     <auto-save>true</auto-save>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="67" />
-    <option name="y" value="32" />
-    <option name="width" value="1853" />
-    <option name="height" value="1048" />
+    <option name="x" value="358" />
+    <option name="y" value="148" />
+    <option name="width" value="1389" />
+    <option name="height" value="784" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -534,7 +469,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="javascript.nodejs.core.library.configured.version" value="11.10.1" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/client/src/components/dashboard" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_interpreter_path" value="/usr/bin/node" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
@@ -643,7 +578,8 @@
       <workItem from="1563086663393" duration="118000" />
       <workItem from="1563086806346" duration="29477000" />
       <workItem from="1563128523720" duration="2000" />
-      <workItem from="1563154509763" duration="40856000" />
+      <workItem from="1563154509763" duration="44054000" />
+      <workItem from="1563247596599" duration="3137000" />
     </task>
     <task id="LOCAL-00001" summary="#Added All the required funtionality&#10;#Fixed few bugs&#10;#optimized some react components">
       <created>1562347799331</created>
@@ -743,11 +679,18 @@
       <option name="project" value="LOCAL" />
       <updated>1563194939500</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="# Added book access manipulation&#10;# Made few bug fixes&#10;# Created Master Control">
+      <created>1563209096020</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1563209096020</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="285705000" />
+    <option name="totallyTimeSpent" value="292040000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -834,42 +777,10 @@
     <MESSAGE value="# Added Search Bar&#10;# Added Date range Filter&#10;# Made bug fixes&#10;# Created SQL Schema for Power BI Analysis&#10;# Added Reset Password" />
     <MESSAGE value="# Optimized Imports &#10;# Optimized Icons" />
     <MESSAGE value="# Optimized Imports &#10;# Optimized Icons&#10;#Optimized and removed Console logs" />
-    <option name="LAST_COMMIT_MESSAGE" value="# Optimized Imports &#10;# Optimized Icons&#10;#Optimized and removed Console logs" />
+    <MESSAGE value="# Added book access manipulation&#10;# Made few bug fixes&#10;# Created Master Control" />
+    <option name="LAST_COMMIT_MESSAGE" value="# Added book access manipulation&#10;# Made few bug fixes&#10;# Created Master Control" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/validations/worldRegister.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/components/SuperAdmin/tableDisplay/TableRowLVPEI.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#40#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/actions/profileActions.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="181">
-          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/components/MyAccount/ResetPassword.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2080">
-          <caret line="107" column="38" selection-start-line="107" selection-start-column="38" selection-end-line="107" selection-end-column="38" />
-          <folding>
-            <element signature="e#0#40#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/validations/resetPassword.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-78">
@@ -942,9 +853,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="7982">
           <caret line="307" column="29" selection-start-line="307" selection-start-column="29" selection-end-line="307" selection-end-column="29" />
-          <folding>
-            <element signature="e#0#40#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -983,15 +891,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/public/favicon2.ico">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/public/favicon3.ico">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/public/favicon.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/client/public/favicon2.ico" />
+    <entry file="file://$PROJECT_DIR$/client/public/favicon3.ico" />
+    <entry file="file://$PROJECT_DIR$/client/public/favicon.png" />
     <entry file="file://$PROJECT_DIR$/client/public/favicon.ico">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -1026,30 +928,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="127">
           <caret line="90" column="1" lean-forward="true" selection-start-line="90" selection-start-column="1" selection-end-line="90" selection-end-column="1" />
-          <folding>
-            <element signature="e#0#40#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/User.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1924">
-          <caret line="77" selection-start-line="77" selection-end-line="77" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="26">
-          <caret line="1" column="18" selection-start-line="1" selection-start-column="18" selection-end-line="1" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/components/PublicHome/Single/TableItem.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="94" lean-forward="true" selection-start-line="94" selection-end-line="94" />
           <folding>
             <element signature="e#0#40#0" expanded="true" />
           </folding>
@@ -1101,23 +979,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mongoModels/Music.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="481">
-          <caret line="77" column="17" selection-start-line="77" selection-start-column="17" selection-end-line="77" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/components/PublicHome/Single/BookItem.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="629">
-          <caret line="229" column="32" lean-forward="true" selection-start-line="229" selection-start-column="32" selection-end-line="229" selection-end-column="32" />
-          <folding>
-            <element signature="e#0#40#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/src/components/layout/NavBar.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="395">
@@ -1138,54 +999,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/components/LVPAdmin/GrantBook.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="335">
-          <caret line="56" column="50" selection-start-line="56" selection-start-column="50" selection-end-line="56" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/src/actions/homeActions.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="163">
           <caret line="72" column="13" selection-start-line="72" selection-start-column="13" selection-end-line="72" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/components/LVPAdmin/DeleteBook.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-629">
-          <caret line="2" column="34" selection-start-line="2" selection-start-column="34" selection-end-line="2" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/components/LVPAdmin/BooksMaster.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="315" column="60" selection-start-line="315" selection-start-column="60" selection-end-line="315" selection-end-column="60" />
-          <folding>
-            <element signature="e#0#40#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/api/superAdmin.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="328">
-          <caret line="93" column="32" selection-start-line="93" selection-start-column="32" selection-end-line="93" selection-end-column="32" />
-          <folding>
-            <element signature="e#412#456#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/api/upload.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="151">
-          <caret line="476" column="29" lean-forward="true" selection-start-line="476" selection-start-column="29" selection-end-line="476" selection-end-column="29" />
         </state>
       </provider>
     </entry>
@@ -1193,26 +1010,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="309">
           <caret line="39" column="69" selection-start-line="39" selection-start-column="69" selection-end-line="39" selection-end-column="69" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/api/users.js">
+    <entry file="file://$PROJECT_DIR$/client/src/components/LVPAdmin/GrantBookMaster.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="130">
-          <caret line="475" column="25" selection-start-line="475" selection-start-column="13" selection-end-line="475" selection-end-column="25" />
-          <folding>
-            <element signature="e#1902#1951#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/components/LVPAdmin/RemovedBookItem.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="343">
-          <caret line="134" column="28" selection-start-line="134" selection-start-column="28" selection-end-line="134" selection-end-column="28" />
+        <state relative-caret-position="-1300">
+          <caret line="19" column="18" lean-forward="true" selection-start-line="19" selection-start-column="18" selection-end-line="19" selection-end-column="18" />
           <folding>
             <element signature="e#0#40#0" expanded="true" />
           </folding>
@@ -1223,13 +1027,142 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="177">
           <caret line="83" column="28" selection-start-line="83" selection-start-column="13" selection-end-line="83" selection-end-column="28" />
+          <folding>
+            <element signature="e#0#198#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/components/LVPAdmin/GrantBookMaster.js">
+    <entry file="file://$PROJECT_DIR$/client/src/components/LVPAdmin/RemovedBookItem.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="307">
-          <caret line="318" column="55" selection-start-line="318" selection-start-column="55" selection-end-line="318" selection-end-column="55" />
+        <state relative-caret-position="343">
+          <caret line="133" column="28" selection-start-line="133" selection-start-column="28" selection-end-line="133" selection-end-column="28" />
+          <folding>
+            <element signature="e#0#40#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/components/LVPAdmin/DeleteBook.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-593">
+          <caret line="3" column="56" selection-start-line="3" selection-start-column="56" selection-end-line="3" selection-end-column="56" />
+          <folding>
+            <element signature="e#0#40#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/api/upload.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="12376">
+          <caret line="476" column="29" lean-forward="true" selection-start-line="476" selection-start-column="29" selection-end-line="476" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mongoModels/Music.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="499">
+          <caret line="77" column="17" selection-start-line="77" selection-start-column="17" selection-end-line="77" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/keys_dev.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="7" column="37" selection-start-line="7" selection-start-column="20" selection-end-line="7" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/components/LVPAdmin/GrantBook.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="23" selection-start-line="23" selection-end-line="24" selection-end-column="87" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/User.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="104">
+          <caret line="4" column="23" lean-forward="true" selection-start-line="4" selection-start-column="23" selection-end-line="4" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/api/superAdmin.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="26">
+          <caret line="74" lean-forward="true" selection-start-line="74" selection-end-line="74" />
+          <folding>
+            <element signature="e#412#456#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/components/LVPAdmin/BooksMaster.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="437">
+          <caret line="315" column="60" selection-start-line="315" selection-start-column="60" selection-end-line="315" selection-end-column="60" />
+          <folding>
+            <element signature="e#0#40#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="312">
+          <caret line="12" column="22" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/components/PublicHome/Single/TableItem.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="241">
+          <caret line="207" column="112" selection-start-line="207" selection-start-column="112" selection-end-line="207" selection-end-column="112" />
+          <folding>
+            <element signature="e#0#40#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/utils/URL.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="6" selection-start-column="6" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/api/users.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="472" selection-start-line="472" selection-end-line="472" />
+          <folding>
+            <element signature="e#1902#1951#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/components/PublicHome/Single/BookItem.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="283">
+          <caret line="198" column="13" lean-forward="true" selection-start-line="198" selection-start-column="13" selection-end-line="198" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#40#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/components/LVPAdmin/MediateLogin.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="25" selection-start-line="25" selection-end-line="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/components/PublicHome/Single/PublicBookItem.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="116" column="56" selection-start-line="116" selection-start-column="56" selection-end-line="116" selection-end-column="56" />
           <folding>
             <element signature="e#0#40#0" expanded="true" />
           </folding>
