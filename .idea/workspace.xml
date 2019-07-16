@@ -5,13 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5a967d78-a97f-45cb-83a3-e92f0b827e72" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/client/src/components/LVPAdmin/MediateLogin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/SuperAdmin/PBIAnalysis.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/PublicHome/Single/BookItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/PublicHome/Single/BookItem.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/PublicHome/Single/PublicBookItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/PublicHome/Single/PublicBookItem.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/PublicHome/Single/TableItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/PublicHome/Single/TableItem.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/User.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/User.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api/users.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -50,11 +45,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/src/components/LVPAdmin/BooksMaster.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="437">
-              <caret line="315" column="60" selection-start-line="315" selection-start-column="60" selection-end-line="315" selection-end-column="60" />
+            <state relative-caret-position="323">
+              <caret line="21" column="25" lean-forward="true" selection-end-line="316" />
               <folding>
                 <element signature="e#0#40#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config/keys_dev.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="156">
+              <caret line="6" selection-start-line="6" selection-end-line="7" selection-end-column="38" />
             </state>
           </provider>
         </entry>
@@ -66,18 +70,6 @@
               <caret line="472" selection-start-line="472" selection-end-line="472" />
               <folding>
                 <element signature="e#1902#1951#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/routes/api/superAdmin.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="26">
-              <caret line="74" lean-forward="true" selection-start-line="74" selection-end-line="74" />
-              <folding>
-                <element signature="e#412#456#0" />
               </folding>
             </state>
           </provider>
@@ -104,7 +96,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/src/components/PublicHome/Single/PublicBookItem.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="182">
@@ -117,28 +109,34 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="78">
+                <caret line="3" column="9" selection-start-line="3" selection-start-column="9" selection-end-line="3" selection-end-column="9" />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/client/src/components/SuperAdmin/PBIAnalysis.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="260">
+              <caret line="239" column="38" selection-start-line="239" selection-start-column="38" selection-end-line="239" selection-end-column="38" />
+              <folding>
+                <element signature="e#0#40#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/src/utils/URL.js">
           <provider selected="true" editor-type-id="text-editor">
             <state>
               <caret column="6" selection-start-column="6" selection-end-column="6" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/models/User.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="104">
-              <caret line="4" column="23" lean-forward="true" selection-start-line="4" selection-start-column="23" selection-end-line="4" selection-end-column="23" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/src/components/LVPAdmin/GrantBook.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="160">
-              <caret line="23" selection-start-line="23" selection-end-line="24" selection-end-column="87" />
             </state>
           </provider>
         </entry>
@@ -202,8 +200,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/client/src/actions/types.js" />
-        <option value="$PROJECT_DIR$/client/src/reducers/authReducer.js" />
         <option value="$PROJECT_DIR$/client/src/components/PublicHome/PublicCatalogue.js" />
         <option value="$PROJECT_DIR$/validations/worldRegister.js" />
         <option value="$PROJECT_DIR$/client/src/components/SuperAdmin/Report.js" />
@@ -253,6 +249,8 @@
         <option value="$PROJECT_DIR$/routes/api/users.js" />
         <option value="$PROJECT_DIR$/client/src/components/LVPAdmin/MediateLogin.js" />
         <option value="$PROJECT_DIR$/client/src/components/PublicHome/Single/PublicBookItem.js" />
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/client/src/components/SuperAdmin/PBIAnalysis.js" />
       </list>
     </option>
   </component>
@@ -263,10 +261,10 @@
     <auto-save>true</auto-save>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="358" />
-    <option name="y" value="148" />
-    <option name="width" value="1389" />
-    <option name="height" value="784" />
+    <option name="x" value="67" />
+    <option name="y" value="32" />
+    <option name="width" value="927" />
+    <option name="height" value="1048" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -318,91 +316,7 @@
               <item name="client" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="common" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SoundCloud" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SoundCloud" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="common" type="462c0819:PsiDirectoryNode" />
-              <item name="plugins" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SoundCloud" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SoundCloud" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="common" type="462c0819:PsiDirectoryNode" />
-              <item name="Routes" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SoundCloud" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SoundCloud" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="dashboard" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SoundCloud" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SoundCloud" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="layout" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SoundCloud" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SoundCloud" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="LVPAdmin" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SoundCloud" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SoundCloud" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="PublicHome" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SoundCloud" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SoundCloud" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="PublicHome" type="462c0819:PsiDirectoryNode" />
-              <item name="Single" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SoundCloud" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SoundCloud" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
               <item name="SuperAdmin" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SoundCloud" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SoundCloud" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="SuperAdmin" type="462c0819:PsiDirectoryNode" />
-              <item name="tableDisplay" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SoundCloud" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SoundCloud" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="upload" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="SoundCloud" type="b2602c69:ProjectViewProjectNode" />
@@ -579,7 +493,7 @@
       <workItem from="1563086806346" duration="29477000" />
       <workItem from="1563128523720" duration="2000" />
       <workItem from="1563154509763" duration="44054000" />
-      <workItem from="1563247596599" duration="3137000" />
+      <workItem from="1563247596599" duration="3808000" />
     </task>
     <task id="LOCAL-00001" summary="#Added All the required funtionality&#10;#Fixed few bugs&#10;#optimized some react components">
       <created>1562347799331</created>
@@ -686,11 +600,25 @@
       <option name="project" value="LOCAL" />
       <updated>1563209096020</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="# Release Version&#10;# Fixed Minor Bugs">
+      <created>1563255416208</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1563255416208</updated>
+    </task>
+    <task id="LOCAL-00017" summary="# Release Version">
+      <created>1563255846408</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1563255846408</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="292040000" />
+    <option name="totallyTimeSpent" value="292711000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -723,7 +651,7 @@
       <window_info anchor="bottom" id="Terminal" order="10" weight="0.23615819" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="bottom" id="TypeScript" order="12" />
-      <window_info anchor="bottom" id="Run" order="13" visible="true" weight="0.3638418" />
+      <window_info anchor="bottom" id="Run" order="13" weight="0.3638418" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -778,23 +706,11 @@
     <MESSAGE value="# Optimized Imports &#10;# Optimized Icons" />
     <MESSAGE value="# Optimized Imports &#10;# Optimized Icons&#10;#Optimized and removed Console logs" />
     <MESSAGE value="# Added book access manipulation&#10;# Made few bug fixes&#10;# Created Master Control" />
-    <option name="LAST_COMMIT_MESSAGE" value="# Added book access manipulation&#10;# Made few bug fixes&#10;# Created Master Control" />
+    <MESSAGE value="# Release Version&#10;# Fixed Minor Bugs" />
+    <MESSAGE value="# Release Version" />
+    <option name="LAST_COMMIT_MESSAGE" value="# Release Version" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/validations/resetPassword.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-78">
-          <caret line="3" selection-start-line="3" selection-end-line="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mongoModels/User.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="18" column="16" lean-forward="true" selection-start-line="18" selection-start-column="16" selection-end-line="18" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/src/components/common/Routes/PrivateRoute.js">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -1067,13 +983,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/keys_dev.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
-          <caret line="7" column="37" selection-start-line="7" selection-start-column="20" selection-end-line="7" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/src/components/LVPAdmin/GrantBook.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="160">
@@ -1094,16 +1003,6 @@
           <caret line="74" lean-forward="true" selection-start-line="74" selection-end-line="74" />
           <folding>
             <element signature="e#412#456#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/components/LVPAdmin/BooksMaster.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="315" column="60" selection-start-line="315" selection-start-column="60" selection-end-line="315" selection-end-column="60" />
-          <folding>
-            <element signature="e#0#40#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1163,6 +1062,43 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="182">
           <caret line="116" column="56" selection-start-line="116" selection-start-column="56" selection-end-line="116" selection-end-column="56" />
+          <folding>
+            <element signature="e#0#40#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/keys_dev.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="156">
+          <caret line="6" selection-start-line="6" selection-end-line="7" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="78">
+            <caret line="3" column="9" selection-start-line="3" selection-start-column="9" selection-end-line="3" selection-end-column="9" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/components/LVPAdmin/BooksMaster.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="21" column="25" lean-forward="true" selection-end-line="316" />
+          <folding>
+            <element signature="e#0#40#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/components/SuperAdmin/PBIAnalysis.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="239" column="38" selection-start-line="239" selection-start-column="38" selection-end-line="239" selection-end-column="38" />
           <folding>
             <element signature="e#0#40#0" expanded="true" />
           </folding>
