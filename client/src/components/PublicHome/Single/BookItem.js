@@ -146,11 +146,11 @@ class BookItem extends Component {
     if(this.state.selected===false) {
       checkbox=(<td>
         <button onClick={this.onSelect} style={{background:'white', color:'blue', borderStyle:'none'}}>
-          <i className="far fa-check-square fa-2x"/></button></td>)
+          <i className="far fa-check-square fa-2x"/> Select</button></td>)
     }else {
       checkbox=(<td onClick={this.onUnSelect}
       ><button style={{background:'white', color:'blue', borderStyle:'none'}}>
-        <i className="fas fa-check-square fa-2x"/></button></td>)
+        <i className="fas fa-check-square fa-2x"/>Selected</button></td>)
 
     }
 
@@ -203,20 +203,20 @@ class BookItem extends Component {
           <button style={{borderStyle:'none', background:'white'}}>
             <TwitterShareButton title={'Hey! Checkout this great Audio Library Book from L V Prasad Eye Institute'}
                                 hastags={['SupportVisionImpaired','L V Prasad Eye Institute']}
-                                url={URL()+`audioBook/${this.props.folder._id}`}><TwitterIcon size={25} round={true} />
+                                url={URL()+`audioBook/${this.props.music._id}`}><TwitterIcon size={25} round={true} />
             </TwitterShareButton></button>
           <button style={{borderStyle:'none', background:'white'}}>
             <WhatsappShareButton title={'Hey! Checkout this great Audio Library Book from L V Prasad Eye Institute'}
-                                 url={URL()+`audioBook/${this.props.folder._id}`}><WhatsappIcon size={25} round={true} />
+                                 url={URL()+`audioBook/${this.props.music._id}`}><WhatsappIcon size={25} round={true} />
             </WhatsappShareButton></button>
           <button style={{borderStyle:'none', background:'white'}}>
             <FacebookShareButton quote={'Hey! Checkout this great Audio Library Book from L V Prasad Eye Institute'}
                                  hastag={'#SupportVisionImpaired #LVPEI'}
-                                 url={URL()+`audioBook/${this.props.folder._id}`}><FacebookIcon size={25} round={true} />
+                                 url={URL()+`audioBook/${this.props.music._id}`}><FacebookIcon size={25} round={true} />
             </FacebookShareButton></button>
           <button style={{borderStyle:'none', background:'white'}}>
             <LinkedinShareButton
-              url={URL()+`audioBook/${this.props.folder._id}`}><LinkedinIcon size={25} round={true} />
+              url={URL()+`audioBook/${this.props.music._id}`}><LinkedinIcon size={25} round={true} />
             </LinkedinShareButton></button>
         </div>
         </td>

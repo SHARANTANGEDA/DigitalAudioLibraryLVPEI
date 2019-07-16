@@ -71,9 +71,7 @@ class ModalLogin extends Component {
                   <div className='row col-md-12'>
                     <Link  to={"/resetPassword"} className={"text-primary"}> Forgot Password? </Link>
                   </div>
-                  <div className='row col-md-12'>
-                    <p>Don't have an account yet?, create one for free...<Link to='/register'>Here</Link></p>
-                  </div>
+
                 </div>
 
               </div>

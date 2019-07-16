@@ -136,7 +136,6 @@ class PublicBookItem extends Component {
         <div>
           <MediateLogin/>
           <div className='row d-flex justify-content-between' style={{margin:'20px'}}>
-            <Link className='btn btn-info' to='/register'>Register</Link>
             <button style={{color:'white', background:'green', marginRight:'10px'}} className='btn btn-sm' onClick={this.openLoginModal}>Continue to Login</button>
             <button style={{color:'white', background:'red', marginRight:'10px'}} className='btn btn-sm' onClick={this.closeModal}>Close</button>
           </div>
@@ -232,20 +231,20 @@ class PublicBookItem extends Component {
           <button style={{borderStyle:'none', background:'white'}}>
             <TwitterShareButton title={'Hey! Checkout this great Audio Library Book from L V Prasad Eye Institute'}
                                 hastags={['SupportVisionImpaired','L V Prasad Eye Institute']}
-                                url={URL()+`audioBook/${this.props.folder._id}`}><TwitterIcon size={25} round={true} />
+                                url={URL()+`audioBook/${this.props.music._id}`}><TwitterIcon size={25} round={true} />
             </TwitterShareButton></button>
           <button style={{borderStyle:'none', background:'white'}}>
             <WhatsappShareButton title={'Hey! Checkout this great Audio Library Book from L V Prasad Eye Institute'}
-                                 url={URL()+`audioBook/${this.props.folder._id}`}><WhatsappIcon size={25} round={true} />
+                                 url={URL()+`audioBook/${this.props.music._id}`}><WhatsappIcon size={25} round={true} />
             </WhatsappShareButton></button>
           <button style={{borderStyle:'none', background:'white'}}>
             <FacebookShareButton quote={'Hey! Checkout this great Audio Library Book from L V Prasad Eye Institute'}
                                  hastag={'#SupportVisionImpaired #LVPEI'}
-                                 url={URL()+`audioBook/${this.props.folder._id}`}><FacebookIcon size={25} round={true} />
+                                 url={URL()+`audioBook/${this.props.music._id}`}><FacebookIcon size={25} round={true} />
             </FacebookShareButton></button>
           <button style={{borderStyle:'none', background:'white'}}>
             <LinkedinShareButton
-              url={URL()+`audioBook/${this.props.folder._id}`}><LinkedinIcon size={25} round={true} />
+              url={URL()+`audioBook/${this.props.music._id}`}><LinkedinIcon size={25} round={true} />
             </LinkedinShareButton></button>
         </div>
         </td>

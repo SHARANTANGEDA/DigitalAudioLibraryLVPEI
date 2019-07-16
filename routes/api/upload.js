@@ -327,7 +327,7 @@ router.get('/downloadFile/:id', passport.authenticate('world', { session: false 
         let month = today.getMonth()
         let year = today.getFullYear()
         let quarter = getQuarter()
-        sqlDB.User.create({age:age,ageCategory:ageCategory,gender: user.gender,
+        sqlDB.pbi_dal_overview.create({age:age,ageCategory:ageCategory,gender: user.gender,
         qualification: user.qualification, address: user.address, pinCode: user.pinCode,
         city: user.city, state: user.state, country: user.country,
         status:'download',bookCategory: music.category, bookLanguage: music.language,
@@ -369,7 +369,7 @@ router.post('/downloadSelected/:id', passport.authenticate('world', { session: f
           let month = today.getMonth()
           let year = today.getFullYear()
           let quarter = getQuarter()
-          sqlDB.User.create({age:age,ageCategory:ageCategory,gender: user.gender,
+          sqlDB.pbi_dal_overview.create({age:age,ageCategory:ageCategory,gender: user.gender,
             qualification: user.qualification, address: user.address, pinCode: user.pinCode,
             city: user.city, state: user.state, country: user.country,
             status:'download',bookCategory: music.category, bookLanguage: music.language,
@@ -426,7 +426,7 @@ router.get('/downloadFolder/:id', passport.authenticate('world', { session: fals
           let month = today.getMonth()
           let year = today.getFullYear()
           let quarter = getQuarter()
-          sqlDB.User.create({
+          sqlDB.pbi_dal_overview.create({
             age: age, ageCategory: ageCategory, gender: user.gender,
             qualification: user.qualification, address: user.address, pinCode: user.pinCode,
             city: user.city, state: user.state, country: user.country,

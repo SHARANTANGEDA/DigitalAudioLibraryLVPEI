@@ -120,9 +120,6 @@ class Navbar extends Component {
 
         <li className="nav-item pull-right" style={{color: 'white',background:'#008cff' , borderRadius: '5px'
            }}>
-          <Link className='nav-link' to="/register" style={{color: 'white', borderRadius: '5px' }}>
-            Register
-          </Link>
         </li>
       </ul>
     )

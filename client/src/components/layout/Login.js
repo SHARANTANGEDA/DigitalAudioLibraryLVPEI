@@ -111,8 +111,6 @@ class Login extends Component {
                   </div>
                 </form>
                 <hr/>
-                <p style={{color: 'white'}}>Don't have an account yet?,
-                  <Link  to={"/register"} className={"btn btn-sm text-primary"}>Sign Up </Link> to register</p>
               </div>
             </div>
           </div>
