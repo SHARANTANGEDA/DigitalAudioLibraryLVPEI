@@ -77,8 +77,10 @@ class BookItem extends Component {
     this.setState({file: true})
   }
   onPlay (e) {
-      this.setState({ file2: true })
-    this.props.getAuthPlays(this.props.folder._id)
+      // this.setState({ file2: true})
+    console.log('here')
+
+    this.props.getAuthPlays(this.props.bookId)
 
   }
   myUploadProgress = () => (progress) => {
@@ -194,8 +196,12 @@ class BookItem extends Component {
             {size}{' '}{unit}</span>
         </td>
         <td >
-          <audio controls onClick={this.onPlay.bind(this)}
-                 src={`/api/upload/audio/${this.props.bookId}/${music.filename}`} style={{width:'400px'}}/>
+            <audio controls onPlay={this.onPlay}
+                   src={`/api/upload/audio/${this.props.bookId}/${music.filename}`} style={{width:'400px'}}>
+              <button >
+
+              </button>
+            </audio>
         </td>
         {this.props.auth.user.role==='world' && <td>{icon}</td>}
         {this.props.auth.user.role==='world' && <td>{downloadTimes}</td>}
@@ -216,7 +222,7 @@ class BookItem extends Component {
             </FacebookShareButton></button>
           <button style={{borderStyle:'none', background:'white'}}>
             <LinkedinShareButton
-              url={URL()+`audioBook/${this.props.music._id}`}><LinkedinIcon size={25} round={true} />
+              url={URL()+`audioBook/${this.props.bookId}`}><LinkedinIcon size={25} round={true} />
             </LinkedinShareButton></button>
         </div>
         </td>

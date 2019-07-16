@@ -322,6 +322,7 @@ router.get('/downloadFile/:id', passport.authenticate('world', { session: false 
     user.save().then(user => {
       Music.findByIdAndUpdate(files.metadata.bookId, { $inc: { downloads: 1 } }).then(music => {
         let age=getAge(user.dob)
+        console.log(age)
         let ageCategory = categorizeAge(age)
         let today = new Date();
         let month = today.getMonth()
@@ -364,7 +365,7 @@ router.get('/downloadFile/:id', passport.authenticate('world', { session: false 
         }
         let year = today.getFullYear()
         let quarter = getQuarter()
-            sqlDB.dal_main_overview.create({age:age,ageCategory:ageCategory,name:user.firstName+' '+user.lastName,
+        sqlDB.pbi_dal_view.create({age:age,ageCategory:ageCategory,name:user.firstName+' '+user.lastName,
               gender: user.gender, qualification: user.qualification, address: user.address, pinCode: user.pinCode,
         city: user.city, state: user.state, country: user.country,
         status:'download', bookTitle: music.title,bookCategory: music.category, bookLanguage: music.language,
@@ -443,7 +444,7 @@ router.post('/downloadSelected/:id', passport.authenticate('world', { session: f
           }
           let year = today.getFullYear()
           let quarter = getQuarter()
-          sqlDB.dal_main_overview.create({age:age,ageCategory:ageCategory,name:user.firstName+' '+user.lastName,
+          sqlDB.pbi_dal_view.create({age:age,ageCategory:ageCategory,name:user.firstName+' '+user.lastName,
             gender: user.gender, qualification: user.qualification, address: user.address, pinCode: user.pinCode,
             city: user.city, state: user.state, country: user.country,
             status:'download', bookTitle: music.title,bookCategory: music.category, bookLanguage: music.language,
@@ -537,7 +538,7 @@ router.get('/downloadFolder/:id', passport.authenticate('world', { session: fals
           }
           let year = today.getFullYear()
           let quarter = getQuarter()
-          sqlDB.dal_main_overview.create({age:age,ageCategory:ageCategory,name:user.firstName+' '+user.lastName,
+          sqlDB.pbi_dal_view.create({age:age,ageCategory:ageCategory,name:user.firstName+' '+user.lastName,
             gender: user.gender, qualification: user.qualification, address: user.address, pinCode: user.pinCode,
             city: user.city, state: user.state, country: user.country,
             status:'download', bookTitle: music.title,bookCategory: music.category, bookLanguage: music.language,

@@ -200,7 +200,6 @@ export const addRating = (id, rating) => dispatch => {
 export const getAuthPlays = (id) => dispatch => {
   axios.get(`/api/users/addAuthPlay/${id}`)
     .then(res => {
-      window.location.href=`/audioBook/${id}`
     }).catch(err => {
     console.log({success: false})
   })

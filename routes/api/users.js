@@ -567,6 +567,7 @@ router.get('/catalogue', (req, res) => {
 
 
 router.get('/addAuthPlay/:id',passport.authenticate('world',{session: false}),(req, res) => {
+  console.log('In Play')
   User.findById(req.user.id).then(user => {
     Music.findByIdAndUpdate(req.params.id, { $inc: { plays: 1 } }).then(music => {
       let age=getAge(user.dob)
@@ -612,10 +613,10 @@ router.get('/addAuthPlay/:id',passport.authenticate('world',{session: false}),(r
       }
       let year = today.getFullYear()
       let quarter = getQuarter()
-      sqlDB.dal_main_overview.create({age:age,ageCategory:ageCategory,name:user.firstName+' '+user.lastName,
+      sqlDB.pbi_dal_view.create({age:age,ageCategory:ageCategory,name:user.firstName+' '+user.lastName,
         gender: user.gender, qualification: user.qualification, address: user.address, pinCode: user.pinCode,
         city: user.city, state: user.state, country: user.country,
-        status:'download', bookTitle: music.title,bookCategory: music.category, bookLanguage: music.language,
+        status:'play', bookTitle: music.title,bookCategory: music.category, bookLanguage: music.language,
         bookAuthor: music.author, month:mStr, year: year, quarter: quarter}).then(sqlRow => {
         res.json({ success: true })
       })
