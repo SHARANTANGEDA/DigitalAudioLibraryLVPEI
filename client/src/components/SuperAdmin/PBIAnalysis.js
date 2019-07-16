@@ -13,7 +13,7 @@ import { DateRangePicker } from 'react-dates'
 import 'react-dates/lib/css/_datepicker.css'
 import moment from 'moment'
 
-class BooksMaster extends Component {
+class PBIAnalysis extends Component {
   constructor () {
     super()
     this.state = {
@@ -229,7 +229,7 @@ class BooksMaster extends Component {
       }
     }
     let content;
-    if(this.props.auth.user.role==='lvpei') {
+    if(this.props.auth.user.role==='lvpei' || this.props.auth.user.role==='super_admin') {
       content= (
         <div className="displayFolder container-fluid" style={{minWidth:'100%', padding: '0px'}}>
           <div className="App-content row d-flex justify-content-between" >
@@ -238,9 +238,9 @@ class BooksMaster extends Component {
               {heading}
             </nav>
             <h1 className='text-center'>Microsoft Power BI Analysis</h1>
-            <div>
-
-            </div>
+              <iframe width="933" height="700"
+                      src="https://app.powerbi.com/view?r=eyJrIjoiMzcwZTQ3MzUtOWM4OS00YjJiLTkyZjQtMTIyMGMzOWY5ZTIzIiwidCI6ImY3ODM3NzBhLWM0ZjgtNDg4NS1hMTg0LWVlNTExYTgzMzcxMSIsImMiOjEwfQ%3D%3D"
+                      frameBorder="0" allowFullScreen="true"></iframe>
           </div>
 
         </div>
@@ -256,7 +256,7 @@ class BooksMaster extends Component {
   }
 }
 
-BooksMaster.propTypes = {
+PBIAnalysis.propTypes = {
   home: PropTypes.object.isRequired,
 
 }
@@ -265,4 +265,4 @@ const mapStateToProps = state => ({
   auth: state.auth,
   folder: state.folder
 })
-export default connect(mapStateToProps)(BooksMaster)
+export default connect(mapStateToProps)(PBIAnalysis)

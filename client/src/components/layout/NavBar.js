@@ -140,6 +140,12 @@ class Navbar extends Component {
                 Usage Reports
               </Link>
             </li>
+            <li className="nav-item" style={{color: 'white',background:'#008cff' , borderRadius: '5px'
+            }}>
+              <Link className="nav-link" to="/analytics"
+                    style={{color: 'white', borderRadius: '5px',background:'#008cff'  }}>
+                PBI Analytics</Link>
+            </li>
             <li className="nav-item dropdown" style={{color: 'white',background:'#008cff' , borderRadius: '5px'
                }}>
                 <Link className="nav-link nav-item d-flex justify-content-around" to="" data-toggle="dropdown"
@@ -185,6 +191,12 @@ class Navbar extends Component {
             <Link className='nav-link'  to="/dashboard" style={{color: 'white', borderRadius: '5px' }}>
               Home
             </Link>
+          </li>
+          <li className="nav-item" style={{color: 'white',background:'#008cff' , borderRadius: '5px'
+          }}>
+            <Link className="nav-link" to="/analytics"
+                  style={{color: 'white', borderRadius: '5px',background:'#008cff'  }}>
+             PBI Analytics</Link>
           </li>
           {/*<li className='nav-item' style={{color: 'white',background:'#008cff' , borderRadius: '5px'*/}
           {/*  }}>*/}

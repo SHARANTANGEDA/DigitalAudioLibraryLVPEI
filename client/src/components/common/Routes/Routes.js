@@ -16,6 +16,7 @@ import ReAssignLVPUsers from '../../SuperAdmin/ReAssignLVPUsers'
 import BooksMaster from '../../LVPAdmin/BooksMaster'
 import AllRecords from '../../dashboard/AllRecords'
 import GrantBookMaster from '../../LVPAdmin/GrantBookMaster'
+import PBIAnalysis from '../../SuperAdmin/PBIAnalysis'
 
 const Routes = () => {
   return (
@@ -38,6 +39,8 @@ const Routes = () => {
         <PrivateRoute exact path='/lvpBooks' component={BooksMaster}/>
         <PrivateRoute exact path='/dashboard/:id' component={AllRecords}/>
         <PrivateRoute exact path='/grantBookAccess' component={GrantBookMaster}/>
+        <PrivateRoute exact path='/analytics' component={PBIAnalysis}/>
+
         <Route path="*" component={NotFound} />
       </Switch>
     </div>
