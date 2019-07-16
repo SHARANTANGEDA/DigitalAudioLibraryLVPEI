@@ -1,4 +1,4 @@
-# Audio Digital Library LVPEI
+# Digital Audio Library LVPEI
 ## Project Description
 #### This web Application completely built on MERN stack with MySQL for PBI Analysis.
 -To Write
