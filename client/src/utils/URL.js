@@ -1,5 +1,5 @@
 const URL = () => {
-  return 'http://172.16.154.3:5000/';
+  return 'http://220.227.249.169:5000/';
 }
 
 export default URL
