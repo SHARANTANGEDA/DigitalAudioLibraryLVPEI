@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  return sequelize.define("pbi_dal_overview", {
+  return sequelize.define("dal_main_overview", {
     id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -13,6 +13,14 @@ module.exports = (sequelize, DataTypes) => {
     },
     ageCategory: {
       type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    lastName: {
+      type: DataTypes.STRING,
       allowNull: false
     },
     gender: {
@@ -48,6 +56,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    bookTitle: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     bookCategory: {
       type: DataTypes.STRING,
       allowNull: false
@@ -61,7 +73,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     month: {
-      type:DataTypes.INTEGER,
+      type:DataTypes.STRING,
       allowNull: false
     },
     year: {

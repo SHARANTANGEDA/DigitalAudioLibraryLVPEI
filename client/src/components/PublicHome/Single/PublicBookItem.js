@@ -231,16 +231,16 @@ class PublicBookItem extends Component {
           <button style={{borderStyle:'none', background:'white'}}>
             <TwitterShareButton title={'Hey! Checkout this great Audio Library Book from L V Prasad Eye Institute'}
                                 hastags={['SupportVisionImpaired','L V Prasad Eye Institute']}
-                                url={URL()+`audioBook/${this.props.music._id}`}><TwitterIcon size={25} round={true} />
+                                url={URL()+`audioBook/${this.props.bookId}`}><TwitterIcon size={25} round={true} />
             </TwitterShareButton></button>
           <button style={{borderStyle:'none', background:'white'}}>
             <WhatsappShareButton title={'Hey! Checkout this great Audio Library Book from L V Prasad Eye Institute'}
-                                 url={URL()+`audioBook/${this.props.music._id}`}><WhatsappIcon size={25} round={true} />
+                                 url={URL()+`audioBook/${this.props.bookId}`}><WhatsappIcon size={25} round={true} />
             </WhatsappShareButton></button>
           <button style={{borderStyle:'none', background:'white'}}>
             <FacebookShareButton quote={'Hey! Checkout this great Audio Library Book from L V Prasad Eye Institute'}
                                  hastag={'#SupportVisionImpaired #LVPEI'}
-                                 url={URL()+`audioBook/${this.props.music._id}`}><FacebookIcon size={25} round={true} />
+                                 url={URL()+`audioBook/${this.props.bookId}`}><FacebookIcon size={25} round={true} />
             </FacebookShareButton></button>
           <button style={{borderStyle:'none', background:'white'}}>
             <LinkedinShareButton

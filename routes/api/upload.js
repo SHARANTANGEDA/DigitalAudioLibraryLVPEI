@@ -325,13 +325,50 @@ router.get('/downloadFile/:id', passport.authenticate('world', { session: false 
         let ageCategory = categorizeAge(age)
         let today = new Date();
         let month = today.getMonth()
+        let mStr
+        if(month===1) {
+          mStr='01 Jan'
+        }
+        if(month===2) {
+          mStr='02 Feb'
+        }
+        if(month===3) {
+          mStr='03 Mar'
+        }
+        if(month===4) {
+          mStr='04 Apr'
+        }
+        if(month===5) {
+          mStr='05 May'
+        }
+        if(month===6) {
+          mStr='06 Jun'
+        }
+        if(month===7) {
+          mStr='07 Jul'
+        }
+        if(month===8) {
+          mStr='08 Aug'
+        }
+        if(month===9) {
+          mStr='09 Sep'
+        }
+        if(month===10) {
+          mStr='10 Oct'
+        }
+        if(month===11) {
+          mStr='11 Nov'
+        }
+        if(month===12) {
+          mStr='12 Dec'
+        }
         let year = today.getFullYear()
         let quarter = getQuarter()
-        sqlDB.pbi_dal_overview.create({age:age,ageCategory:ageCategory,gender: user.gender,
-        qualification: user.qualification, address: user.address, pinCode: user.pinCode,
+            sqlDB.dal_main_overview.create({age:age,ageCategory:ageCategory,name:user.firstName+' '+user.lastName,
+              gender: user.gender, qualification: user.qualification, address: user.address, pinCode: user.pinCode,
         city: user.city, state: user.state, country: user.country,
-        status:'download',bookCategory: music.category, bookLanguage: music.language,
-        bookAuthor: music.author, month:month, year: year, quarter: quarter}).then(sqlRow => {
+        status:'download', bookTitle: music.title,bookCategory: music.category, bookLanguage: music.language,
+        bookAuthor: music.author, month:mStr, year: year, quarter: quarter}).then(sqlRow => {
           let readstream = gfs.createReadStream({
             filename: files.filename,
             root: 'uploads'
@@ -367,13 +404,50 @@ router.post('/downloadSelected/:id', passport.authenticate('world', { session: f
           let ageCategory = categorizeAge(age)
           let today = new Date();
           let month = today.getMonth()
+          let mStr
+          if(month===1) {
+            mStr='01 Jan'
+          }
+          if(month===2) {
+            mStr='02 Feb'
+          }
+          if(month===3) {
+            mStr='03 Mar'
+          }
+          if(month===4) {
+            mStr='04 Apr'
+          }
+          if(month===5) {
+            mStr='05 May'
+          }
+          if(month===6) {
+            mStr='06 Jun'
+          }
+          if(month===7) {
+            mStr='07 Jul'
+          }
+          if(month===8) {
+            mStr='08 Aug'
+          }
+          if(month===9) {
+            mStr='09 Sep'
+          }
+          if(month===10) {
+            mStr='10 Oct'
+          }
+          if(month===11) {
+            mStr='11 Nov'
+          }
+          if(month===12) {
+            mStr='12 Dec'
+          }
           let year = today.getFullYear()
           let quarter = getQuarter()
-          sqlDB.pbi_dal_overview.create({age:age,ageCategory:ageCategory,gender: user.gender,
-            qualification: user.qualification, address: user.address, pinCode: user.pinCode,
+          sqlDB.dal_main_overview.create({age:age,ageCategory:ageCategory,name:user.firstName+' '+user.lastName,
+            gender: user.gender, qualification: user.qualification, address: user.address, pinCode: user.pinCode,
             city: user.city, state: user.state, country: user.country,
-            status:'download',bookCategory: music.category, bookLanguage: music.language,
-            bookAuthor: music.author, month:month, year: year, quarter: quarter}).then(async sqlRow => {
+            status:'download', bookTitle: music.title,bookCategory: music.category, bookLanguage: music.language,
+            bookAuthor: music.author, month:mStr, year: year, quarter: quarter}).then(async sqlRow => {
           let archive = archiver('zip')
           let dummy = []
           // archive.on('error', function (err) {
@@ -420,19 +494,54 @@ router.get('/downloadFolder/:id', passport.authenticate('world', { session: fals
 
       Music.findByIdAndUpdate(files[0].metadata.bookId, { $inc: { downloads: files.length } })
         .then(async music => {
-          let age = getAge(user.dob)
+          let age=getAge(user.dob)
           let ageCategory = categorizeAge(age)
           let today = new Date();
           let month = today.getMonth()
+          let mStr
+          if(month===1) {
+            mStr='01 Jan'
+          }
+          if(month===2) {
+            mStr='02 Feb'
+          }
+          if(month===3) {
+            mStr='03 Mar'
+          }
+          if(month===4) {
+            mStr='04 Apr'
+          }
+          if(month===5) {
+            mStr='05 May'
+          }
+          if(month===6) {
+            mStr='06 Jun'
+          }
+          if(month===7) {
+            mStr='07 Jul'
+          }
+          if(month===8) {
+            mStr='08 Aug'
+          }
+          if(month===9) {
+            mStr='09 Sep'
+          }
+          if(month===10) {
+            mStr='10 Oct'
+          }
+          if(month===11) {
+            mStr='11 Nov'
+          }
+          if(month===12) {
+            mStr='12 Dec'
+          }
           let year = today.getFullYear()
           let quarter = getQuarter()
-          sqlDB.pbi_dal_overview.create({
-            age: age, ageCategory: ageCategory, gender: user.gender,
-            qualification: user.qualification, address: user.address, pinCode: user.pinCode,
+          sqlDB.dal_main_overview.create({age:age,ageCategory:ageCategory,name:user.firstName+' '+user.lastName,
+            gender: user.gender, qualification: user.qualification, address: user.address, pinCode: user.pinCode,
             city: user.city, state: user.state, country: user.country,
-            status: 'download', bookCategory: music.category, bookLanguage: music.language,
-            bookAuthor: music.author, month: month, year: year, quarter: quarter
-          }).then(async sqlRow => {
+            status:'download', bookTitle: music.title,bookCategory: music.category, bookLanguage: music.language,
+            bookAuthor: music.author, month:mStr, year: year, quarter: quarter}).then(async sqlRow => {
 
             let archive = archiver('zip')
             let dummy = []
