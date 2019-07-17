@@ -10,7 +10,7 @@ class PBIAnalysis extends Component {
         <div className="displayFolder container-fluid" style={{minWidth:'100%', padding: '0px'}}>
           <div className="App-content row d-flex justify-content-center col-md-12" >
 
-            <h1 className='text-center'>Microsoft Power BI Analysis</h1>
+            <h1 className='text-center'>Usage Analysis</h1>
             <div className='col-md-12 d-flex justify-content-center'>
               <iframe width="1000" height="700"
                       src="https://app.powerbi.com/view?r=eyJrIjoiMzcwZTQ3MzUtOWM4OS00YjJiLTkyZjQtMTIyMGMzOWY5ZTIzIiwidCI6ImY3ODM3NzBhLWM0ZjgtNDg4NS1hMTg0LWVlNTExYTgzMzcxMSIsImMiOjEwfQ%3D%3D"
