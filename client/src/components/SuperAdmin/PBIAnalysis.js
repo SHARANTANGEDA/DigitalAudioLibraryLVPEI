@@ -12,10 +12,7 @@ class PBIAnalysis extends Component {
 
             <h1 className='text-center'>Usage Analysis</h1>
             <div className='col-md-12 d-flex justify-content-center'>
-              <iframe width="1000" height="700"
-                      src="https://app.powerbi.com/view?r=eyJrIjoiMzcwZTQ3MzUtOWM4OS00YjJiLTkyZjQtMTIyMGMzOWY5ZTIzIiwidCI6ImY3ODM3NzBhLWM0ZjgtNDg4NS1hMTg0LWVlNTExYTgzMzcxMSIsImMiOjEwfQ%3D%3D"
-                      frameBorder="0" allowFullScreen="true"></iframe>
-
+              <h1>Add Your PBI iframe instead of this to display</h1>
             </div>
 
           </div>

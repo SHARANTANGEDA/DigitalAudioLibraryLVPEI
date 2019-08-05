@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="5a967d78-a97f-45cb-83a3-e92f0b827e72" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/SuperAdmin/PBIAnalysis.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/SuperAdmin/PBIAnalysis.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -51,20 +50,25 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/routes/api/users.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15860">
-              <caret line="610" column="22" selection-start-line="610" selection-start-column="22" selection-end-line="610" selection-end-column="22" />
+            <state relative-caret-position="572">
+              <caret line="406" column="13" selection-start-line="406" selection-start-column="13" selection-end-line="406" selection-end-column="13" />
+              <folding>
+                <element signature="e#17196#17240#0" />
+                <element signature="e#17903#19811#0" />
+                <element signature="e#19908#21452#0" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/src/components/SuperAdmin/PBIAnalysis.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="312">
-              <caret line="12" column="54" selection-start-line="12" selection-start-column="54" selection-end-line="12" selection-end-column="54" />
+            <state relative-caret-position="130">
+              <caret line="5" selection-start-line="5" selection-end-line="6" />
               <folding>
                 <element signature="e#0#40#0" expanded="true" />
               </folding>
@@ -105,7 +109,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/src/components/PublicHome/Single/BookItem.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
+            <state relative-caret-position="1820">
               <caret line="86" column="32" selection-start-line="86" selection-start-column="32" selection-end-line="86" selection-end-column="32" />
               <folding>
                 <element signature="e#0#40#0" expanded="true" />
@@ -127,7 +131,7 @@
         <entry file="file://$PROJECT_DIR$/client/src/components/dashboard/AudioBook.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="4186">
-              <caret line="176" column="15" lean-forward="true" selection-start-line="176" selection-start-column="15" selection-end-line="176" selection-end-column="15" />
+              <caret line="176" column="15" selection-start-line="176" selection-start-column="15" selection-end-line="176" selection-end-column="15" />
               <folding>
                 <element signature="e#0#40#0" expanded="true" />
               </folding>
@@ -255,17 +259,16 @@
     <auto-save>true</auto-save>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="993" />
-    <option name="y" value="32" />
+    <option name="x" value="1920" />
+    <option name="y" value="-2" />
     <option name="width" value="927" />
-    <option name="height" value="1048" />
+    <option name="height" value="784" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -397,6 +400,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -410,7 +414,7 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="settings.typescriptcompiler" />
+    <property name="settings.editor.selected.configurable" value="preferences.externalDependencies" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/client/node_modules/typescript/lib" />
   </component>
   <component name="RecentsManager">
@@ -516,7 +520,11 @@
       <workItem from="1563154509763" duration="44054000" />
       <workItem from="1563247596599" duration="16370000" />
       <workItem from="1563288001694" duration="3946000" />
-      <workItem from="1563331994573" duration="141000" />
+      <workItem from="1563331994573" duration="347000" />
+      <workItem from="1563443572980" duration="698000" />
+      <workItem from="1563459786910" duration="60000" />
+      <workItem from="1564993261229" duration="1359000" />
+      <workItem from="1565008676254" duration="151000" />
     </task>
     <task id="LOCAL-00001" summary="#Added All the required funtionality&#10;#Fixed few bugs&#10;#optimized some react components">
       <created>1562347799331</created>
@@ -700,11 +708,18 @@
       <option name="project" value="LOCAL" />
       <updated>1563291351442</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="# Release Version&#10;# Made All Bugs reported until now">
+      <created>1563332151274</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1563332151274</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="309360000" />
+    <option name="totallyTimeSpent" value="311834000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -716,10 +731,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="67" y="32" width="1853" height="1048" extended-state="6" />
+    <frame x="1920" y="-2" width="1920" height="1082" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49943504" visible="true" weight="0.19476905" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49943504" visible="true" weight="0.20171674" />
       <window_info id="Structure" order="1" sideWeight="0.500565" side_tool="true" weight="0.24986088" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="DB Browser" order="3" />
@@ -737,7 +752,7 @@
       <window_info anchor="bottom" id="Terminal" order="10" weight="0.23615819" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="bottom" id="TypeScript" order="12" />
-      <window_info anchor="bottom" id="Run" order="13" weight="0.3638418" />
+      <window_info anchor="bottom" id="Run" order="13" weight="0.36343852" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -1117,13 +1132,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/api/users.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15860">
-          <caret line="610" column="22" selection-start-line="610" selection-start-column="22" selection-end-line="610" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/routes/api/upload.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5304">
@@ -1148,6 +1156,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/components/PublicHome/Single/BookItem.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1820">
+          <caret line="86" column="32" selection-start-line="86" selection-start-column="32" selection-end-line="86" selection-end-column="32" />
+          <folding>
+            <element signature="e#0#40#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/client/src/actions/homeActions.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4732">
@@ -1158,17 +1176,7 @@
     <entry file="file://$PROJECT_DIR$/client/src/components/dashboard/AudioBook.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4186">
-          <caret line="176" column="15" lean-forward="true" selection-start-line="176" selection-start-column="15" selection-end-line="176" selection-end-column="15" />
-          <folding>
-            <element signature="e#0#40#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/components/PublicHome/Single/BookItem.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="86" column="32" selection-start-line="86" selection-start-column="32" selection-end-line="86" selection-end-column="32" />
+          <caret line="176" column="15" selection-start-line="176" selection-start-column="15" selection-end-line="176" selection-end-column="15" />
           <folding>
             <element signature="e#0#40#0" expanded="true" />
           </folding>
@@ -1177,10 +1185,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/client/src/components/SuperAdmin/PBIAnalysis.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="12" column="54" selection-start-line="12" selection-start-column="54" selection-end-line="12" selection-end-column="54" />
+        <state relative-caret-position="130">
+          <caret line="5" selection-start-line="5" selection-end-line="6" />
           <folding>
             <element signature="e#0#40#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/api/users.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="572">
+          <caret line="406" column="13" selection-start-line="406" selection-start-column="13" selection-end-line="406" selection-end-column="13" />
+          <folding>
+            <element signature="e#17196#17240#0" />
+            <element signature="e#17903#19811#0" />
+            <element signature="e#19908#21452#0" />
           </folding>
         </state>
       </provider>
