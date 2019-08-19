@@ -33,15 +33,6 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/src/utils/URL.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="26">
-              <caret line="1" column="32" selection-start-line="1" selection-start-column="32" selection-end-line="1" selection-end-column="32" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/src/components/common/Routes/Routes.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="650">
@@ -50,10 +41,10 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/api/users.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="572">
+            <state relative-caret-position="10556">
               <caret line="406" column="13" selection-start-line="406" selection-start-column="13" selection-end-line="406" selection-end-column="13" />
               <folding>
                 <element signature="e#17196#17240#0" />
@@ -67,11 +58,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/src/components/SuperAdmin/PBIAnalysis.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="130">
-              <caret line="5" selection-start-line="5" selection-end-line="6" />
+            <state relative-caret-position="364">
+              <caret line="14" column="64" selection-start-line="14" selection-start-column="64" selection-end-line="14" selection-end-column="64" />
               <folding>
                 <element signature="e#0#40#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/config/keys_dev.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="260">
+              <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
             </state>
           </provider>
         </entry>
@@ -525,6 +525,8 @@
       <workItem from="1563459786910" duration="60000" />
       <workItem from="1564993261229" duration="1359000" />
       <workItem from="1565008676254" duration="151000" />
+      <workItem from="1565009035024" duration="81000" />
+      <workItem from="1566230525369" duration="276000" />
     </task>
     <task id="LOCAL-00001" summary="#Added All the required funtionality&#10;#Fixed few bugs&#10;#optimized some react components">
       <created>1562347799331</created>
@@ -715,11 +717,18 @@
       <option name="project" value="LOCAL" />
       <updated>1563332151274</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="# Release Version&#10;# Made All Bugs reported until now">
+      <created>1565009096928</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1565009096928</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="311834000" />
+    <option name="totallyTimeSpent" value="312191000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -732,9 +741,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1920" y="-2" width="1920" height="1082" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49943504" visible="true" weight="0.20171674" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49943504" visible="true" weight="0.20171674" />
       <window_info id="Structure" order="1" sideWeight="0.500565" side_tool="true" weight="0.24986088" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="DB Browser" order="3" />
@@ -749,7 +757,7 @@
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="DB Execution Console" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
-      <window_info anchor="bottom" id="Terminal" order="10" weight="0.23615819" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.343852" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="bottom" id="TypeScript" order="12" />
       <window_info anchor="bottom" id="Run" order="13" weight="0.36343852" />
@@ -1039,13 +1047,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/keys_dev.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="156">
-          <caret line="6" selection-start-line="6" selection-end-line="7" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/src/components/LVPAdmin/BooksMaster.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
@@ -1132,6 +1133,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/routes/api/users.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="10556">
+          <caret line="406" column="13" selection-start-line="406" selection-start-column="13" selection-end-line="406" selection-end-column="13" />
+          <folding>
+            <element signature="e#17196#17240#0" />
+            <element signature="e#17903#19811#0" />
+            <element signature="e#19908#21452#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/routes/api/upload.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5304">
@@ -1185,23 +1198,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/client/src/components/SuperAdmin/PBIAnalysis.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="130">
-          <caret line="5" selection-start-line="5" selection-end-line="6" />
+        <state relative-caret-position="364">
+          <caret line="14" column="64" selection-start-line="14" selection-start-column="64" selection-end-line="14" selection-end-column="64" />
           <folding>
             <element signature="e#0#40#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/api/users.js">
+    <entry file="file://$PROJECT_DIR$/config/keys_dev.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="572">
-          <caret line="406" column="13" selection-start-line="406" selection-start-column="13" selection-end-line="406" selection-end-column="13" />
-          <folding>
-            <element signature="e#17196#17240#0" />
-            <element signature="e#17903#19811#0" />
-            <element signature="e#19908#21452#0" />
-          </folding>
+        <state relative-caret-position="260">
+          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
         </state>
       </provider>
     </entry>
